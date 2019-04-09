@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Oracle.DataAccess.Client;
+using Alkoshop.Models;
 
 namespace Alkoshop.Controllers
 {
@@ -14,24 +15,28 @@ namespace Alkoshop.Controllers
         public ActionResult Index()
         {
             OracleConnection conn = DBMain.GetConnection();
-         /*   List<string> names = new List<string>();
-            OracleCommand command = new OracleCommand("SELECT * FROM ALKOHOLICI.\"Category\"", conn); // use \" for "
-            try
-            {
-                OracleDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    string myField = (string)reader["Name"];
-                    names.Add(myField);
-                    System.Diagnostics.Debug.WriteLine(myField);
-                }
-                System.Diagnostics.Debug.WriteLine("--End of query--");
+            /*   List<string> names = new List<string>();
+               OracleCommand command = new OracleCommand("SELECT * FROM ALKOHOLICI.\"Category\"", conn); // use \" for "
+               try
+               {
+                   OracleDataReader reader = command.ExecuteReader();
+                   while (reader.Read())
+                   {
+                       string myField = (string)reader["Name"];
+                       names.Add(myField);
+                       System.Diagnostics.Debug.WriteLine(myField);
+                   }
+                   System.Diagnostics.Debug.WriteLine("--End of query--");
+               }
+               catch (Exception ex1)
+               {
+                   System.Diagnostics.Debug.WriteLine("## ERROR: " + ex1.Message);
+               }*/
+
+            List<Product> products = DBGetData.getAllProducts(conn);
+            foreach (Product product in products){
+                System.Diagnostics.Debug.WriteLine(product.Name);
             }
-            catch (Exception ex1)
-            {
-                System.Diagnostics.Debug.WriteLine("## ERROR: " + ex1.Message);
-            }*/
-            
             return View();
         }
     }
