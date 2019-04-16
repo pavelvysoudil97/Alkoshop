@@ -27,6 +27,20 @@ namespace Alkoshop.Database
             return null;
         }
 
+        internal static List<int> getFavForCustomer(OracleConnection conn, int customerID)
+        {
+            List<int> favProductIDs = new List<int>();
+            OracleDataReader reader = getReader("SELECT f.\"ProuctID\" FROM ALKOHOLICI.\"Favourite\" f WHERE f.\"CustomerID\" = "+customerID+";", conn);
+            if (reader != null)
+            {
+                while (reader.Read())
+                {
+                    favProductIDs.Add((int)reader["ProductID"]);
+                }
+                return favProductIDs;
+            }
+            return null;
+        }
 
 
         internal static OracleDataReader getReader(string comm, OracleConnection conn)
