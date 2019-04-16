@@ -17,12 +17,9 @@ namespace Alkoshop.Controllers
             OracleConnection conn = DBMain.GetConnection();
  
 
-            List<Product> products = DBGetData.getAllProducts(conn);
-            foreach (Product product in products){
-                
-                System.Diagnostics.Debug.WriteLine(product.Name);
-            }
-            return View();
+            IList<Product> products = DBGetData.getAllProducts(conn);
+           
+            return View(products);
         }
     }
 }
