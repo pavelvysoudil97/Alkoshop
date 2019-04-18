@@ -21,6 +21,7 @@ namespace Alkoshop.Models
         public string Producer { get; set; }
         public int PricePU { get; set; }
         public string availability { get; set; }
-
+        public string Country { get; set; }
+        public string Picture { get; set; }
     }
 }

@@ -56,5 +56,9 @@ namespace Alkoshop.Database
             }
             return null;
         }
+
+        // TODO - getCategories 
+
+        // TODO - getProductsByCategory
     }
 }

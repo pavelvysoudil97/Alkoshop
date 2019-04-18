@@ -16,3 +16,13 @@ textarea {
     max-width: 280px;
 }
 
+.card33{
+    min-width: 33%;
+}
+
+.flexproduct{
+    flex-basis:auto;
+}
+
+
+

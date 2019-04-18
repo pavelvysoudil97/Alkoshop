@@ -6,6 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using Oracle.DataAccess.Client;
 using Alkoshop.Models;
+using System.Drawing;
+using Alkoshop.Class;
+using System.Drawing.Imaging;
 
 namespace Alkoshop.Controllers
 {
@@ -18,8 +21,11 @@ namespace Alkoshop.Controllers
  
 
             IList<Product> products = DBGetData.getAllProducts(conn);
+            foreach(Product p in products)
+            {
+            }
            
-            return View(products);
+                return View(products);
         }
     }
 }
