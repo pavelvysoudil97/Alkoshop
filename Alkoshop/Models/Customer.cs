@@ -13,6 +13,9 @@ namespace Alkoshop.Models
         public string Password { get; set; }
         public int PhoneNumber { get; set; }
         public string BirthDate { get; set; }
+
+        // Bude potreba dodelat adresu jakozto objekt
+        public string Address { get; set; }
         
     }
 }
