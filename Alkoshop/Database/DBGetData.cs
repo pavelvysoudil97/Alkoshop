@@ -60,5 +60,10 @@ namespace Alkoshop.Database
         // TODO - getCategories 
 
         // TODO - getProductsByCategory
+
+    
+      //  internal static createCustomer(string name, string surname, string email, string password, int phoneNumber, DateTime birthDate, Address address ){
+       
+        
     }
 }
