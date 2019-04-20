@@ -128,5 +128,11 @@ namespace Alkoshop.Database
                 System.Diagnostics.Debug.WriteLine("## ERROR: " + ex1.Message);
             }
         }
+
+        // TODO:
+        // getEmployee(string email, string password)
+        // createEmployeeWithAddress(Employee employee, Address address)
+        // FINAL - CRD - ProductOrder - Order 
+
     }
 }
