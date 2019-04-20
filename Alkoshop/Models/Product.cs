@@ -21,11 +21,11 @@ namespace Alkoshop.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Producer { get; set; }
-        public double PricePU { get; set; }
+        public double PricePU { get; set; } // double protoze tak je to i v DB
         public int Amount { get; set; }
         public string Availability { get; set; }
         public string Country { get; set; }
         public string Picture { get; set; }
-        public int Alcotabac { get; set; }
+        public int Alcotabac { get; set; } //1 - alkohol; 2 - tabak
     }
 }
