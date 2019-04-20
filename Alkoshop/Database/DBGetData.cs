@@ -6,21 +6,23 @@ using Oracle.DataAccess.Client;
 
 namespace Alkoshop.Database
 {
-    public class DBGetData { 
+    public class DBGetData {
+
+
 
         internal static List<Product> getAllProducts(OracleConnection conn)
         {
             List<Product> products = new List<Product>();
             OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\"", conn);
-            if (reader != null) { 
+            if (reader != null) {
                 while (reader.Read())
                 {
-                    int id = (int) reader["ProductID"];
-                    string name = (string) reader["Name"];
-                    string producer = (string) reader["Producer"];
-                 //   int pricePU = (int) reader["Price_per_unit"];
+                    int id = (int)reader["ProductID"];
+                    string name = (string)reader["Name"];
+                    string producer = (string)reader["Producer"];
+                    //   int pricePU = (int) reader["Price_per_unit"];
                     string availability = (string)reader["Availability"];
-                    products.Add(new Product(id,name,producer,10,availability));
+                    products.Add(new Product(id, name, producer, 10, availability));
                 }
                 return products;
             }
@@ -30,7 +32,7 @@ namespace Alkoshop.Database
         internal static List<int> getFavForCustomer(OracleConnection conn, int customerID)
         {
             List<int> favProductIDs = new List<int>();
-            OracleDataReader reader = getReader("SELECT f.\"ProuctID\" FROM ALKOHOLICI.\"Favourite\" f WHERE f.\"CustomerID\" = "+customerID+";", conn);
+            OracleDataReader reader = getReader("SELECT f.\"ProuctID\" FROM ALKOHOLICI.\"Favourite\" f WHERE f.\"CustomerID\" = " + customerID + ";", conn);
             if (reader != null)
             {
                 while (reader.Read())
@@ -57,13 +59,18 @@ namespace Alkoshop.Database
             return null;
         }
 
-        // TODO - getCategories 
+        // TODO - getCategories
 
         // TODO - getProductsByCategory
 
-    
-      //  internal static createCustomer(string name, string surname, string email, string password, int phoneNumber, DateTime birthDate, Address address ){
-       
-        
+        // TODO - LOGIN -  getCustomer(string email, string password) , getEmployee(string email, string password)
+
+        // TODO - FINAL - CRD - ProductOrder - Order
+
+
+
+        //internal static createCustomerWithAddress(Customer customer, Address address)
+
+        //internal static createEmployeeeWithAddress(Employee employee, Address address)
     }
 }

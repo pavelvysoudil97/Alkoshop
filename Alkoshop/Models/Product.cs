@@ -19,6 +19,8 @@ namespace Alkoshop.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Producer { get; set; }
+
+        public int isAlcohol { get; set; } //1 - alcohol 0 Tabacco
         public int PricePU { get; set; }
         public string availability { get; set; }
         public string Country { get; set; }
