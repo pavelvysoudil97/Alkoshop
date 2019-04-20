@@ -21,11 +21,8 @@ namespace Alkoshop.Controllers
  
 
             IList<Product> products = DBGetData.getAllProducts(conn);
-            foreach(Product p in products)
-            {
-            }
-           
-                return View(products);
+
+            return View(products);
         }
     }
 }
