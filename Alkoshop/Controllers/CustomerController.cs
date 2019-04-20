@@ -30,6 +30,8 @@ namespace Alkoshop.Controllers
 
                 var addressObject = TempData["addresscontainer"];
 
+               // DBGetData.createCustomerWithAddress(customer, addressObject);
+
                 return RedirectToAction("Index", "Home");
             }
 
