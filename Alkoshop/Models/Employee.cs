@@ -22,8 +22,8 @@ namespace Alkoshop.Models
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
+        
 
-        [Required(ErrorMessage = "Gdpr is required")]
         public string Gdpr { get; set; }
 
         [Required(ErrorMessage = "Phone number is required")]

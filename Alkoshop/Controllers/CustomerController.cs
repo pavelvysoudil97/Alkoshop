@@ -37,8 +37,9 @@ namespace Alkoshop.Controllers
             if (ModelState.IsValid)
             {
                 //Pripravene na create Customer 
-               // DBGetData.createCustomerWithAddress(customer, addressObject);
+                // DBGetData.createCustomerWithAddress(customer, addressObject);
 
+                TempData["message-success"] = "Customer was added successfully";
                 return RedirectToAction("Index", "Home");
             }
             

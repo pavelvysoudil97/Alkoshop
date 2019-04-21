@@ -41,6 +41,7 @@ namespace Alkoshop.Controllers
             {
                 //Pripravene na create Employee 
                 // DBGetData.createEmployeeWithAddress(customer, addressObject);
+                TempData["message-success"] = "Employee was added successfully";
 
                 return RedirectToAction("Index", "Home");
             }

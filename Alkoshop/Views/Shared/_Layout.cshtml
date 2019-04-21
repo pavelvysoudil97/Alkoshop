@@ -12,9 +12,10 @@
 
 
     <!-- Bootstrap core CSS -->
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/bootstrap-theme.min.css")" rel="stylesheet" />
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" />
+
 
 
     <style>
@@ -47,7 +48,12 @@
     </div>
 
     <div class="container">
-
+        @if (TempData["message-success"] != null)
+              {
+                <div class="alert alert-success" role="alert">
+                    @TempData["message-success"];
+                </div>
+              }
         @RenderBody()
 
 

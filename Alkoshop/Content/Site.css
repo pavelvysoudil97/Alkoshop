@@ -9,8 +9,16 @@
 }
 
 
-.padded-down{
+.padded-down {
     padding-bottom: 35px;
 }
 
+input .input-validation-error{
+    background-color:blue;
+    color:aqua;
+}
+
+.valid{
+    background-color:red;
+}
 
