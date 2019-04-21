@@ -30,17 +30,18 @@ namespace Alkoshop.Controllers
 
             var addressContainer = TempData["addresscontainer"];
 
+            if (customer.Address == null)
+            {
+                customer.Address = (Address)TempData["addresscontainer"];
+            }
             if (ModelState.IsValid)
             {
-                
+                //Pripravene na create Customer 
                // DBGetData.createCustomerWithAddress(customer, addressObject);
 
                 return RedirectToAction("Index", "Home");
             }
-            if(customer.Address == null)
-            {
-                customer.Address = (Address)TempData["addresscontainer"];
-            }
+            
             
             return View("Create", customer);
         }

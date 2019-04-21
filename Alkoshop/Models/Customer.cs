@@ -8,6 +8,10 @@ namespace Alkoshop.Models
 {
     public class Customer
     {
+        public Customer()
+        {
+
+        }
         public Customer(string name, string surname, string email, string password, int phoneNumber, DateTime birthDate, Address address)
         {
             Name = name;
@@ -31,6 +35,7 @@ namespace Alkoshop.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password is required")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Phone number is required")]
@@ -38,6 +43,7 @@ namespace Alkoshop.Models
         public int PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Birth Date is required")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime BirthDate { get; set; }
         
         public Address Address { get; set; }

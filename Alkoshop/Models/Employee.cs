@@ -19,6 +19,7 @@ namespace Alkoshop.Models
         [EmailAddress(ErrorMessage = "Its not valid email address")]
         public string Email { get; set; }
 
+        [DataType(DataType.Password)]
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
@@ -28,11 +29,11 @@ namespace Alkoshop.Models
         [Required(ErrorMessage = "Phone number is required")]
         [Range(111111111, 999999999, ErrorMessage = "Neni regulerni telefonni cislo")]
         public int PhoneNumber { get; set; }
+        
 
-        [Required(ErrorMessage = "Salary is required")]
         public int Salary { get; set; }
         
-        public Address address { get; set; }
+        public Address Address { get; set; }
 
     }
 }

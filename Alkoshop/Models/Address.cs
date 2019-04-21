@@ -8,6 +8,11 @@ namespace Alkoshop.Models
 {
     public class Address
     {
+
+        public Address()
+        {
+
+        }
         public Address(string city, string street, string streetNumber, string zipCode)
         {
             City = city;
@@ -17,12 +22,15 @@ namespace Alkoshop.Models
         }
 
         public string id { get; set; }
+
         [Required(ErrorMessage = "Name is required")]
         public string City { get; set; }
 
         public string Street { get; set; }
+
         [Required(ErrorMessage = "Street number is required")]
         public string StreetNumber { get; set; }
+
         [Required(ErrorMessage = "Zip code is required")]
         public string ZipCode { get; set; }
     }
