@@ -15,19 +15,33 @@ namespace Alkoshop.Controllers
             return View();
         }
 
-        public ActionResult Create()
+        public ActionResult Create(string cusoremp)
+        {
+            TempData["cusoremp"] = cusoremp;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Add(Address address, string cusoremp)
+        {
+            if (ModelState.IsValid)
+            {
+                if((string)TempData["cusoremp"] == "cus") { 
+                    return RedirectToAction("Create", "Customer", address);
+                    
+                } else if ((string)TempData["cusoremp"] == "emp")
+                {
+                    return RedirectToAction("Create", "Employee", address);
+                }
+                
+            }
+            return View("Create");
+            
+        }
+        public ActionResult CreateEmployee()
         {
             return View();
         }
 
-        public ActionResult Add(Address address)
-        {
-            if (ModelState.IsValid)
-            {
-                return RedirectToAction("Create", "Customer", address);
-            }
-            return View("Create", address);
-            
-        }
+        
     }
 }

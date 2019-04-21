@@ -19,22 +19,29 @@ namespace Alkoshop.Controllers
         public ActionResult Create(Address address)
         {
             TempData["addresscontainer"] = address;
+            Customer customer = new Customer();
+            customer.Address = address;
             return View();
         }
 
         [HttpPost]
         public ActionResult Add(Customer customer)
         {
+
+            var addressContainer = TempData["addresscontainer"];
+
             if (ModelState.IsValid)
             {
-
-                var addressObject = TempData["addresscontainer"];
-
+                
                // DBGetData.createCustomerWithAddress(customer, addressObject);
 
                 return RedirectToAction("Index", "Home");
             }
-
+            if(customer.Address == null)
+            {
+                customer.Address = (Address)TempData["addresscontainer"];
+            }
+            
             return View("Create", customer);
         }
     }

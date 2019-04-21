@@ -65,8 +65,9 @@ namespace Alkoshop.Database
 
         // TODO - LOGIN -  getCustomer(string email, string password) , getEmployee(string email, string password)
 
-        // TODO - FINAL - CRD - ProductOrder - Order
+        // TODO - FINAL - CRUD - ProductOrder - Order
 
+        // TODO - Update Employee + update Customer
 
 
         //internal static createCustomerWithAddress(Customer customer, Address address)

@@ -39,7 +39,7 @@
             <a class="p-2 text-dark" href="#">Support</a>
             <a class="p-2 text-dark" href="#">Pricing</a>
         </nav>
-        <a class="btn btn-outline-primary float-lg-right" href="@Url.Action("Create","Address")"> Sign up </a>
+        <a class="btn btn-outline-primary float-lg-right" href="@Url.Action("Create","Address", new { cusoremp = "cus"})"> Sign up </a>
     </div>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -60,7 +60,7 @@
             </div>
         </footer>
     </div>
-    <script src="~/Scripts/bootstrap.min.js" />
+    <script src="~/Scripts/bootstrap.min.js" ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>

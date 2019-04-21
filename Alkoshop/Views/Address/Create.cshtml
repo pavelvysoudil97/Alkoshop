@@ -7,9 +7,8 @@
 
 <h2>Step 1. - Register address</h2>
 
-@Html.ValidationSummary()
 
-@using (Html.BeginForm("Add", "Address", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Add" , "Address", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data", cusoremp = "cus" }))
 {
     <div class="form-group">
         <label>City</label>
