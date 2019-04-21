@@ -17,8 +17,8 @@
                 <div class="col-10">
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>Producer: @p.Producer</li>
-                        <!-- <li>Price: @p.PricePU</li>   -->
-                        @if (p.availability == "no")
+                        <li>Price: @p.PricePU</li>  
+                        @if (p.Availability == "yes")
                             {
                                  <li>Na skladě</li>
                             }
@@ -28,7 +28,7 @@
                             }
                     </ul>
                 </div>
-                @if (p.availability == "yes")
+                @if (p.Availability == "yes")
                     {
                           <button type="button" class="btn btn-lg btn-block btn-outline-primary">Koupit teď</button>
                     }
