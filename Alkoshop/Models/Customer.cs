@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 
 namespace Alkoshop.Models
 {
-    public class Customer
+    public class Customer : MembershipUser
     {
         public Customer()
         {

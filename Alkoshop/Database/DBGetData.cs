@@ -49,7 +49,7 @@ namespace Alkoshop.Database
             }
             return null;
         }
-
+        
         internal static IList<int> getFavForCustomer(OracleConnection conn, int customerID)
         {
             IList<int> favProductIDs = new List<int>();
@@ -67,17 +67,23 @@ namespace Alkoshop.Database
 
         internal static Customer getCustomer(OracleConnection conn, string email, string password)
         {
-            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Customer\" WHERE \"Email\"='"+email+"' AND \"Password\"='"+password+"'", conn);
-            reader.Read();
-            string name = (string)reader["Name"];
-            string surname = (string)reader["Surname"];
-            int phoneNumber = Int32.Parse((string)reader["Phone_number"]);
-            DateTime birthDate = (DateTime)reader["Birth_date"];
-            string addressID = ((int)reader["AddressID"]).ToString();
-            OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
-            reader2.Read();
-            Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
-            return new Customer(name,surname,email,password,phoneNumber,birthDate,address);
+            if(email != null && password != null)
+            {
+                OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Customer\" WHERE \"Email\"='" + email + "' AND \"Password\"='" + password + "'", conn);
+                reader.Read();
+                string name = (string)reader["Name"];
+                string surname = (string)reader["Surname"];
+                int phoneNumber = Int32.Parse((string)reader["Phone_number"]);
+                DateTime birthDate = (DateTime)reader["Birth_date"];
+                string addressID = ((int)reader["AddressID"]).ToString();
+                OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
+                reader2.Read();
+                Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
+                return new Customer(name, surname, email, password, phoneNumber, birthDate, address);
+            }
+
+            return null;
+           
         }
 
         private static OracleDataReader getReader(string comm, OracleConnection conn)

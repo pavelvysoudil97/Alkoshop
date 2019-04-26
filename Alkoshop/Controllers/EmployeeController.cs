@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace Alkoshop.Controllers
 {
+    [Authorize(Users = "pecha@gmail.com")]
     public class EmployeeController : Controller
     {
         // GET: Employee
