@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -7,7 +8,7 @@ namespace Alkoshop.Models
 {
     public class Product
     {
-        public Product(int id, string name, string producer, double pricePU, int amount, string availability, int alcotabac)
+        public Product(int id, string name, string producer, double pricePU, int amount, string availability, int alcotabac, string picture = "/Design/no_image.png")
         {
             Id = id;
             Name = name;
@@ -16,6 +17,7 @@ namespace Alkoshop.Models
             Amount = amount;
             Availability = availability;
             Alcotabac = alcotabac;
+            Picture = picture;
         }
 
         public int Id { get; set; }

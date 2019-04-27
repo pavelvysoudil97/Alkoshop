@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Web;
+using System.IO;
 using Alkoshop.Models;
 using Oracle.DataAccess.Client;
 
@@ -28,6 +28,14 @@ namespace Alkoshop.Database
                     double pricePU = (double)reader["Price"];
                     decimal amount = (decimal)reader["Amount"];
                     decimal alcotabac = (decimal)reader["Alcotabac"];
+                    int pictureID = (int)reader["PictureID"];
+                    if(pictureID!=0)
+                    {
+                        string path = System.Web.HttpContext.Current.Server.MapPath("~/Design/") + pictureID + ".jpg";       
+                        getPhotoAndSave(conn, path, pictureID);
+                        products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, "/Design/" + pictureID + ".jpg"));
+                        continue;
+                    }
                     products.Add(new Product(id,name,producer,pricePU,(int)amount,availability,(int)alcotabac));
                 }                
                 return products;
@@ -50,7 +58,7 @@ namespace Alkoshop.Database
             return null;
         }
         
-        internal static IList<int> getFavForCustomer(OracleConnection conn, int customerID)
+        private static IList<int> getFavForCustomer(OracleConnection conn, int customerID)
         {
             IList<int> favProductIDs = new List<int>();
             OracleDataReader reader = getReader("SELECT f.\"ProuctID\" FROM ALKOHOLICI.\"Favourite\" f WHERE f.\"CustomerID\" = "+customerID+";", conn);
@@ -63,6 +71,24 @@ namespace Alkoshop.Database
                 return favProductIDs;
             }
             return null;
+        }
+
+        internal static IList<Product> getFavProductsForCustomer(OracleConnection conn, int customerID, IList<Product> products)
+        {
+            // EZ!! :D
+            IList<Product> favProducts = new List<Product>();
+            IList<int> favProductIDs = getFavForCustomer(conn, customerID);
+            foreach (Product product in products) {
+                foreach(int id in favProductIDs)
+                {
+                    if (product.Id==id)
+                    {
+                        favProducts.Add(product);
+                        break;
+                    }
+                }
+            }
+            return favProducts;
         }
 
         internal static Customer getCustomer(OracleConnection conn, string email, string password)
@@ -81,9 +107,27 @@ namespace Alkoshop.Database
                 Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
                 return new Customer(name, surname, email, password, phoneNumber, birthDate, address);
             }
+            return null;        
+        }
 
+        internal static Employee getEmployee(OracleConnection conn, string email, string password)
+        {
+            if (email != null && password != null)
+            {
+                OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Employee\" WHERE \"Email\"='" + email + "' AND \"Password\"='" + password + "'", conn);
+                reader.Read();
+                string name = (string)reader["Name"];
+                string surname = (string)reader["Surname"];
+                string nickname = (string)reader["Nickname"];
+                int salary = (int)reader["Salary"];
+                int phoneNumber = Int32.Parse((string)reader["Phone_number"]);
+                string addressID = ((int)reader["AddressID"]).ToString();
+                OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
+                reader2.Read();
+                Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
+                return new Employee(name, surname, nickname, email, password, phoneNumber, salary, address);
+            }
             return null;
-           
         }
 
         private static OracleDataReader getReader(string comm, OracleConnection conn)
@@ -125,7 +169,7 @@ namespace Alkoshop.Database
             string comm = "INSERT INTO ALKOHOLICI.\"Customer\" (\"Birth_date\",\"Name\",\"Surname\",\"Email\",\"Password\",\"Phone_number\",\"Gdpr\",\"AddressID\") VALUES(:birthDate,'" + customer.Name+"','"+customer.Surname+"','"+customer.Email+"','"+customer.Password+"','"+customer.PhoneNumber+"','yes',"+addressID+")";    
             OracleCommand command = new OracleCommand(comm, conn);
             command.Parameters.Add(new OracleParameter("birthDate", OracleDbType.Date)).Value = customer.BirthDate;
-          try
+            try
             {
                 command.ExecuteNonQuery();
             }
@@ -135,10 +179,55 @@ namespace Alkoshop.Database
             }
         }
 
-        // TODO:
-        // getEmployee(string email, string password)
-        // createEmployeeWithAddress(Employee employee, Address address)
-        // FINAL - CRD - ProductOrder - Order 
+        internal static void createEmployeeWithAddress(OracleConnection conn, Employee employee, Address address)
+        {
+            int addressID = createAddress(conn, address);
+            string comm = "INSERT INTO ALKOHOLICI.\"Employee\" (\"Name\",\"Surname\",\"Nickname\",\"Email\",\"Password\",\"Phone_number\",\"Salary\",\"Gdpr\",\"AddressID\") VALUES('" + employee.Name + "','" + employee.Surname + "','" + employee.Nickname + "','" + employee.Email + "','" + employee.Password + "','" + employee.PhoneNumber + "','" + employee.Salary + "','yes'," + addressID + ")";
+            OracleCommand command = new OracleCommand(comm, conn);
+            try
+            {
+                command.ExecuteNonQuery();
+            }
+            catch (Exception ex1)
+            {
+                System.Diagnostics.Debug.WriteLine("## ERROR: " + ex1.Message);
+            }
+        }
+
+        internal static void insertPhoto(OracleConnection conn, string sourceLoc)
+        {
+            FileStream fs = new FileStream(sourceLoc, FileMode.Open, FileAccess.Read);
+            byte[] ImageData = new byte[fs.Length];
+            fs.Read(ImageData, 0, System.Convert.ToInt32(fs.Length));
+            fs.Close();
+
+            OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"Picture\" (\"Data\") VALUES (:blobtodb)", conn);
+            cmd.Parameters.Add(new OracleParameter("blobtodb", OracleDbType.Blob)).Value = ImageData;
+            try
+            {
+                cmd.ExecuteNonQuery();
+                System.Diagnostics.Debug.WriteLine("Image inserted");
+            }
+            catch (Exception ex1)
+            {
+                System.Diagnostics.Debug.WriteLine("## ERROR: " + ex1.Message);
+            }
+        }
+        
+        internal static void getPhotoAndSave(OracleConnection conn, string destinationLoc, int pictureID)
+        {
+            OracleDataReader reader = getReader("SELECT p.\"Data\" FROM ALKOHOLICI.\"Picture\" p WHERE p.\"PictureID\" = '"+pictureID+"'", conn);
+            reader.Read();
+            byte[] byteData = new byte[0];
+            byteData = (byte[])reader["Data"];
+
+            FileStream fs = new FileStream(@destinationLoc, FileMode.OpenOrCreate, FileAccess.Write);
+            fs.Write(byteData, 0, byteData.GetUpperBound(0));
+            fs.Close();
+            System.Diagnostics.Debug.WriteLine("Image saved");
+        }
+        
+        // TODO: FINAL - CRD - ProductOrder - Order 
 
     }
 }
