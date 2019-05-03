@@ -22,3 +22,6 @@ input .input-validation-error{
     background-color:red;
 }
 
+.pull-right{
+    float: right !important
+}
