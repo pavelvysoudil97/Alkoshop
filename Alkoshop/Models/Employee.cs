@@ -10,8 +10,25 @@ namespace Alkoshop.Models
     
     public class Employee
     {
+        public Employee() { }
+
+        public Employee(string name, string surname, string nickname, string email, string password, int phoneNumber, int salary, Address address)
+        {
+            Name = name;
+            Surname = surname;
+            Nickname = nickname;
+            Email = email;
+            Password = password;
+            PhoneNumber = phoneNumber;
+            Salary = salary;
+            Address = address;
+        }
+
         [Required(ErrorMessage ="Name is required")]
         public string Name { get; set; }
+
+        [Required(ErrorMessage = "Surname is required")]
+        public string Surname { get; set; }
 
         [Required(ErrorMessage = "Nickname is required")]
         public string Nickname { get; set; }

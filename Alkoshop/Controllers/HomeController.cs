@@ -9,6 +9,7 @@ using Alkoshop.Models;
 using System.Drawing;
 using Alkoshop.Class;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace Alkoshop.Controllers
 {
@@ -18,10 +19,11 @@ namespace Alkoshop.Controllers
         public ActionResult Index()
         {
             OracleConnection conn = DBMain.GetConnection();
- 
+
+            //    DBGetData.insertPhoto(conn, "C:/amundsen.jpg"); //pro vlozeni obrazku do DB
 
             IList<Product> products = DBGetData.getAllProducts(conn);
-
+            
             return View(products);
         }
     }
