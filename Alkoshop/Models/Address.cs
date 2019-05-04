@@ -21,7 +21,7 @@ namespace Alkoshop.Models
             ZipCode = zipCode;
         }
 
-        public string id { get; set; }
+        public int ID { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string City { get; set; }

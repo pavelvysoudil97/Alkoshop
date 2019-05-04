@@ -8,7 +8,7 @@ namespace Alkoshop.Models
 {
     public class Product
     {
-        public Product(int id, string name, string producer, double pricePU, int amount, string availability, int alcotabac, string picture = "/Design/no_image.png")
+        public Product(int id, string name, string producer, double pricePU, int amount, string availability, int alcotabac, string description, string picture = "/Design/no_image.png")
         {
             Id = id;
             Name = name;
@@ -17,6 +17,7 @@ namespace Alkoshop.Models
             Amount = amount;
             Availability = availability;
             Alcotabac = alcotabac;
+            Description = description;
             Picture = picture;
         }
 
@@ -27,6 +28,7 @@ namespace Alkoshop.Models
         public int Amount { get; set; }
         public string Availability { get; set; }
         public string Country { get; set; }
+        public string Description { get; set; }
         public string Picture { get; set; }
         public int Alcotabac { get; set; } //1 - alkohol; 2 - tabak
     }

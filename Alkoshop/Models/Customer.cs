@@ -13,8 +13,9 @@ namespace Alkoshop.Models
         {
 
         }
-        public Customer(string name, string surname, string email, string password, int phoneNumber, DateTime birthDate, Address address)
+        public Customer(int id, string name, string surname, string email, string password, int phoneNumber, DateTime birthDate, Address address)
         {
+            ID = id;
             Name = name;
             Surname = surname;
             Email = email;
@@ -23,6 +24,7 @@ namespace Alkoshop.Models
             BirthDate = birthDate;
             Address = address;
         }
+        public int ID { get; set; }
 
         [Required(ErrorMessage ="Name is required")]
         public string Name { get; set; }

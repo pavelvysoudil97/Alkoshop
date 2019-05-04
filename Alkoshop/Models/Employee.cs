@@ -12,8 +12,9 @@ namespace Alkoshop.Models
     {
         public Employee() { }
 
-        public Employee(string name, string surname, string nickname, string email, string password, int phoneNumber, int salary, Address address)
+        public Employee(int id, string name, string surname, string nickname, string email, string password, int phoneNumber, int salary, Address address)
         {
+            ID = id;
             Name = name;
             Surname = surname;
             Nickname = nickname;
@@ -23,6 +24,7 @@ namespace Alkoshop.Models
             Salary = salary;
             Address = address;
         }
+        public int ID { get; set; }
 
         [Required(ErrorMessage ="Name is required")]
         public string Name { get; set; }

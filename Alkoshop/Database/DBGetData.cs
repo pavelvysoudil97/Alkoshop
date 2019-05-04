@@ -28,15 +28,16 @@ namespace Alkoshop.Database
                     double pricePU = (double)reader["Price"];
                     decimal amount = (decimal)reader["Amount"];
                     decimal alcotabac = (decimal)reader["Alcotabac"];
+                    string description = (string)reader["Description"];
                     int pictureID = (int)reader["PictureID"];
                     if(pictureID!=0)
                     {
                         string path = System.Web.HttpContext.Current.Server.MapPath("~/Design/") + pictureID + ".jpg";       
                         getPhotoAndSave(conn, path, pictureID);
-                        products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, "/Design/" + pictureID + ".jpg"));
+                        products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, "/Design/" + pictureID + ".jpg"));
                         continue;
                     }
-                    products.Add(new Product(id,name,producer,pricePU,(int)amount,availability,(int)alcotabac));
+                    products.Add(new Product(id,name,producer,pricePU,(int)amount,availability,(int)alcotabac,description));
                 }                
                 return products;
             }
@@ -75,7 +76,6 @@ namespace Alkoshop.Database
 
         internal static IList<Product> getFavProductsForCustomer(OracleConnection conn, int customerID, IList<Product> products)
         {
-            // EZ!! :D
             IList<Product> favProducts = new List<Product>();
             IList<int> favProductIDs = getFavForCustomer(conn, customerID);
             foreach (Product product in products) {
@@ -97,15 +97,16 @@ namespace Alkoshop.Database
             {
                 OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Customer\" WHERE \"Email\"='" + email + "' AND \"Password\"='" + password + "'", conn);
                 reader.Read();
+                int customerID = (int)reader["CustomerID"];
                 string name = (string)reader["Name"];
                 string surname = (string)reader["Surname"];
                 int phoneNumber = Int32.Parse((string)reader["Phone_number"]);
                 DateTime birthDate = (DateTime)reader["Birth_date"];
-                string addressID = ((int)reader["AddressID"]).ToString();
+                int addressID = (int)reader["AddressID"];
                 OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
                 reader2.Read();
                 Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
-                return new Customer(name, surname, email, password, phoneNumber, birthDate, address);
+                return new Customer(customerID, name, surname, email, password, phoneNumber, birthDate, address);
             }
             return null;        
         }
@@ -116,16 +117,17 @@ namespace Alkoshop.Database
             {
                 OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Employee\" WHERE \"Email\"='" + email + "' AND \"Password\"='" + password + "'", conn);
                 reader.Read();
+                int employeeID = (int)reader["EmployeeID"];
                 string name = (string)reader["Name"];
                 string surname = (string)reader["Surname"];
                 string nickname = (string)reader["Nickname"];
                 int salary = (int)reader["Salary"];
                 int phoneNumber = Int32.Parse((string)reader["Phone_number"]);
-                string addressID = ((int)reader["AddressID"]).ToString();
+                int addressID = (int)reader["AddressID"];
                 OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
                 reader2.Read();
                 Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
-                return new Employee(name, surname, nickname, email, password, phoneNumber, salary, address);
+                return new Employee(employeeID, name, surname, nickname, email, password, phoneNumber, salary, address);
             }
             return null;
         }
@@ -142,6 +144,19 @@ namespace Alkoshop.Database
                 System.Diagnostics.Debug.WriteLine("## ERROR: " + ex1.Message);
             }
             return null;
+        }
+
+        internal static void createOrder(OracleConnection conn, Order order, ProductOrder[] productOrders)
+        {
+            OracleCommand command = new OracleCommand("INSERT INTO ALKOHOLICI.\"Order\" (\"Date\",\"Status\",\"AddressID\",\"CustomerID\",\"EmployeeID\") VALUES(:date,'" + order.Status + "','" + order.AddressID + "','" + order.CustomerID + "','" + order.EmployeeID + ")", conn);
+            command.Parameters.Add(new OracleParameter("date", OracleDbType.Date)).Value = order.Date;
+            command.ExecuteNonQuery();
+
+            foreach (ProductOrder productOrder in productOrders)
+            {
+                OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"ProductOrder\" (\"ProductID\",\"OrderID\",\"Price_per_unit\",\"Number_of_unit\") VALUES('" + productOrder.ProductID + "','" + order.ID + "','" + productOrder.Price_per_unit + "','" + productOrder.Number_of_unit + ")", conn);
+                cmd.ExecuteNonQuery();
+            }
         }
 
         internal static int createAddress(OracleConnection conn, Address address)
@@ -201,8 +216,9 @@ namespace Alkoshop.Database
             fs.Read(ImageData, 0, System.Convert.ToInt32(fs.Length));
             fs.Close();
 
-            OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"Picture\" (\"Data\") VALUES (:blobtodb)", conn);
+            OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"Picture\" (\"Data\",\"Date_of_upload\",\"Suffix\") VALUES (:blobtodb,:date,'jpg')", conn);
             cmd.Parameters.Add(new OracleParameter("blobtodb", OracleDbType.Blob)).Value = ImageData;
+            cmd.Parameters.Add(new OracleParameter("date", OracleDbType.Date)).Value = DateTime.Now;
             try
             {
                 cmd.ExecuteNonQuery();
