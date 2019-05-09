@@ -44,6 +44,27 @@ namespace Alkoshop.Database
             return null;
         }
 
+        internal static Product getProductByID(OracleConnection conn, int productID)
+        {
+            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\" p JOIN \"ALKOHOLICI\".\"PRODUKTY_CENY_MNOZSTVI\" m ON p.NAME=m.NAME WHERE p.\"ProductID\"="+productID, conn);
+            reader.Read();
+            int id = (int)reader["ProductID"];
+            string name = (string)reader["Name"];
+            string producer = (string)reader["Producer"];
+            string availability = (string)reader["Availability"];
+            double pricePU = (double)reader["Price"];
+            decimal amount = (decimal)reader["Amount"];
+            decimal alcotabac = (decimal)reader["Alcotabac"];
+            string description = (string)reader["Description"];
+            int pictureID = (int)reader["PictureID"];
+            if (pictureID != 0)
+            {
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Design/") + pictureID + ".jpg";
+                return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, "/Design/" + pictureID + ".jpg");
+            }
+            return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description);
+        }
+
         internal static IList<Category> getCategories(OracleConnection conn)
         {
             IList<Category> categories = new List<Category>();
