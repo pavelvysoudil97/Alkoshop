@@ -59,36 +59,35 @@ namespace Alkoshop.Database
             return null;
         }
         
-        private static IList<int> getFavForCustomer(OracleConnection conn, int customerID)
+        internal static IList<Product> getFavForCustomer(OracleConnection conn, int customerID)
         {
-            IList<int> favProductIDs = new List<int>();
-            OracleDataReader reader = getReader("SELECT f.\"ProuctID\" FROM ALKOHOLICI.\"Favourite\" f WHERE f.\"CustomerID\" = "+customerID+";", conn);
+            IList<Product> products = new List<Product>();
+            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\" p JOIN \"ALKOHOLICI\".\"PRODUKTY_CENY_MNOZSTVI\" m ON p.NAME=m.NAME JOIN ALKOHOLICI.\"Favourite\" f ON p.\"ProductID\"=f.PRODUCTID WHERE f.\"CustomerID\" = " + customerID + "", conn);
             if (reader != null)
             {
                 while (reader.Read())
                 {
-                    favProductIDs.Add((int)reader["ProductID"]);
+                    int id = (int)reader["ProductID"];
+                    string name = (string)reader["Name"];
+                    string producer = (string)reader["Producer"];
+                    string availability = (string)reader["Availability"];
+                    double pricePU = (double)reader["Price"];
+                    decimal amount = (decimal)reader["Amount"];
+                    decimal alcotabac = (decimal)reader["Alcotabac"];
+                    string description = (string)reader["Description"];
+                    int pictureID = (int)reader["PictureID"];
+                    if (pictureID != 0)
+                    {
+                        string path = System.Web.HttpContext.Current.Server.MapPath("~/Design/") + pictureID + ".jpg";
+                        getPhotoAndSave(conn, path, pictureID);
+                        products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, "/Design/" + pictureID + ".jpg"));
+                        continue;
+                    }
+                    products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description));
                 }
-                return favProductIDs;
+                return products;
             }
             return null;
-        }
-
-        internal static IList<Product> getFavProductsForCustomer(OracleConnection conn, int customerID, IList<Product> products)
-        {
-            IList<Product> favProducts = new List<Product>();
-            IList<int> favProductIDs = getFavForCustomer(conn, customerID);
-            foreach (Product product in products) {
-                foreach(int id in favProductIDs)
-                {
-                    if (product.Id==id)
-                    {
-                        favProducts.Add(product);
-                        break;
-                    }
-                }
-            }
-            return favProducts;
         }
 
         internal static Customer getCustomer(OracleConnection conn, string email, string password)
