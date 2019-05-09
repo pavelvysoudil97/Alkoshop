@@ -13,6 +13,7 @@ namespace Alkoshop.Controllers
         public ActionResult Index()
         {
             return View();
+            
         }
 
         [HttpPost]
@@ -22,6 +23,7 @@ namespace Alkoshop.Controllers
             {
                 FormsAuthentication.SetAuthCookie(email, false);
                 return RedirectToAction("Index", "Home");
+                
             }
             TempData["login-error"] = "Login nebo heslo není správné";
             return RedirectToAction("Index", "Login");

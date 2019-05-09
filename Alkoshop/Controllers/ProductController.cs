@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Alkoshop.Database;
+using Alkoshop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +14,12 @@ namespace Alkoshop.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult Detail(Product product)
+        {
+            // Product product = DBGetData.getProductById(productId);
+            return View(product); //product
         }
         
 

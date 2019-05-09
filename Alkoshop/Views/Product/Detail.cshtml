@@ -1,0 +1,31 @@
+﻿@using Alkoshop.Models
+@model Product
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>Detail</h2>
+
+<div class="col-md-12">
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static">
+
+            <h3 class="mb-0">@Model.Name</h3>
+            <div class="mb-1 text-muted">@Model.Producer</div>
+            <p class="mb-auto">Pochazi z :@Model.Country</p>
+            <p class="mb-auto">@Model.Description</p>
+            <div>@Model.PricePU</div>
+        </div>
+        <div class="col-auto d-none d-lg-block">
+            <img src="@Model.Picture" alt="jagger" width="200px" height="200px" />
+        </div>
+    </div>
+    <div class="qty mt-5">
+        <button class="minus">-</button>
+        <input type="number" class="count" name="qty" value="1">
+        <button class="plus">+</button>
+    </div>
+</div>
+
+<script src="~/Scripts/counter.js"></script>
+
