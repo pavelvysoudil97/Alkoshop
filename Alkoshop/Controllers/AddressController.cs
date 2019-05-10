@@ -20,6 +20,10 @@ namespace Alkoshop.Controllers
         {
             
             TempData["cusoremp"] = cusoremp;
+            if(cusoremp == "emp" && !User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index","Login");
+            }
             return View();
         }
         [HttpPost]
@@ -30,7 +34,7 @@ namespace Alkoshop.Controllers
                 if((string)TempData["cusoremp"] == "cus") { 
                     return RedirectToAction("Create", "Customer", address);
                     
-                } else if ((string)TempData["cusoremp"] == "emp")
+                } else if ((string)TempData["cusoremp"] == "emp" && User.Identity.IsAuthenticated)
                 {
                     return RedirectToAction("Create", "Employee", address);
                 }

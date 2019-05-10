@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Alkoshop.Database;
+using Alkoshop.Models;
+using Oracle.DataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +15,14 @@ namespace Alkoshop.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult Detail(int productId)
+        {
+            OracleConnection connection = DBMain.GetConnection();
+             Product product = DBGetData.getProductByID(connection, productId);
+
+            return View(product); //product
         }
         
 

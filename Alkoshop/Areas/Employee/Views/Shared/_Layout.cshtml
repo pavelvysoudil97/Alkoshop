@@ -38,8 +38,9 @@
             <a class="p-2 text-dark" href="#">Features</a>
             <a class="p-2 text-dark" href="#">Enterprise</a>
             <a class="p-2 text-dark" href="#">Support</a>
+            <a class="p-2 text-dark" href="@Url.Action("Create","Address", new { cusoremp = "emp"})">Employee</a>
         </nav>
-
+        <a class="btn btn-outline-primary float-lg-right" href="@Url.Action("Logout","Login")"> Log out </a>
         <a class="btn btn-outline-primary float-lg-right" href="@Url.Action("Index","Login")"> Sign in </a>
         <a class="btn btn-outline-primary float-lg-right" href="@Url.Action("Create","Address", new { cusoremp = "cus"})"> Sign up </a>
     </div>
@@ -48,20 +49,67 @@
         <h1 class="display-4">ALKOSHOP - HELL YEA</h1>
     </div>
 
-    
+
 
 
     <div class="container">
         @if (TempData["message-success"] != null)
         {
-                <div class="alert alert-success" role="alert">
-                    @TempData["message-success"];
-                </div>
+            <div class="alert alert-success" role="alert">
+                @TempData["message-success"];
+            </div>
         }
         @RenderBody()
 
-       
+        <div class="col-6 col-md-9 col-xl-2 bd-sidebar">
 
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Your cart</span>
+                <span class="badge badge-secondary badge-pill">3</span>
+            </h4>
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Product name</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$12</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Second product</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$8</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Third item</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <div class="text-success">
+                        <h6 class="my-0">Promo code</h6>
+                        <small>EXAMPLECODE</small>
+                    </div>
+                    <span class="text-success">-$5</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (USD)</span>
+                    <strong>$20</strong>
+                </li>
+            </ul>
+
+            <form class="card p-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Promo code">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary">Redeem</button>
+                    </div>
+                </div>
+            </form>
         </div>
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">

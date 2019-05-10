@@ -128,6 +128,7 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\counter.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -151,6 +152,8 @@
     <Content Include="Areas\Customer\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Customer\Views\Home\Index.cshtml" />
     <Content Include="Areas\Employee\Views\web.config" />
+    <Content Include="Areas\Employee\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Customer\Views\Cart\Index.cshtml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -174,14 +177,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\Customer\Controllers\CartController.cs" />
+    <Compile Include="Areas\Customer\Controllers\FavouriteController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
+    <Compile Include="Areas\Employee\Controllers\HomeController.cs" />
     <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
     <Compile Include="Class\AlkoshopMembershipProvider.cs" />
     <Compile Include="Class\ImageHelper.cs" />
     <Compile Include="Controllers\AddressController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
-    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Areas\Employee\Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -223,6 +229,7 @@
     <Content Include="Views\Address\Create.cshtml" />
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Product\Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -233,11 +240,10 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Models\" />
-    <Folder Include="Areas\Employee\Controllers\" />
+    <Folder Include="Areas\Customer\Views\Favourite\" />
     <Folder Include="Areas\Employee\Models\" />
-    <Folder Include="Areas\Employee\Views\Shared\" />
+    <Folder Include="Areas\Employee\Views\Home\" />
     <Folder Include="Design\" />
-    <Folder Include="Views\Product\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

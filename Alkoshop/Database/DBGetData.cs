@@ -117,16 +117,24 @@ namespace Alkoshop.Database
             {
                 OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Customer\" WHERE \"Email\"='" + email + "' AND \"Password\"='" + password + "'", conn);
                 reader.Read();
-                int customerID = (int)reader["CustomerID"];
-                string name = (string)reader["Name"];
-                string surname = (string)reader["Surname"];
-                int phoneNumber = Int32.Parse((string)reader["Phone_number"]);
-                DateTime birthDate = (DateTime)reader["Birth_date"];
-                int addressID = (int)reader["AddressID"];
-                OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
-                reader2.Read();
-                Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
-                return new Customer(customerID, name, surname, email, password, phoneNumber, birthDate, address);
+                try
+                {
+                    int customerID = (int)reader["CustomerID"];
+                    string name = (string)reader["Name"];
+                    string surname = (string)reader["Surname"];
+                    int phoneNumber = Int32.Parse((string)reader["Phone_number"]);
+                    DateTime birthDate = (DateTime)reader["Birth_date"];
+                    int addressID = (int)reader["AddressID"];
+                    OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
+                    reader2.Read();
+                    Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
+                    return new Customer(customerID, name, surname, email, password, phoneNumber, birthDate, address);
+                }
+                catch
+                {
+                    return null;
+                }
+                
             }
             return null;        
         }

@@ -15,29 +15,29 @@
             </div>
             <div class="card-body">
                 <div class="col-2">
-                    <img src="@p.Picture" alt="jagger"  width="200px" height="200px"/>
+                    <img src="@p.Picture" alt="jagger" width="200px" height="200px" />
                 </div>
                 <div class="col-10">
                     <ul class="list-unstyled mt-3 mb-4">
                         <li>Producer: @p.Producer</li>
                         <li>Price: @p.PricePU</li>
                         @if (p.Availability == "yes")
-                        {
-                            <li>Na skladě</li>
-                        }
-                        else
-                        {
-                            <li>Vyprodano</li>
-                        }
+            {
+                <li>Na skladě</li>
+            }
+            else
+            {
+                <li>Vyprodano</li>
+            }
                     </ul>
                 </div>
                 @if (p.Availability == "yes")
-                {
-                    <button type="button" class="btn btn-lg btn-block btn-outline-primary">Koupit teď</button>
-                }
+                 {
+                    <a href="@Url.Action("Detail","Product", new {  productId = p.Id })" class="btn btn-lg btn-block btn-outline-primary btn-dark marged-bottom">Koupit ted</a>
+                 }
             </div>
         </div>
-    }
+        }
 </div>
 </div>
 
