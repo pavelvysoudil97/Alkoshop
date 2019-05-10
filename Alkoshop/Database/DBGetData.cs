@@ -172,9 +172,14 @@ namespace Alkoshop.Database
             command.Parameters.Add(new OracleParameter("date", OracleDbType.Date)).Value = order.Date;
             command.ExecuteNonQuery();
 
+            OracleCommand command2 = new OracleCommand("SELECT MAX(\"OrderID\") as id FROM ALKOHOLICI.\"Order\"", conn);
+            OracleDataReader reader = command2.ExecuteReader();
+            reader.Read();
+            decimal orderID = (decimal)reader["id"];
+
             foreach (ProductOrder productOrder in productOrders)
             {
-                OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"ProductOrder\" (\"ProductID\",\"OrderID\",\"Price_per_unit\",\"Number_of_unit\") VALUES('" + productOrder.ProductID + "','" + order.ID + "','" + productOrder.Price_per_unit + "','" + productOrder.Number_of_unit + ")", conn);
+                OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"ProductOrder\" (\"ProductID\",\"OrderID\",\"Price_per_unit\",\"Number_of_unit\") VALUES('" + productOrder.ProductID + "','" + (int)orderID + "','" + productOrder.Price_per_unit + "','" + productOrder.Number_of_unit + ")", conn);
                 cmd.ExecuteNonQuery();
             }
         }
