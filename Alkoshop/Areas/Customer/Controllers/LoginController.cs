@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace Alkoshop.Controllers
+namespace Alkoshop.Areas.Customer.Controllers
 {
     public class LoginController : Controller
     {

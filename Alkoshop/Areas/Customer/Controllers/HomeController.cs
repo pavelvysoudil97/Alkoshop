@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Alkoshop.Database;
+using Alkoshop.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +13,9 @@ namespace Alkoshop.Areas.Customer.Controllers
         // GET: Customer/Home
         public ActionResult Index()
         {
-            return View();
+            IList<Product> products = DBGetData.getAllProducts(DBMain.GetConnection());
+
+            return View(products);
         }
     }
 }

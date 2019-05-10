@@ -1,4 +1,6 @@
-﻿using Alkoshop.Models;
+﻿using Alkoshop.Database;
+using Alkoshop.Models;
+using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +14,27 @@ namespace Alkoshop.Areas.Customer.Controllers
         // GET: Customer/Cart
         public ActionResult Index()
         {
-            return View();
+            IList<CartItem> cartItems = (List<CartItem>)Session["cart"];
+
+            return View(cartItems);
+
         }
 
         [HttpPost]
-        public ActionResult Add(int productId, int pricePerUnit, int numberOfUnit)
+        public ActionResult Add(string name, string image, int productId, int pricePerUnit, int numberOfUnit)
         {
-            ProductOrder productOrder = new ProductOrder(productId, 0, pricePerUnit, numberOfUnit);
+
+            CartItem cartItem = new CartItem(name, image, productId, pricePerUnit, numberOfUnit);
             if(Session["cart"] == null)
             {
-                IList<ProductOrder> startingCartProducts = new List<ProductOrder>();
+                IList<CartItem> startingCartProducts = new List<CartItem>();
                 Session["cart"] = startingCartProducts;
             }
-            IList<ProductOrder> cartProducts = (List<ProductOrder>)Session["cart"];
-            cartProducts.Add(productOrder);
+            IList<CartItem> cartProducts = (List<CartItem>)Session["cart"];
+            cartProducts.Add(cartItem);
             Session["cart"] = cartProducts;
+
+            TempData["message-success"] = "Polozka byla uspesne pridana do Vaseho kosiku";
             return RedirectToAction("Index", "Home");
         }
     }

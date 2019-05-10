@@ -21,7 +21,7 @@ namespace Alkoshop.Controllers
             TempData["conn"] = DBMain.GetConnection();
 
             //    DBGetData.insertPhoto(conn, "C:/amundsen.jpg"); //pro vlozeni obrazku do DB
-            Product p = DBGetData.getProductByID((OracleConnection)TempData["conn"], 10);
+            
             IList<Product> products = DBGetData.getAllProducts((OracleConnection)TempData["conn"]);
             
             return View(products);
