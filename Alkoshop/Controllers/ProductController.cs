@@ -1,5 +1,6 @@
 ﻿using Alkoshop.Database;
 using Alkoshop.Models;
+using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,11 @@ namespace Alkoshop.Controllers
             return View();
         }
 
-        public ActionResult Detail(Product product)
+        public ActionResult Detail(int productId)
         {
-            // Product product = DBGetData.getProductById(productId);
+            OracleConnection connection = DBMain.GetConnection();
+             Product product = DBGetData.getProductByID(connection, productId);
+
             return View(product); //product
         }
         

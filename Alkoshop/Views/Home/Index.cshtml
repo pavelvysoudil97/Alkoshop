@@ -33,8 +33,7 @@
                 </div>
                 @if (p.Availability == "yes")
                  {
-           
-                    <a href="@Url.Action("Detail","Product", new { product = new Product(1685, "YoMama","Producer", 9999, 100, "true", 1, "Description of YoMama")})" class="btn btn-lg btn-block btn-outline-primary btn-dark marged-bottom">Koupit ted</a>
+                    <a href="@Url.Action("Detail","Product", new {  productId = p.Id })" class="btn btn-lg btn-block btn-outline-primary btn-dark marged-bottom">Koupit ted</a>
                  }
             </div>
         </div>
