@@ -10,11 +10,11 @@
     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static">
 
-            <h3 class="mb-0">@Model.Name</h3>
-            <div class="mb-1 text-muted">@Model.Producer</div>
-            <p class="mb-auto">Pochazi z :@Model.Country</p>
+            <h3 class="mb-0"> Název: @Model.Name</h3>
+            <div class="mb-1 text-muted">Výrobce: @Model.Producer</div>
+            <p class="mb-auto">@Model.</p>
             <p class="mb-auto">@Model.Description</p>
-            <div>@Model.PricePU</div>
+            <div><p>Cena: @Model.PricePU Kč</p></div>
         </div>
         <div class="col-auto d-none d-lg-block">
             <img src="@Model.Picture" alt="jagger" width="200px" height="200px" />

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Alkoshop.Database;
+using Alkoshop.Models;
+using Oracle.DataAccess.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,20 +22,45 @@ namespace Alkoshop.Areas.Customer.Controllers
         [HttpPost]
         public ActionResult Login(string email, string password)
         {
+            OracleConnection conn = DBMain.GetConnection();
+            if (email.Contains("@alkoshop.com"))
+            {
+                Alkoshop.Models.Employee employee = DBGetData.getEmployee(conn, email, password);
+                if (employee != null)
+                {
+                    Session["User"] = employee;
+                    Session["UserRole"] = "employee";
+                }
+            }
+            else
+            {
+                Alkoshop.Models.Customer customer = DBGetData.getCustomer(conn, email, password);
+                if(customer!= null)
+                {
+                    Session["User"] = customer;
+                    Session["UserRole"] = "customer";
+                }
+            }
+
             if(Membership.ValidateUser(email, password))
             {
                 FormsAuthentication.SetAuthCookie(email, false);
+                
                 return RedirectToAction("Index", "Home");
                 
             }
+
+
             TempData["login-error"] = "Login nebo heslo není správné";
             return RedirectToAction("Index", "Login");
         }
 
         public ActionResult Logout()
         {
+            
+            Session["cart"] = null; 
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = ""});
         }
     }
 }
