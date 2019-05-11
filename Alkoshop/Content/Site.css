@@ -25,3 +25,16 @@ input .input-validation-error{
 .pull-right{
     float: right !important
 }
+
+#nav {
+    background-color: darkgreen;
+    color: white;
+}
+
+#color-body {
+    background-color: lightcyan;
+}
+#sing {
+    float: right;
+    position: absolute;
+}

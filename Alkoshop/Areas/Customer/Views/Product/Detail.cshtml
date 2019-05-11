@@ -4,34 +4,34 @@
     ViewBag.Title = "Detail";
 }
 
-<h2>Detail</h2>
-
 <div class="col-md-12">
+
     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static">
-
-            <h3 class="mb-0">@Model.Name</h3>
-            <div class="mb-1 text-muted">@Model.Producer</div>
-            <p class="mb-auto">Pochazi z :@Model.Country</p>
-            <p class="mb-auto">@Model.Description</p>
-            <div>@Model.PricePU</div>
+        <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
+            <div class="col-auto d-none d-lg-block align-self-center">
+                <img src="@Model.Picture" alt="jagger" width="200px" height="200px" />
+            </div>
+            <b><h3 class="mb-0">@Model.Name</h3></b>
+            <div class="mb-1 text-muted"><b>Producent: </b>@Model.Producer</div>
+            <p class="mb-auto"><b>Pochází z: </b> @Model.Country</p>
+            <p class="mb-auto"><b>Popis produktu: </b>@Model.Description</p>
+            <div><b>Cena: </b> @Model.PricePU CZk</div>  
+            
+            @using (@Html.BeginForm("Add", "Cart", new { name = Model.Name, image = Model.Picture, productId = Model.Id, pricePerUnit = Model.PricePU }, FormMethod.Post))
+             {
+                 <br/><br />
+                 <div>
+                     <p class="mb-auto"><b>Zadejte počet kusů: </b></p>
+                     <label for="inputPassword2" class="sr-only">Počet kusů</label>
+                     <input type="number" class="form-control" id="inputCount" name="numberOfUnit" size="15">
+                 </div>
+                 <br/><br />
+               <button type="submit" class="btn btn-success mb-2">Přidat do košíku</button>
+             }
         </div>
-        <div class="col-auto d-none d-lg-block">
-            <img src="@Model.Picture" alt="jagger" width="200px" height="200px" />
-        </div>
+    
     </div>
-    @using (@Html.BeginForm("Add", "Cart", new { name = Model.Name, image = Model.Picture, productId = Model.Id, pricePerUnit = Model.PricePU }, FormMethod.Post))
-    {
-
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="inputPassword2" class="sr-only">Count</label>
-            <input type="number" class="form-control" id="inputCount" name="numberOfUnit">
-        </div>
-            <button type="submit" class="btn btn-primary mb-2">Add to Cart</button>
-        
-    }
 
 </div>
 
 <script src="~/Scripts/counter.js"></script>
-

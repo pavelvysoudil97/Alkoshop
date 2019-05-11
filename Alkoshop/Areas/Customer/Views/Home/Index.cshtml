@@ -1,43 +1,43 @@
 ﻿@using Alkoshop.Models
 @model IList<Product>
 
-
-
-
-<div class=" container-fluid ">
-
+<div class="card-group">
 
     @foreach (Product p in Model)
     {
-        <div class="card  col-sm-4">
-            <div class="card-header">
-                <h4 class="my-0 font-weight-normal">@p.Name</h4>
-            </div>
-            <div class="card-body">
-                <div class="col-2">
-                    <img src="@p.Picture" alt="jagger" width="200px" height="200px" />
+        <div class="col-lg-3" style="margin-bottom: 8px">
+            <div class="card">
+                <img class="card-img-top" src="@p.Picture" alt="Card image cap" width="200" height="200">
+                <div class="card-body">
+                    <h5 class="card-title">@p.Name</h5>
+                    <div class="card-text list-unstyled">
+                        <ul class="mt-3 mb-4">
+                            <li>Producer: @p.Producer</li>
+                            <li>Price: @p.PricePU</li>
+                            @if (p.Availability == "yes")
+                            {
+                                <li>Na skladě</li>
+                            }
+                            else
+                            {
+                                <li>Vyprodano</li>
+                            }
+                        </ul>
+                    </div>
                 </div>
-                <div class="col-10">
-                    <ul class="list-unstyled mt-3 mb-4">
-                        <li>Producer: @p.Producer</li>
-                        <li>Price: @p.PricePU</li>
+                <div class="card-footer">
+
+                    <small class="text-muted">
                         @if (p.Availability == "yes")
                         {
-                            <li>Na skladě</li>
+                            <a href="@Url.Action("Detail","Product", new {  productId = p.Id })" class="btn btn-lg btn-block text-white btn-outline-success btn-success marged-bottom">Koupit ted</a>
                         }
-                        else
-                        {
-                            <li>Vyprodano</li>
-                        }
-                    </ul>
+                    </small>
                 </div>
-                @if (p.Availability == "yes")
-                {
-                    <a href="@Url.Action("Detail","Product", new {  productId = p.Id })" class="btn btn-lg btn-block btn-outline-primary btn-dark marged-bottom">Koupit ted</a>
-                }
             </div>
         </div>
     }
+   
 </div>
 
 
