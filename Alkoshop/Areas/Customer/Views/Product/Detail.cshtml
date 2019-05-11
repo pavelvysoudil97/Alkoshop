@@ -15,7 +15,7 @@
             <div class="mb-1 text-muted"><b>Producent: </b>@Model.Producer</div>
             <p class="mb-auto"><b>Pochází z: </b> @Model.Country</p>
             <p class="mb-auto"><b>Popis produktu: </b>@Model.Description</p>
-            <div><b>Cena: </b> @Model.PricePU CZk</div>  
+            <div><b>Cena: </b> @Model.PricePU Kč</div>  
             
             @using (@Html.BeginForm("Add", "Cart", new { name = Model.Name, image = Model.Picture, productId = Model.Id, pricePerUnit = Model.PricePU }, FormMethod.Post))
              {
