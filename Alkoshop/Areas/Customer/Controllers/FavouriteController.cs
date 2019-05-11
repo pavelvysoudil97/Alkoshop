@@ -15,11 +15,20 @@ namespace Alkoshop.Areas.Customer.Controllers
         public ActionResult Index()
         {
 
-           // User user = DBGetData.getCustomer((OracleConnection)TempData["conn"], User.Identity.Name);
-           // IList<Product> products = DBGetData.getAllProducts((OracleConnection)TempData["conn"]);
-           // IList<Product> favProducts = DBGetData.getFavProductsForCustomer((OracleConnection)TempData["conn"], user, products);
+            Alkoshop.Models.Customer customer = Session["User"] as Alkoshop.Models.Customer;
+            OracleConnection connection = DBMain.GetConnection();
+            IList<Product> favProducts = DBGetData.getFavForCustomer(connection, customer.ID);
 
-            return View();
+            return View(favProducts);
+        }
+
+        public ActionResult Add(int productId)
+        {
+            OracleConnection connection = DBMain.GetConnection();
+            Alkoshop.Models.Customer customer = Session["User"] as Alkoshop.Models.Customer;
+            DBGetData.addProductToFav(connection, customer.ID, productId);
+            TempData["message-success"] = "Produkt byl pridan k vasim oblibenym";
+            return RedirectToAction("Index", "Home");
         }
     }
 }

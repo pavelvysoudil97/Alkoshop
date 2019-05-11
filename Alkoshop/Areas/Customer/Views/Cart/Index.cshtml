@@ -9,7 +9,8 @@
             <th>Id</th>
             <th>Cena za kus</th>
             <th>Pocet kusu</th>
-
+            <th>Upravit</th>
+            <th>Smazat</th>
         </tr>
     </thead>
     <tbody>
@@ -18,17 +19,34 @@
          {
             foreach (CartItem item in Model)
              {
-                    <tr>
-                        <td>@item.Name</td>
-                        <td>
-                            <img src="@item.Image" alt="jagger" width="200px" height="200px" />
-                        </td>
+        <tr>
+            <td>@item.Name</td>
+            <td>
+                <img src="@item.Image" alt="jagger" width="200px" height="200px" />
+            </td>
 
-                        <td>@item.ProductId</td>
-                        <td>@item.PricePerUnit</td>
-                        <td>@item.NumberOfUnits</td>
+            <td>@item.ProductId</td>
+            <td>@item.PricePerUnit</td>
+            
 
-                    </tr>
+            <td>
+                @Html.TextBox("count")
+                <!--<input type="number" class="form-control" id="count" name="count" placeholder="item.NumberOfUnits">-->
+            </td>
+                <td>
+                   <!-- <button type="submit" 
+                            class="btn btn-primary"
+                            onclick="location.href='Url.Action("Update", "Cart", new { cartItemProductId = item.ProductId, count =  })'">Upravit</button>
+                    !-->
+                <button type="button" ></button>
+
+                </td>
+            
+
+            <td>
+                <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Delete","Cart",new { cartItemId = item.ProductId})'">Smazat</button>
+            </td>
+        </tr>
             }
         }
         else
@@ -39,6 +57,7 @@
         }
 
     </tbody>
+    
 
 </table>
 

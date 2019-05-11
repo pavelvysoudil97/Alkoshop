@@ -67,10 +67,19 @@ namespace Alkoshop.Database
             return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description,country);
         }
 
-        internal static IList<Category> getCategories(OracleConnection conn)
+        internal static IList<Category> getCategories(OracleConnection conn, int alcotabac /*1 - alkohol; 2 - tabak*/)
         {
             IList<Category> categories = new List<Category>();
-            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Category\" ;", conn);
+            string comm = "SELECT \"CategoryID\", \"Name\" FROM ALKOHOLICI.\"Category\"";
+            if(alcotabac == 1)
+            {
+                comm = "SELECT DISTINCT c.\"CategoryID\", c.\"Name\" FROM ALKOHOLICI.\"Product\" p JOIN ALKOHOLICI.\"Category\" c ON p.\"CategoryID\" = c.\"CategoryID\" WHERE p.\"AlcoholID\" IS NOT NULL";
+            }
+            if (alcotabac == 2)
+            {
+                comm = "SELECT DISTINCT c.\"CategoryID\", c.\"Name\" FROM ALKOHOLICI.\"Product\" p JOIN ALKOHOLICI.\"Category\" c ON p.\"CategoryID\" = c.\"CategoryID\" WHERE p.\"TabaccoID\" IS NOT NULL";
+            }
+            OracleDataReader reader = getReader(comm, conn);
             if (reader != null)
             {
                 while (reader.Read())
@@ -87,7 +96,13 @@ namespace Alkoshop.Database
             OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"Favourite\" (\"CustomerID\",\"PRODUCTID\") VALUES('" + customerID + "','" + productID + "')", conn);
             cmd.ExecuteNonQuery();
         }
-        
+
+        internal static void removeProductFromFav(OracleConnection conn, int customerID, int productID)
+        {
+            OracleCommand cmd = new OracleCommand("DELETE FROM ALKOHOLICI.\"Favourite\" WHERE \"CustomerID\"='" + customerID + "' AND \"PRODUCTID\"='" + productID + "'", conn);
+            cmd.ExecuteNonQuery();
+        }
+
         internal static IList<Product> getFavForCustomer(OracleConnection conn, int customerID)
         {
             IList<Product> products = new List<Product>();
@@ -217,9 +232,40 @@ namespace Alkoshop.Database
             return orders;
         }
 
+        internal static IList<Order> getOrdersForCustomer(OracleConnection conn, int customerID)
+        {
+            IList<Order> orders = new List<Order>();
+            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Order\" WHERE \"CustomerID\"=" + customerID, conn);
+            while (reader.Read())
+            {
+                int id = (int)reader["OrderID"];
+                DateTime date = (DateTime)reader["Date"];
+                string status = (string)reader["Status"];
+                int employeeID = (int)reader["EmployeeID"];
+                int addressID = (int)reader["AddressID"];
+                orders.Add(new Order(id, date, status, addressID, customerID, employeeID));
+            }
+            return orders;
+        }
+
         internal static void changeOrderStatus(OracleConnection conn, int orderID, string status)
         {
             OracleCommand command = new OracleCommand("UPDATE ALKOHOLICI.\"Order\" SET \"Status\"='" +status+ "' WHERE \"OrderID\"="+orderID, conn);
+            command.ExecuteNonQuery();
+        }
+
+        // Kdyz chcces zmenit i adresu tak musi byt vyplneno oldAddressID a newAddress!
+        internal static void changeCustomerData(OracleConnection conn, int customerID, string name, string surname, string pass, string email, int phoneNumber, int oldAddressID = 0, Address newAddress = null)
+        {
+            string comm = "UPDATE ALKOHOLICI.\"Customer\" SET \"Name\"='" + name + "',\"Surname\"='" + surname + "',\"Password\"='" + pass + "',\"Email\"='" + email + "',\"Phone_number\"='" + phoneNumber + "' WHERE \"CustomerID\"=" + customerID;
+            if (oldAddressID!=0 && newAddress!=null)
+            {
+                OracleCommand cmnd = new OracleCommand("DELETE FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + oldAddressID, conn);
+                cmnd.ExecuteNonQuery();
+                int addressID = createAddress(conn, newAddress);
+                comm = "UPDATE ALKOHOLICI.\"Customer\" SET \"Name\"='" + name + "',\"Surname\"='" + surname + "',\"Password\"='" + pass + "',\"Email\"='" + email + "',\"Phone_number\"='" + phoneNumber + "',\"AddressID\"='" + addressID + "' WHERE \"CustomerID\"=" + customerID;
+            }
+            OracleCommand command = new OracleCommand(comm, conn);
             command.ExecuteNonQuery();
         }
 
@@ -306,8 +352,63 @@ namespace Alkoshop.Database
             fs.Close();
             System.Diagnostics.Debug.WriteLine("Image saved");
         }
-        
-        // TODO: FINAL - CRD - ProductOrder - Order 
+
+        internal static IDictionary<int,string> getCountries(OracleConnection conn)
+        {
+            IDictionary<int, string> countries = new Dictionary<int, string>();
+            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Country\"", conn);
+            if (reader != null)
+            {
+                while (reader.Read())
+                {
+                    countries.Add((int)reader["CountryID"], (string)reader["COUNTRY"]);
+                }
+                return countries;
+            }
+            return null;
+        }
+
+        //Product Constructor: Product(name, producer, pricePU, amount, availability, description, alcotabac)!!!!!!
+        internal static void addProduct(OracleConnection conn, Product product, int countryID, int categoryID, string pictureLocation)
+        {
+            if (product.Alcotabac == 1)
+            {
+                string comm1 = "INSERT INTO ALKOHOLICI.\"Alcohol\" (\"Bottle_amount\",\"Price_per_bottle\") VALUES('" + product.Amount + "','" + product.PricePU + "')";
+                new OracleCommand(comm1, conn).ExecuteNonQuery();
+                int alcoholID = maxID(conn, "Alcohol", "AlcoholID");
+                insertPhoto(conn, pictureLocation);
+                int pictureID = maxID(conn, "Picture", "PictureID");
+                string comm2 = "INSERT INTO ALKOHOLICI.\"Product\" (\"Availability\",\"AlcoholID\",\"CountryID\",\"PictureID\",\"NAME\",\"PRODUCER\",\"CategoryID\",\"DESCRIPTION\") VALUES('" + product.Availability + "','" + alcoholID + "','" + countryID + "','" + pictureID + "','" + product.Name + "','" + product.Producer + "','" + categoryID + "','" + product.Description + ")";
+                new OracleCommand(comm2, conn).ExecuteNonQuery();
+            }
+            if (product.Alcotabac == 2)
+            {
+                string comm1 = "INSERT INTO ALKOHOLICI.\"Tabacco\" (\"Gram_amount\",\"Price_per_gram\") VALUES('" + product.Amount + "','" + product.PricePU + "')";
+                new OracleCommand(comm1, conn).ExecuteNonQuery();
+                int tabaccoID = maxID(conn, "Tabacco", "TabaccoID");
+                insertPhoto(conn, pictureLocation);
+                int pictureID = maxID(conn, "Picture", "PictureID");
+                string comm2 = "INSERT INTO ALKOHOLICI.\"Product\" (\"Availability\",\"TabaccoID\",\"CountryID\",\"PictureID\",\"NAME\",\"PRODUCER\",\"CategoryID\",\"DESCRIPTION\") VALUES('" + product.Availability + "','" + tabaccoID + "','" + countryID + "','" + pictureID + "','" + product.Name + "','" + product.Producer + "','" + categoryID + "','" + product.Description + ")";
+                new OracleCommand(comm2, conn).ExecuteNonQuery();
+            }
+        }
+
+        private static int maxID(OracleConnection conn, string table, string id)
+        {
+            OracleCommand comm = new OracleCommand("SELECT MAX(\""+id+"\") as id FROM ALKOHOLICI.\""+table+"\"", conn);
+            OracleDataReader reader = comm.ExecuteReader();
+            decimal ID = 0;
+            reader.Read();
+            ID = (decimal)reader["id"];
+            return (int)ID;
+        }
+
+        internal static void removeProduct(OracleConnection conn, int productID)
+        {
+            string comm = "UPDATE ALKOHOLICI.\"Product\" SET \"Visible\"='" + 0 + "' WHERE \"ProductID\"=" + productID;
+            OracleCommand command = new OracleCommand(comm, conn);
+            command.ExecuteNonQuery();
+        }
 
     }
 }

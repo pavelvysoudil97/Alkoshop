@@ -8,6 +8,17 @@ namespace Alkoshop.Models
 {
     public class Product
     {
+        public Product(string name, string producer, double pricePU, int amount, string availability, string description, int alcotabac)
+        {
+            Name = name;
+            Producer = producer;
+            PricePU = pricePU;
+            Amount = amount;
+            Availability = availability;
+            Description = description;
+            Alcotabac = alcotabac;
+        }
+
         public Product(int id, string name, string producer, double pricePU, int amount, string availability, int alcotabac, string description, string country, string picture = "/Design/no_image.png")
         {
             Id = id;
