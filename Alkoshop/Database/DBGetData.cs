@@ -67,10 +67,15 @@ namespace Alkoshop.Database
             return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description,country);
         }
 
-        internal static IList<Category> getCategories(OracleConnection conn)
+        internal static IList<Category> getCategories(OracleConnection conn, int alcotabac /*1 - alkohol; 2 - tabak*/)
         {
             IList<Category> categories = new List<Category>();
-            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Category\" ;", conn);
+            string comm = "SELECT DISTINCT c.\"CategoryID\", c.\"Name\" FROM ALKOHOLICI.\"Product\" p JOIN ALKOHOLICI.\"Category\" c ON p.\"CategoryID\" = c.\"CategoryID\" WHERE p.\"AlcoholID\" IS NOT NULL";
+            if (alcotabac == 2)
+            {
+                comm = "SELECT DISTINCT c.\"CategoryID\", c.\"Name\" FROM ALKOHOLICI.\"Product\" p JOIN ALKOHOLICI.\"Category\" c ON p.\"CategoryID\" = c.\"CategoryID\" WHERE p.\"TabaccoID\" IS NOT NULL";
+            }
+            OracleDataReader reader = getReader(comm, conn);
             if (reader != null)
             {
                 while (reader.Read())
@@ -217,9 +222,40 @@ namespace Alkoshop.Database
             return orders;
         }
 
+        internal static IList<Order> getOrdersForCustomer(OracleConnection conn, int customerID)
+        {
+            IList<Order> orders = new List<Order>();
+            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Order\" WHERE \"CustomerID\"=" + customerID, conn);
+            while (reader.Read())
+            {
+                int id = (int)reader["OrderID"];
+                DateTime date = (DateTime)reader["Date"];
+                string status = (string)reader["Status"];
+                int employeeID = (int)reader["EmployeeID"];
+                int addressID = (int)reader["AddressID"];
+                orders.Add(new Order(id, date, status, addressID, customerID, employeeID));
+            }
+            return orders;
+        }
+
         internal static void changeOrderStatus(OracleConnection conn, int orderID, string status)
         {
             OracleCommand command = new OracleCommand("UPDATE ALKOHOLICI.\"Order\" SET \"Status\"='" +status+ "' WHERE \"OrderID\"="+orderID, conn);
+            command.ExecuteNonQuery();
+        }
+
+        // Kdyz chcces zmenit i adresu tak musi byt vyplneno oldAddressID a newAddress!
+        internal static void changeCustomerData(OracleConnection conn, int customerID, string name, string surname, string pass, string email, int phoneNumber, int oldAddressID = 0, Address newAddress = null)
+        {
+            string comm = "UPDATE ALKOHOLICI.\"Customer\" SET \"Name\"='" + name + "',\"Surname\"='" + surname + "',\"Password\"='" + pass + "',\"Email\"='" + email + "',\"Phone_number\"='" + phoneNumber + "' WHERE \"CustomerID\"=" + customerID;
+            if (oldAddressID!=0 && newAddress!=null)
+            {
+                OracleCommand cmnd = new OracleCommand("DELETE FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + oldAddressID, conn);
+                cmnd.ExecuteNonQuery();
+                int addressID = createAddress(conn, newAddress);
+                comm = "UPDATE ALKOHOLICI.\"Customer\" SET \"Name\"='" + name + "',\"Surname\"='" + surname + "',\"Password\"='" + pass + "',\"Email\"='" + email + "',\"Phone_number\"='" + phoneNumber + "',\"AddressID\"='" + addressID + "' WHERE \"CustomerID\"=" + customerID;
+            }
+            OracleCommand command = new OracleCommand(comm, conn);
             command.ExecuteNonQuery();
         }
 
