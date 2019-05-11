@@ -18,11 +18,11 @@ namespace Alkoshop.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            TempData["conn"] = DBMain.GetConnection();
+            Session["conn"] = DBMain.GetConnection();
 
             //    DBGetData.insertPhoto(conn, "C:/amundsen.jpg"); //pro vlozeni obrazku do DB
-            Product p = DBGetData.getProductByID((OracleConnection)TempData["conn"], 10);
-            IList<Product> products = DBGetData.getAllProducts((OracleConnection)TempData["conn"]);
+
+            IList<Product> products = DBGetData.getAllProducts((OracleConnection)Session["conn"]);
             
             return View(products);
         }

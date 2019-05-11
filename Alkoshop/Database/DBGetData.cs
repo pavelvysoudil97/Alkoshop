@@ -79,6 +79,12 @@ namespace Alkoshop.Database
             }
             return null;
         }
+
+        internal static void addProductToFav(OracleConnection conn, int customerID, int productID)
+        {
+            OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"Favourite\" (\"CustomerID\",\"PRODUCTID\") VALUES('" + customerID + "','" + productID + "')", conn);
+            cmd.ExecuteNonQuery();
+        }
         
         internal static IList<Product> getFavForCustomer(OracleConnection conn, int customerID)
         {
@@ -190,6 +196,28 @@ namespace Alkoshop.Database
                 OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"ProductOrder\" (\"ProductID\",\"OrderID\",\"Price_per_unit\",\"Number_of_unit\") VALUES('" + productOrder.ProductID + "','" + (int)orderID + "','" + productOrder.Price_per_unit + "','" + productOrder.Number_of_unit + ")", conn);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        internal static IList<Order> getAllOrders(OracleConnection conn, int employeeID)
+        {
+            IList<Order> orders = new List<Order>();
+            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Order\" WHERE \"EmployeeID\"="+employeeID, conn);
+            while (reader.Read())
+            {
+                int id = (int)reader["OrderID"];
+                DateTime date = (DateTime)reader["Date"];
+                string status = (string)reader["Status"];
+                int customerID = (int)reader["CustomerID"];
+                int addressID = (int)reader["AddressID"];
+                orders.Add(new Order(id, date, status, addressID, customerID, employeeID));
+            }
+            return orders;
+        }
+
+        internal static void changeOrderStatus(OracleConnection conn, int orderID, string status)
+        {
+            OracleCommand command = new OracleCommand("UPDATE ALKOHOLICI.\"Order\" SET \"Status\"='" +status+ "' WHERE \"OrderID\"="+orderID, conn);
+            command.ExecuteNonQuery();
         }
 
         internal static int createAddress(OracleConnection conn, Address address)
