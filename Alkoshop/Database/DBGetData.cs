@@ -14,9 +14,9 @@ namespace Alkoshop.Database
             OracleDataReader reader;
             if (categoryID == 0)
             {
-                reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\" p JOIN \"ALKOHOLICI\".\"PRODUKTY_CENY_MNOZSTVI\" m ON p.NAME=m.NAME", conn);
+                reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\" p JOIN \"ALKOHOLICI\".\"PRODUKTY_CENY_MNOZSTVI\" m ON p.NAME=m.NAME JOIN \"ALKOHOLICI\".\"Country\" c ON p.\"CountryID\"=c.\"CountryID\"", conn);
             }else{
-                reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\" p JOIN \"ALKOHOLICI\".\"PRODUKTY_CENY_MNOZSTVI\" m ON p.NAME=m.NAME WHERE p.\"CategoryID\"=" + categoryID, conn);
+                reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\" p JOIN \"ALKOHOLICI\".\"PRODUKTY_CENY_MNOZSTVI\" m ON p.NAME=m.NAME JOIN \"ALKOHOLICI\".\"Country\" c ON p.\"CountryID\"=c.\"CountryID\" WHERE p.\"CategoryID\"=" + categoryID, conn);
             }
             if (reader != null) { 
                 while (reader.Read())
@@ -29,15 +29,16 @@ namespace Alkoshop.Database
                     decimal amount = (decimal)reader["Amount"];
                     decimal alcotabac = (decimal)reader["Alcotabac"];
                     string description = (string)reader["Description"];
+                    string country = (string)reader["COUNTRY"];
                     int pictureID = (int)reader["PictureID"];
                     if(pictureID!=0)
                     {
                         string path = System.Web.HttpContext.Current.Server.MapPath("~/Design/") + pictureID + ".jpg";       
                         getPhotoAndSave(conn, path, pictureID);
-                        products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, "/Design/" + pictureID + ".jpg"));
+                        products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, country, "/Design/" + pictureID + ".jpg"));
                         continue;
                     }
-                    products.Add(new Product(id,name,producer,pricePU,(int)amount,availability,(int)alcotabac,description));
+                    products.Add(new Product(id,name,producer,pricePU,(int)amount,availability,(int)alcotabac,description,country));
                 }                
                 return products;
             }
@@ -46,7 +47,7 @@ namespace Alkoshop.Database
 
         internal static Product getProductByID(OracleConnection conn, int productID)
         {
-            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\" p JOIN \"ALKOHOLICI\".\"PRODUKTY_CENY_MNOZSTVI\" m ON p.NAME=m.NAME WHERE p.\"ProductID\"="+productID, conn);
+            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\" p JOIN \"ALKOHOLICI\".\"PRODUKTY_CENY_MNOZSTVI\" m ON p.NAME=m.NAME JOIN \"ALKOHOLICI\".\"Country\" c ON p.\"CountryID\"=c.\"CountryID\" WHERE p.\"ProductID\"=" + productID, conn);
             reader.Read();
             int id = (int)reader["ProductID"];
             string name = (string)reader["Name"];
@@ -56,13 +57,14 @@ namespace Alkoshop.Database
             decimal amount = (decimal)reader["Amount"];
             decimal alcotabac = (decimal)reader["Alcotabac"];
             string description = (string)reader["Description"];
+            string country = (string)reader["COUNTRY"];
             int pictureID = (int)reader["PictureID"];
             if (pictureID != 0)
             {
                 string path = System.Web.HttpContext.Current.Server.MapPath("~/Design/") + pictureID + ".jpg";
-                return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, "/Design/" + pictureID + ".jpg");
+                return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, country, "/Design/" + pictureID + ".jpg");
             }
-            return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description);
+            return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description,country);
         }
 
         internal static IList<Category> getCategories(OracleConnection conn)
@@ -89,7 +91,7 @@ namespace Alkoshop.Database
         internal static IList<Product> getFavForCustomer(OracleConnection conn, int customerID)
         {
             IList<Product> products = new List<Product>();
-            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\" p JOIN \"ALKOHOLICI\".\"PRODUKTY_CENY_MNOZSTVI\" m ON p.NAME=m.NAME JOIN ALKOHOLICI.\"Favourite\" f ON p.\"ProductID\"=f.PRODUCTID WHERE f.\"CustomerID\" = " + customerID + "", conn);
+            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Product\" p JOIN \"ALKOHOLICI\".\"PRODUKTY_CENY_MNOZSTVI\" m ON p.NAME=m.NAME JOIN ALKOHOLICI.\"Favourite\" f ON p.\"ProductID\"=f.PRODUCTID JOIN \"ALKOHOLICI\".\"Country\" c ON p.\"CountryID\"=c.\"CountryID\" WHERE f.\"CustomerID\" = " + customerID + "", conn);
             if (reader != null)
             {
                 while (reader.Read())
@@ -102,15 +104,16 @@ namespace Alkoshop.Database
                     decimal amount = (decimal)reader["Amount"];
                     decimal alcotabac = (decimal)reader["Alcotabac"];
                     string description = (string)reader["Description"];
+                    string country = (string)reader["COUNTRY"];
                     int pictureID = (int)reader["PictureID"];
                     if (pictureID != 0)
                     {
                         string path = System.Web.HttpContext.Current.Server.MapPath("~/Design/") + pictureID + ".jpg";
                         getPhotoAndSave(conn, path, pictureID);
-                        products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, "/Design/" + pictureID + ".jpg"));
+                        products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, country, "/Design/" + pictureID + ".jpg"));
                         continue;
                     }
-                    products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description));
+                    products.Add(new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, country));
                 }
                 return products;
             }
