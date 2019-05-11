@@ -40,38 +40,40 @@
             <a class="p-2 text-dark" href="#">Support</a>
         </nav>
 
-        <a class="btn btn-outline-primary float-lg-right" href="@Url.Action("Index","Login")"> Sign in </a>
+        <a class="btn btn-outline-primary float-lg-right" href="@Url.Action("Index","Login", new { area = "Customer"})"> Sign in </a>
         <a class="btn btn-outline-primary float-lg-right" href="@Url.Action("Create","Address", new { cusoremp = "cus"})"> Sign up </a>
     </div>
+
+    @if (TempData["message-success"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["message-success"];
+        </div>
+    }
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">ALKOSHOP - HELL YEA</h1>
     </div>
 
-    
+
 
 
     <div class="container">
-        @if (TempData["message-success"] != null)
-        {
-                <div class="alert alert-success" role="alert">
-                    @TempData["message-success"];
-                </div>
-        }
+
         @RenderBody()
 
-       
 
-        </div>
-        <footer class="pt-4 my-md-5 pt-md-5 border-top">
-            <div class="row">
-                <div class="col-12 col-md">
-                    <img class="mb-2" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
-                    <small class="d-block mb-3 text-muted">&copy; 2017-2019</small>
-                </div>
-            </div>
-        </footer>
+
     </div>
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <img class="mb-2" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+                <small class="d-block mb-3 text-muted">&copy; 2017-2019</small>
+            </div>
+        </div>
+    </footer>
+
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>

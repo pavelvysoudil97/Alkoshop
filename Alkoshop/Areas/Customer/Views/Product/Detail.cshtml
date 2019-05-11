@@ -20,8 +20,16 @@
             <img src="@Model.Picture" alt="jagger" width="200px" height="200px" />
         </div>
     </div>
-  
-    <p>Pro objednani se musite prihlasit</p>
+    @using (@Html.BeginForm("Add", "Cart", new { name = Model.Name, image = Model.Picture, productId = Model.Id, pricePerUnit = Model.PricePU }, FormMethod.Post))
+    {
+
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="inputPassword2" class="sr-only">Count</label>
+            <input type="number" class="form-control" id="inputCount" name="numberOfUnit">
+        </div>
+            <button type="submit" class="btn btn-primary mb-2">Add to Cart</button>
+        
+    }
 
 </div>
 

@@ -1,6 +1,45 @@
 ﻿@using Alkoshop.Models
-@model IList<ProductOrder>
+@model IList<CartItem>
 
+<table class="table table-bordered table-hover marged-bottom">
+    <thead>
+        <tr>
+            <th>Nazev produktu</th>
+            <th>Image</th>
+            <th>Id</th>
+            <th>Cena za kus</th>
+            <th>Pocet kusu</th>
 
-<h2>Index</h2>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+         {
+            foreach (CartItem item in Model)
+             {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <img src="@item.Image" alt="jagger" width="200px" height="200px" />
+                        </td>
+
+                        <td>@item.ProductId</td>
+                        <td>@item.PricePerUnit</td>
+                        <td>@item.NumberOfUnits</td>
+
+                    </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td> Vas kosik neobsahuje zadne produkty</td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
 
