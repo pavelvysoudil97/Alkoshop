@@ -92,7 +92,13 @@ namespace Alkoshop.Database
             OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"Favourite\" (\"CustomerID\",\"PRODUCTID\") VALUES('" + customerID + "','" + productID + "')", conn);
             cmd.ExecuteNonQuery();
         }
-        
+
+        internal static void removeProductFromFav(OracleConnection conn, int customerID, int productID)
+        {
+            OracleCommand cmd = new OracleCommand("DELETE FROM ALKOHOLICI.\"Favourite\" WHERE \"CustomerID\"='" + customerID + "' AND \"PRODUCTID\"='" + productID + "'", conn);
+            cmd.ExecuteNonQuery();
+        }
+
         internal static IList<Product> getFavForCustomer(OracleConnection conn, int customerID)
         {
             IList<Product> products = new List<Product>();
