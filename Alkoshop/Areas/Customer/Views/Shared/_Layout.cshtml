@@ -1,5 +1,5 @@
 ﻿
-
+@using Alkoshop.Models
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,12 +35,19 @@
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
         <a href="@Url.Action("Index","Home")" class="pr-4"><img alt="XXX" src="~/Design/alkoshop_logo.png" width="100px" height="35px" /></a>
         <nav class="my-2 my-md-0 mr-md-3 ">
-            <a class="p-2 text-dark" href="#">Favourite</a>
+            <a class="p-2 text-dark" href="@Url.Action("Index","Favourite")">Favourite</a>
             <a class="p-2 text-dark" href="#">Enterprise</a>
             <a class="p-2 text-dark" href="#">Support</a>
             <a href="@Url.Action("Index", "Cart")">
                 <button type="button" class="btn btn-primary">
-                    Váš košík <span class="badge badge-light">0</span>
+                   Váš košík
+                    <span class="badge badge-light">
+                        @if (@Session["cart"] != null) {
+                        @((Session["cart"] as List<CartItem>).Count)
+                        }
+                        else
+                        { <p>0</p>}
+                    </span>
                     <span class="sr-only">unread messages</span>
                 </button>
             </a>

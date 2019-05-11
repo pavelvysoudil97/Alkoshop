@@ -5,7 +5,7 @@
 
 
 <div class=" container-fluid ">
-
+    <div class="row">
 
     @foreach (Product p in Model)
     {
@@ -22,13 +22,13 @@
                         <li>Producer: @p.Producer</li>
                         <li>Price: @p.PricePU</li>
                         @if (p.Availability == "yes")
-            {
-                <li>Na skladě</li>
-            }
-            else
-            {
-                <li>Vyprodano</li>
-            }
+                        {
+                            <li>Na skladě</li>
+                        }
+                        else
+                        {
+                            <li>Vyprodano</li>
+                        }
                     </ul>
                 </div>
                 @if (p.Availability == "yes")
@@ -38,6 +38,7 @@
             </div>
         </div>
         }
+    </div>
 </div>
 </div>
 

@@ -111,9 +111,17 @@ namespace Alkoshop.Class
         public override bool ValidateUser(string email, string password)
         {
             OracleConnection conn = DBMain.GetConnection();
-            Customer customer = DBGetData.getCustomer(conn, email, password);
 
-            return customer != null;
+            if (email.Contains("@alkoshop.com"))
+            {
+                Employee employee = DBGetData.getEmployee(conn, email, password);
+                return employee != null;
+            }
+            else
+            {
+                Customer customer = DBGetData.getCustomer(conn, email, password);
+                return customer != null;
+            }
         }
     }
 }
