@@ -24,6 +24,14 @@ namespace Alkoshop.Controllers
 
             return View(product); //product
         }
+
+        public ActionResult ShowProductByCategory(int categoryId)
+        {
+            OracleConnection connection = DBMain.GetConnection();
+            IList<Product> foundProducts = DBGetData.getAllProducts(connection, categoryId);
+            TempData["foundProducts"] = foundProducts;
+            return RedirectToAction("Index", "Home", new { incomingProducts = foundProducts });
+        }
         
 
     }

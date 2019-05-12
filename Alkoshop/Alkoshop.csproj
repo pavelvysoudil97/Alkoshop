@@ -183,6 +183,7 @@
     <Compile Include="Areas\Customer\Controllers\FavouriteController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Customer\Controllers\OrderController.cs" />
     <Compile Include="Areas\Customer\Controllers\ProductController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Areas\Employee\Controllers\HomeController.cs" />
@@ -244,6 +245,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Models\" />
+    <Folder Include="Areas\Customer\Views\Order\" />
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Employee\Views\Home\" />
     <Folder Include="Design\" />

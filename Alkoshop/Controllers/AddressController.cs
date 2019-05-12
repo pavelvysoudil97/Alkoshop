@@ -32,7 +32,7 @@ namespace Alkoshop.Controllers
             if (ModelState.IsValid)
             {
                 if((string)TempData["cusoremp"] == "cus") { 
-                    return RedirectToAction("Create", "Customer", address);
+                    return RedirectToAction("Create", "Alkoshop.Controllers.CustomerController", new { area= "", address = address });
                     
                 } else if ((string)TempData["cusoremp"] == "emp" && User.Identity.IsAuthenticated)
                 {

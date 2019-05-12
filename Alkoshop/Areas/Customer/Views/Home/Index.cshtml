@@ -1,6 +1,8 @@
 ﻿@using Alkoshop.Models
 @model IList<Product>
 
+
+
 <div class="card-group">
 
     @foreach (Product p in Model)
@@ -23,6 +25,7 @@
                                 <li>Vyprodano</li>
                             }
                         </ul>
+                        <a href="@Url.Action("Add", "Favourite", new { productId = p.Id })">Přidat do oblíbených</a>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -37,7 +40,34 @@
             </div>
         </div>
     }
-   
+    @section SideMenu
+        {
+        <li class="nav-item">
+            Alkohol
+        </li>
+        @foreach (Category cat in ViewBag.AlcoCategories)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
+                    <span data-feather="file"></span>
+                    @cat.name
+                </a>
+            </li>
+        }
+        <li class="nav-item">
+            Tabák
+        </li>
+        @foreach (Category cat in ViewBag.TabaccoCategories)
+        {
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
+                    <span data-feather="file"></span>
+                    @cat.name
+                </a>
+            </li>
+        }
+    }
+
 </div>
 
 

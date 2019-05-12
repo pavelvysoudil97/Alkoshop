@@ -13,11 +13,21 @@ namespace Alkoshop.Controllers
         {
             Session["conn"] = DBMain.GetConnection();
 
-            //    DBGetData.insertPhoto(conn, "C:/amundsen.jpg"); //pro vlozeni obrazku do DB
+            IList<Category> alcoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 1);
+            IList<Category> tabaccoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 2);
+            ViewBag.AlcoCategories = alcoCategories;
+            ViewBag.TabaccoCategories = tabaccoCategories;
 
-            IList<Product> products = DBGetData.getAllProducts((OracleConnection)Session["conn"]);
+            if (TempData["foundProducts"] != null)
+            {
+                IList<Product> incomingProducts = TempData["foundProducts"] as List<Product>;
+                return View(incomingProducts);
+            }
+            //    DBGetData.insertPhoto(conn, "C:/amundsen.jpg"); //pro vlozeni obrazku do DB
             
-            return View(products);
+            
+            IList<Product> products = DBGetData.getAllProducts((OracleConnection)Session["conn"]);
+            return View(products); 
         }
     }
 }

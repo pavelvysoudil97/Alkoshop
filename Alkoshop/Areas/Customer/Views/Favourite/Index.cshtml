@@ -31,6 +31,7 @@
                             }
                         </ul>
                     </div>
+                    <a href="@Url.Action("Remove", "Favourite", new { productId = p.Id})"> Odebrat z oblíbených</a>
                     @if (p.Availability == "yes")
                     {
                         <a href="@Url.Action("Detail","Product", new {  productId = p.Id })" class="btn btn-lg btn-block btn-outline-primary btn-dark marged-bottom">Koupit ted</a>
