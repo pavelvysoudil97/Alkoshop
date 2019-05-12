@@ -8,6 +8,8 @@ namespace Alkoshop.Models
 {
     public class Product
     {
+        public Product() { }
+
         public Product(string name, string producer, double pricePU, int amount, string availability, string description, int alcotabac)
         {
             Name = name;
@@ -43,5 +45,6 @@ namespace Alkoshop.Models
         public string Description { get; set; }
         public string Picture { get; set; }
         public int Alcotabac { get; set; } //1 - alkohol; 2 - tabak
+        public int PriceWithDPH { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Alkoshop.Areas.Customer.Controllers
 {
+    [Authorize]
     public class FavouriteController : Controller
     {
         // GET: Customer/Favourite

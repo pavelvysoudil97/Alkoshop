@@ -29,7 +29,7 @@ namespace Alkoshop.Areas.Customer.Controllers
                 if (employee != null)
                 {
                     Session["User"] = employee;
-                    Session["UserRole"] = "employee";
+                    Session["UserRole"] = "Employee";
                 }
             }
             else
@@ -38,16 +38,15 @@ namespace Alkoshop.Areas.Customer.Controllers
                 if(customer!= null)
                 {
                     Session["User"] = customer;
-                    Session["UserRole"] = "customer";
+                    Session["UserRole"] = "Customer";
                 }
             }
 
             if(Membership.ValidateUser(email, password))
             {
                 FormsAuthentication.SetAuthCookie(email, false);
-                
-                return RedirectToAction("Index", "Home");
-                
+
+                return RedirectToAction("Index", "Home", new { area = Session["UserRole"] });
             }
 
 

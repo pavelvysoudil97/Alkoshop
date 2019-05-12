@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Alkoshop.Areas.Customer.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         // GET: Customer/Order
@@ -28,9 +29,9 @@ namespace Alkoshop.Areas.Customer.Controllers
             
             order.CustomerID = (Session["User"] as Alkoshop.Models.Customer).ID;
 
-            DateTime dateTime = DateTime.UtcNow.Date;
+            DateTime dateTime = DateTime.Now;
             order.Date = dateTime;
-            order.Status = "waiting";
+            order.Status = "new";
 
             IList<CartItem> cartItems = (Session["cart"] as List<CartItem>);
             IList<ProductOrder> productOrders = new List<ProductOrder>();
