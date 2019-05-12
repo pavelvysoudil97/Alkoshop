@@ -16,19 +16,20 @@
                 <div class="card-body">
                     <h5 class="card-title">@p.Name</h5>
                     <div class="card-text list-unstyled">
-                        <ul class="mt-3 mb-4">
-                            <li>Producer: @p.Producer</li>
-                            <li>Price: @p.PricePU</li>
+                        <ul class="mt-3 mb-4 card-text list-unstyled">
+                            <li>Producent: @p.Producer</li>
+                            <li>Cena: @p.PricePU Kč</li>
                             @if (p.Availability == "yes")
                             {
                                 <li>Na skladě</li>
                             }
                             else
                             {
-                                <li>Vyprodano</li>
+                                <li>Vyprodáno</li>
                             }
                         </ul>
-                        <a href="@Url.Action("Add", "Favourite", new { productId = p.Id })">Přidat do oblíbených</a>
+                        <a href="@Url.Action("Add", "Favourite", new { productId = p.Id })" class="btn btn-sm btn-block text-white btn-outline-success btn-success marged-bottom">Přidat do oblíbených</a>
+
                     </div>
                 </div>
                 <div class="card-footer">
@@ -44,44 +45,42 @@
         </div>
     }
 
-
-    @section SideMenu
-    {
-        <h3 class="h3 align-self-center">MENU</h3>
-        <a data-toggle="collapse" href="#collapse1" class="h4" id="menuitem">
-            Alkohol
-        </a>
-        <div id="collapse1" class="panel-collapse collapse">
-            @foreach (Category cat in ViewBag.AlcoCategories)
-            {
-                <li class="nav-item">
-                    <a class="nav-link" id="itemnav" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
-                        <span data-feather="file"> @cat.name</span>
-
-                    </a>
-                </li>
-
-            }
-        </div>
-
-        <a data-toggle="collapse" href="#collapse2" class="h4" id="menuitem">
-            Tabák
-        </a>
-        <div id="collapse2" class="panel-collapse collapse">
-            @foreach (Category cat in ViewBag.TabaccoCategories)
-            {
-                <li class="nav-item" id="itemnav">
-                    <a class="nav-link" id="itemnav" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
-                        <span data-feather="file"> @cat.name</span>
-
-                    </a>
-                </li>
-
-            }
-        </div>
-    }
-
 </div>
 
 
+@section SideMenu
+    {
+    <h3 class="h3 align-self-center">MENU</h3>
+    <a data-toggle="collapse" href="#collapse1" class="h4" id="menuitem">
+        Alkohol
+    </a>
+    <div id="collapse1" class="panel-collapse collapse">
+        @foreach (Category cat in ViewBag.AlcoCategories)
+        {
+            <li class="nav-item">
+                <a class="nav-link" id="itemnav" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
+                    <span data-feather="file"> @cat.name</span>
+
+                </a>
+            </li>
+
+        }
+    </div>
+
+    <a data-toggle="collapse" href="#collapse2" class="h4" id="menuitem">
+        Tabák
+    </a>
+    <div id="collapse2" class="panel-collapse collapse">
+        @foreach (Category cat in ViewBag.TabaccoCategories)
+        {
+            <li class="nav-item" id="itemnav">
+                <a class="nav-link" id="itemnav" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
+                    <span data-feather="file"> @cat.name</span>
+
+                </a>
+            </li>
+
+        }
+    </div>
+}
 

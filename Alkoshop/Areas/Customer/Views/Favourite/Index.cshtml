@@ -1,26 +1,24 @@
 ﻿@using Alkoshop.Models
 @model IList<Product>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/Content/menustyle.css" />
 
+<div class="card-group">
 
-
-<div class=" container-fluid ">
-    <div class="row">
-
-        @foreach (Product p in Model)
-        {
-            <div class="card  col-sm-4">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal">@p.Name</h4>
-                </div>
+    @foreach (Product p in Model)
+    {
+        <div class="col-lg-3" style="margin-bottom: 8px">
+            <div class="card">
+                <img class="card-img-top" src="@p.Picture" alt="Card image cap" width="200" height="200">
                 <div class="card-body">
-                    <div class="col-2">
-                        <img src="@p.Picture" alt="jagger" width="200px" height="200px" />
-                    </div>
-                    <div class="col-10">
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Producer: @p.Producer</li>
-                            <li>Price: @p.PricePU</li>
+                    <h5 class="card-title">@p.Name</h5>
+                    <div class="card-text list-unstyled">
+                        <ul class="mt-3 mb-4 card-text list-unstyled">
+                            <li>Producent: @p.Producer</li>
+                            <li>Cena: @p.PricePU Kč</li>
                             @if (p.Availability == "yes")
                             {
                                 <li>Na skladě</li>
@@ -30,18 +28,26 @@
                                 <li>Vyprodano</li>
                             }
                         </ul>
+                        <a href="@Url.Action("Remove", "Favourite", new { productId = p.Id})" class="btn btn-sm btn-block text-white btn-outline-success btn-success marged-bottom">Odebrat z oblíbených</a>
+
                     </div>
-                    <a href="@Url.Action("Remove", "Favourite", new { productId = p.Id})"> Odebrat z oblíbených</a>
-                    @if (p.Availability == "yes")
-                    {
-                        <a href="@Url.Action("Detail","Product", new {  productId = p.Id })" class="btn btn-lg btn-block btn-outline-primary btn-dark marged-bottom">Koupit ted</a>
-                    }
+                </div>
+                <div class="card-footer">
+
+                    <small class="text-muted">
+                        @if (p.Availability == "yes")
+                        {
+                            <a href="@Url.Action("Detail","Product", new {  productId = p.Id })" class="btn btn-lg btn-block text-white btn-outline-success btn-success marged-bottom">Koupit teď</a>
+                        }
+                    </small>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
+
 </div>
-</div>
+
+
 
 
 
