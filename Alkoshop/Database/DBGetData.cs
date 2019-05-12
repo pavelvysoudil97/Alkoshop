@@ -151,7 +151,7 @@ namespace Alkoshop.Database
                     int addressID = (int)reader["AddressID"];
                     OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
                     reader2.Read();
-                    Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
+                    Address address = new Address(addressID,(string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
                     return new Customer(customerID, name, surname, email, password, phoneNumber, birthDate, address);
                 }
                 catch
@@ -178,7 +178,7 @@ namespace Alkoshop.Database
                 int addressID = (int)reader["AddressID"];
                 OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
                 reader2.Read();
-                Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
+                Address address = new Address(addressID,(string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
                 return new Employee(employeeID, name, surname, nickname, email, password, phoneNumber, salary, address);
             }
             return null;

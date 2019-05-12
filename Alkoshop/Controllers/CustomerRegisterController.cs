@@ -1,5 +1,6 @@
 ﻿using Alkoshop.Database;
 using Alkoshop.Models;
+using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Alkoshop.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomerRegisterController : Controller
     {
         // GET: Customer
         public ActionResult Index()
@@ -27,7 +28,7 @@ namespace Alkoshop.Controllers
         [HttpPost]
         public ActionResult Add(Customer customer)
         {
-
+            OracleConnection connection = DBMain.GetConnection();
             var addressContainer = TempData["addresscontainer"];
 
             if (customer.Address == null)
@@ -36,8 +37,7 @@ namespace Alkoshop.Controllers
             }
             if (ModelState.IsValid)
             {
-                //Pripravene na create Customer 
-                // DBGetData.createCustomerWithAddress(customer, addressObject);
+                DBGetData.createCustomerWithAddress(connection, customer, customer.Address);
 
                 TempData["message-success"] = "Customer was added successfully";
                 return RedirectToAction("Index", "Home");

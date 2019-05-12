@@ -13,8 +13,9 @@ namespace Alkoshop.Models
         {
 
         }
-        public Address(string city, string street, string streetNumber, string zipCode)
+        public Address(int id, string city, string street, string streetNumber, string zipCode)
         {
+            ID = id;
             City = city;
             Street = street;
             StreetNumber = streetNumber;
