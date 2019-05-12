@@ -1,11 +1,16 @@
 ﻿@using Alkoshop.Models
 @model IList<Product>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/Content/menustyle.css"/>
+
 <div class="card-group">
 
     @foreach (Product p in Model)
     {
-        <div class="col-lg-4" style="margin-bottom: 8px">
+        <div class="col-lg-4" style="margin-bottom: 8px; background-color: whitesmoke; border: none;">
             <div class="card">
                 <img class="card-img-top" src="@p.Picture" alt="Card image cap" width="200" height="200">
                 <div class="card-body">
@@ -37,32 +42,42 @@
             </div>
         </div>
     }
+
+
     @section SideMenu
-        {
-        <li class="nav-item">
+    {
+        <h3 class="h3 align-self-center">MENU</h3>
+        <a data-toggle="collapse" href="#collapse1"  class="h4" id="menuitem">
             Alkohol
-        </li>
-        @foreach (Category cat in ViewBag.AlcoCategories)
-        {
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
-                    <span data-feather="file"></span>
-                    @cat.name
-                </a>
-            </li>
-        }
+        </a>
+        <div id="collapse1" class="panel-collapse collapse">
+            @foreach (Category cat in ViewBag.AlcoCategories)
+    {
         <li class="nav-item">
-            Tabák
+            <a class="nav-link"id="itemnav" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
+                <span data-feather="file"> @cat.name</span>
+               
+            </a>
         </li>
-        @foreach (Category cat in ViewBag.TabaccoCategories)
-        {
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
-                    <span data-feather="file"></span>
-                    @cat.name
-                </a>
-            </li>
-        }
+
+}
+        </div>
+
+        <a data-toggle="collapse" href="#collapse2" class="h4" id="menuitem">
+            Tabák
+        </a>
+        <div id="collapse2" class="panel-collapse collapse">
+            @foreach (Category cat in ViewBag.TabaccoCategories)
+    {
+        <li class="nav-item" id="itemnav">
+            <a class="nav-link"id="itemnav" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
+                <span data-feather="file"> @cat.name</span>
+               
+            </a>
+        </li>
+
+}
+        </div>
     }
 
 

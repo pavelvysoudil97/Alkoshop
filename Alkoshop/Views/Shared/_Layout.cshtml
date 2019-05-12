@@ -13,7 +13,6 @@
     
     <link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" />
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" />
-
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -28,7 +27,7 @@
             color: white;
         }
         #color-body {
-            background-color: lightcyan;
+            background-color: whitesmoke;
         }
         #sing {
             position: absolute;
@@ -60,19 +59,19 @@
             @TempData["message-success"];
         </div>
     }
+     <nav class="col-md-2 d-none d-md-block sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            @RenderSection("SideMenu", false)
+
+        </ul>
+    </div>
+     </nav>
 
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
         <h1 class="display-4">ALKOSHOP</h1>
     </div>
     <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-            <div class="sidebar-sticky">
-                <ul class="nav flex-column">
-                    @RenderSection("SideMenu", false)
-
-                </ul>
-            </div>
-        </nav>
 
         <div class="container col-md-9 ">
 
