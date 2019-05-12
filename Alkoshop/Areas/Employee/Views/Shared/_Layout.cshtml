@@ -41,12 +41,15 @@
     <link href="pricing.css" rel="stylesheet">
 </head>
 <body id="color-body">
+
+<div class="jumbotron" style="background-image:url('/Design/alk.jpg'); background-size: 100%; height: 250px"></div>
+
 <div id="nav" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm">
-    <a href="@Url.Action("Index","Home")" class="pr-4"><img alt="XXX" src="~/Design/alkoshop_logo.png" width="100px" height="35px" /></a>
+    <a href="@Url.Action("Index", "Home")" class="pr-4"><img alt="XXX" src="~/Design/alkoshop_logo.png" width="100px" height="35px"/></a>
     <nav class="my-2 my-md-0 mr-md-3 ">
         <a class="p-2 text-white" href="#">Features</a>
         <a class="p-2 text-white" href="#">O nás</a>
-        <a class="p-2 text-white" href="@Url.Action("Create","Address", new { cusoremp = "emp"})">Registrace zaměstnanec</a>
+        <a class="p-2 text-white" href="@Url.Action("Create", "Address", new {cusoremp = "emp"})">Registrace zaměstnanec</a>
         <a href="@Url.Action("Index", "Cart")">
             <button type="button" class="btn btn-success">
                 Váš košík <span class="badge badge-light">0</span>
@@ -55,12 +58,12 @@
         </a>
     </nav>
     <div id="sing">
-        <a class="btn btn-outline-success float-lg-right text-white" href="@Url.Action("Logout","Login")"> Odhlásit se </a>
-        <a class="btn btn-outline-success float-lg-right text-white" href="@Url.Action("Index","Login")"> Přihlásit se </a>
-        <a class="btn btn-outline-success float-lg-right text-white" href="@Url.Action("Create","Address", new { cusoremp = "cus"})"> Registace zákazník </a>
+        <a class="btn btn-outline-success float-lg-right text-white" href="@Url.Action("Logout", "Login")"> Odhlásit se </a>
+        <a class="btn btn-outline-success float-lg-right text-white" href="@Url.Action("Index", "Login")"> Přihlásit se </a>
+        <a class="btn btn-outline-success float-lg-right text-white" href="@Url.Action("Create", "Address", new {cusoremp = "cus"})"> Registace zákazník </a>
     </div>
 </div>
-<nav class="col-md-2 d-none d-md-block sidebar">
+<nav class="col-sm-2 d-none d-md-block sidebar">
     <div class="sidebar-sticky">
         <ul class="nav flex-column">
             @RenderSection("SideMenu", false)
@@ -68,17 +71,17 @@
         </ul>
     </div>
 </nav>
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">ALKOSHOP</h1>
-    </div>
-    <div class="container">
-        @if (TempData["message-success"] != null)
-        {
-            <div class="alert alert-success" role="alert">
-                @TempData["message-success"];
-            </div>
-        }
-        @RenderBody()
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">ALKOSHOP</h1>
+</div>
+<div class="container">
+    @if (TempData["message-success"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["message-success"];
+        </div>
+    }
+    @RenderBody()
 
     <div class="col-6 col-md-9 col-xl-2 bd-sidebar">
 
@@ -130,14 +133,14 @@
             </div>
         </form>
     </div>
-    </div>
-        <footer id="nav" class="pt-2 my-md-4 pt-md-2 border-top">
-            <p class="text-white-50">&copy; 2019, Pavel Vysoudil, Kristýna Hnízdilová, Jiří Dřímal</p>
-        </footer>
-        <script src="~/Scripts/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
-        <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+</div>
+<footer id="nav" class="pt-2 my-md-4 pt-md-2 border-top">
+    <p class="text-white-50">&copy; 2019, Pavel Vysoudil, Kristýna Hnízdilová, Jiří Dřímal</p>
+</footer>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
 </body>
 </html>
 

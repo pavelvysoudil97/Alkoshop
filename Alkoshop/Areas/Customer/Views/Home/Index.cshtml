@@ -16,9 +16,9 @@
                 <div class="card-body">
                     <h5 class="card-title">@p.Name</h5>
                     <div class="card-text list-unstyled">
-                        <ul class="mt-3 mb-4">
-                            <li>Producer: @p.Producer</li>
-                            <li>Price: @p.PricePU</li>
+                        <ul class="mt-3 mb-4 card-text list-unstyled">
+                            <li>Producent: @p.Producer</li>
+                            <li>Cena: @p.PricePU Kč</li>
                             @if (p.Availability == "yes")
                             {
                                 <li>Na skladě</li>
@@ -28,7 +28,8 @@
                                 <li>Vyprodano</li>
                             }
                         </ul>
-                        <a href="@Url.Action("Add", "Favourite", new { productId = p.Id })">Přidat do oblíbených</a>
+                        <a href="@Url.Action("Add", "Favourite", new { productId = p.Id })" class="btn btn-sm btn-block text-white btn-outline-success btn-success marged-bottom">Přidat do oblíbených</a>
+                   
                     </div>
                 </div>
                 <div class="card-footer">

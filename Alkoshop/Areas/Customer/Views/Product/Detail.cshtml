@@ -15,25 +15,29 @@
             <div class="mb-1 text-muted"><b>Producent: </b>@Model.Producer</div>
             <p class="mb-auto"><b>Pochází z: </b> @Model.Country</p>
             <p class="mb-auto"><b>Popis produktu: </b>@Model.Description</p>
-            <div><b>Cena: </b> @Model.PricePU Kč</div>  
+            <div><b>Cena: </b> @Model.PricePU Kč</div>
 
-            
-            
+
+
             @using (@Html.BeginForm("Add", "Cart", new { name = Model.Name, image = Model.Picture, productId = Model.Id, pricePerUnit = Model.PricePU }, FormMethod.Post))
-             {
-                 <br/><br />
-                 <div>
-                     <p class="mb-auto"><b>Zadejte počet kusů: </b></p>
-                     <label for="inputPassword2" class="sr-only">Počet kusů</label>
-                     <input type="number" class="form-control" id="inputCount" name="numberOfUnit" size="15">
-                 </div>
-                 <br/><br />
-               <button type="submit" class="btn btn-success mb-2">Přidat do košíku</button>
-             }
+            {
+                <br /><br />
+                <div>
+                    <p class="mb-auto"><b>Zadejte počet kusů: </b></p>
+                    <label for="inputPassword2" class="sr-only">Počet kusů</label>
+                    <input type="number" class="form-control" id="inputCount" name="numberOfUnit" size="15">
+                </div>
+                <br /><br />
+                <button type="submit" class="btn btn-success mb-2">Přidat do košíku</button>
+            }
         </div>
-    
+
     </div>
 
 </div>
+
+<br />
+<div style="width: 20%"><a href="@Url.Action("Index","Home")" class="btn btn-lg btn-block text-white btn-outline-success btn-success">Zpět</a></div>
+
 
 <script src="~/Scripts/counter.js"></script>
