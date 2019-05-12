@@ -8,18 +8,21 @@ namespace Alkoshop.Models
 {
     public class Product
     {
-        public Product(string name, string producer, double pricePU, int amount, string availability, string description, int alcotabac)
+        public Product(int id, string name, string producer, double pricePU, int amount, string availability, int alcotabac, string description, string country, double priceWOdph)
         {
+            Id = id;
             Name = name;
             Producer = producer;
             PricePU = pricePU;
             Amount = amount;
             Availability = availability;
-            Description = description;
             Alcotabac = alcotabac;
+            Description = description;
+            Country = country;
+            PriceWOdph = priceWOdph;
         }
 
-        public Product(int id, string name, string producer, double pricePU, int amount, string availability, int alcotabac, string description, string country, string picture = "/Design/no_image.png")
+        public Product(int id, string name, string producer, double pricePU, int amount, string availability, int alcotabac, string description, string country, string picture = "/Design/no_image.png", double priceWOdph = 0)
         {
             Id = id;
             Name = name;
@@ -31,12 +34,14 @@ namespace Alkoshop.Models
             Description = description;
             Country = country;
             Picture = picture;
+            PriceWOdph = priceWOdph;
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
         public string Producer { get; set; }
         public double PricePU { get; set; } // double protoze tak je to i v DB
+        public double PriceWOdph { get; set; }
         public int Amount { get; set; }
         public string Availability { get; set; }
         public string Country { get; set; }

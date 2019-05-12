@@ -56,15 +56,33 @@ namespace Alkoshop.Database
             double pricePU = (double)reader["Price"];
             decimal amount = (decimal)reader["Amount"];
             decimal alcotabac = (decimal)reader["Alcotabac"];
+            int alcotabacID = (int)reader["ALCOTABACID"];
             string description = (string)reader["Description"];
             string country = (string)reader["COUNTRY"];
             int pictureID = (int)reader["PictureID"];
+            double priceWOdph = countProdutcPriceWOdph(conn, (int)alcotabac, alcotabacID);
             if (pictureID != 0)
             {
                 string path = System.Web.HttpContext.Current.Server.MapPath("~/Design/") + pictureID + ".jpg";
-                return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, country, "/Design/" + pictureID + ".jpg");
+                return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, country, "/Design/" + pictureID + ".jpg", priceWOdph);
             }
-            return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description,country);
+            return new Product(id, name, producer, pricePU, (int)amount, availability, (int)alcotabac, description, country, priceWOdph);
+        }
+
+        internal static double countProdutcPriceWOdph(OracleConnection conn, int alcotabac, int alcotabacID)
+        {
+            string comm = "";
+            if (alcotabac == 1)
+            {
+                comm = "SELECT DPH_COUNTER_ALCOHOL(" + alcotabacID + ") FROM DUAL";
+            }
+            if(alcotabac == 2)
+            {
+                comm = "SELECT DPH_COUNTER_TABACCO(" + alcotabacID + ") FROM DUAL";
+            }
+            OracleDataReader reader = getReader(comm, conn);
+            reader.Read();
+            return (double)reader["cena"];
         }
 
         internal static IList<Category> getCategories(OracleConnection conn, int alcotabac /*1 - alkohol; 2 - tabak*/)
@@ -430,6 +448,47 @@ namespace Alkoshop.Database
             string comm = "UPDATE ALKOHOLICI.\"Product\" SET \"Availability\"='no' WHERE \"ProductID\"=" + productID;
             OracleCommand command = new OracleCommand(comm, conn);
             command.ExecuteNonQuery();
+        }
+
+        // POZOR na hodnoty v Productu!!!! viz nize
+        internal static IList<Product> getOrderedProducts(OracleConnection conn)
+        {
+            IList<Product> products = new List<Product>();
+            OracleDataReader reader = getReader("SELECT * FROM \"ALKOHOLICI\".\"OBJEDNANE_PRODUKTY\"", conn);
+            if (reader != null)
+            {
+                while (reader.Read())
+                {
+                    int productID = (int)reader["ProductID"];
+                    int customerID = (int)reader["CustomerID"];
+                    int orderID = (int)reader["OrderID"];
+                    string NAME = (string)reader["NAME"];
+                    DateTime date = (DateTime)reader["Date"];
+                    string producer = (string)reader["Producer"];
+                    string fullName = (string)reader["Name"]+" "+(string)reader["Surname"];                    
+                    int amount = (int)reader["NUMBER_OF_UNIT"];
+                    // COUNTRY, CENA, ALKOTABAK,CENAWOdph = nenastavene!!, Misto Availability je tam datum a misto Description je tam ten zbytek!!!!!
+                    products.Add(new Product(productID,NAME,producer,0,amount,date.ToString(),0,"OrderID: "+orderID+", CustomerID: " + customerID + ", Jméno zákazníka: " +fullName,""));
+                }
+                return products;
+            }
+            return null;
+        }
+
+        internal static IDictionary<string, int> getCountOfProductsInCountries(OracleConnection conn)
+        {
+            IDictionary<string, int> count = new Dictionary<string, int>();
+            OracleDataReader reader = getReader("SELECT * FROM \"ALKOHOLICI\".\"POCTY_PRODUKTU_V_ZEMICH\"", conn);
+            if (reader != null)
+            {
+                while (reader.Read())
+                {
+                    decimal pocet = (decimal)reader["POCET"];
+                    count.Add((string)reader["COUNTRY"], (int)pocet);
+                }
+                return count;
+            }
+            return null;
         }
 
     }
