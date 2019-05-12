@@ -211,7 +211,7 @@ namespace Alkoshop.Database
 
             foreach (ProductOrder productOrder in productOrders)
             {
-                OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"ProductOrder\" (\"ProductID\",\"OrderID\",\"Price_per_unit\",\"Number_of_unit\") VALUES('" + productOrder.ProductID + "','" + (int)orderID + "','" + productOrder.Price_per_unit + "','" + productOrder.Number_of_unit + ")", conn);
+                OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"ProductOrder\" (\"ProductID\",\"OrderID\",\"PRICE_PER_UNIT\",\"NUMBER_OF_UNIT\") VALUES('" + productOrder.ProductID + "','" + (int)orderID + "','" + productOrder.Price_per_unit + "','" + productOrder.Number_of_unit + "')", conn);
                 cmd.ExecuteNonQuery();
             }
         }
