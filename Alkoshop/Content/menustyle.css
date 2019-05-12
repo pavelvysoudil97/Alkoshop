@@ -1,0 +1,32 @@
+﻿#menuitem {
+    margin: 5px;
+    background-color: whitesmoke;
+    border: 1px lightgreen solid;
+    padding: 3px;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+
+    #menuitem:hover {
+        margin: 5px;
+        background-color: whitesmoke;
+        border: 1px lightgreen solid;
+        padding: 3px;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+    }
+
+#itemnav {
+    margin: 3px;
+    background-color: whitesmoke;
+    color: black;
+}
+
+    #itemnav:hover {
+        margin: 3px;
+        background-color: whitesmoke;
+        color: black;
+        text-decoration: none;
+    }

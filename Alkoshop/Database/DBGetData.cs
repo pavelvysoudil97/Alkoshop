@@ -151,7 +151,7 @@ namespace Alkoshop.Database
                     int addressID = (int)reader["AddressID"];
                     OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
                     reader2.Read();
-                    Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
+                    Address address = new Address(addressID,(string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
                     return new Customer(customerID, name, surname, email, password, phoneNumber, birthDate, address);
                 }
                 catch
@@ -178,7 +178,7 @@ namespace Alkoshop.Database
                 int addressID = (int)reader["AddressID"];
                 OracleDataReader reader2 = getReader("SELECT * FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + addressID, conn);
                 reader2.Read();
-                Address address = new Address((string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
+                Address address = new Address(addressID,(string)reader2["City"], (string)reader2["Street"], (string)reader2["Street_number"], (string)reader2["Zip_code"]);
                 return new Employee(employeeID, name, surname, nickname, email, password, phoneNumber, salary, address);
             }
             return null;
@@ -289,7 +289,7 @@ namespace Alkoshop.Database
             return (int)id;
         }        
 
-        internal static void createCustomerWithAddress(OracleConnection conn, Customer customer, Address address)
+        internal static bool createCustomerWithAddress(OracleConnection conn, Customer customer, Address address)
         {
             int addressID = createAddress(conn,address);
             string comm = "INSERT INTO ALKOHOLICI.\"Customer\" (\"Birth_date\",\"Name\",\"Surname\",\"Email\",\"Password\",\"Phone_number\",\"Gdpr\",\"AddressID\") VALUES(:birthDate,'" + customer.Name+"','"+customer.Surname+"','"+customer.Email+"','"+customer.Password+"','"+customer.PhoneNumber+"','yes',"+addressID+")";    
@@ -298,10 +298,12 @@ namespace Alkoshop.Database
             try
             {
                 command.ExecuteNonQuery();
+                return true;
             }
             catch (Exception ex1)
             {
                 System.Diagnostics.Debug.WriteLine("## ERROR: " + ex1.Message);
+                return false;
             }
         }
 
@@ -404,9 +406,28 @@ namespace Alkoshop.Database
             return (int)ID;
         }
 
+        internal static void changeProduct(OracleConnection conn, int productID, int alcotabac, int amount, int pricePU)
+        {
+            OracleDataReader reader = getReader("SELECT \"AlcoholID\",\"TabaccoID\" FROM ALKOHOLICI.\"Product\" WHERE \"ProductID\"=" + productID, conn);
+            reader.Read();
+            string comm = "";
+            if (alcotabac == 1)
+            {
+                int alcoholID = (int)reader["AlcoholID"];
+                comm = "UPDATE ALKOHOLICI.\"Alcohol\" SET \"Bottle_amount\"='" + amount + "',\"Price_per_bottle\"='" + pricePU + "' WHERE \"AlcoholID\"=" + alcoholID;
+            }            
+            if (alcotabac == 2)
+            {
+                int tabaccoID = (int)reader["TabaccoID"];
+                comm = "UPDATE ALKOHOLICI.\"Tabacco\" SET \"Gram_amount\"='" + amount + "',\"Price_per_gram\"='" + pricePU + "' WHERE \"TabaccoID\"=" + tabaccoID;
+            }
+            OracleCommand command = new OracleCommand(comm, conn);
+            command.ExecuteNonQuery();
+        }
+
         internal static void removeProduct(OracleConnection conn, int productID)
         {
-            string comm = "UPDATE ALKOHOLICI.\"Product\" SET \"Visible\"='" + 0 + "' WHERE \"ProductID\"=" + productID;
+            string comm = "UPDATE ALKOHOLICI.\"Product\" SET \"Availability\"='no' WHERE \"ProductID\"=" + productID;
             OracleCommand command = new OracleCommand(comm, conn);
             command.ExecuteNonQuery();
         }
