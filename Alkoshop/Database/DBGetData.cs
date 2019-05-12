@@ -200,8 +200,8 @@ namespace Alkoshop.Database
 
         internal static void createOrder(OracleConnection conn, Order order, IList<ProductOrder> productOrders)
         {
-            OracleCommand command = new OracleCommand("INSERT INTO ALKOHOLICI.\"Order\" (\"Date\",\"Status\",\"AddressID\",\"CustomerID\") VALUES(:date,'" + order.Status + "','" + order.AddressID + "','" + order.CustomerID + ")", conn);
-            command.Parameters.Add(new OracleParameter("date", OracleDbType.Date)).Value = order.Date;
+            OracleCommand command = new OracleCommand("INSERT INTO ALKOHOLICI.\"Order\" (\"Date\",\"Status\",\"AddressID\",\"CustomerID\") VALUES(:orderdate,'" + order.Status + "','" + order.AddressID + "','" + order.CustomerID + "')", conn);
+            command.Parameters.Add(new OracleParameter("orderdate", OracleDbType.Date)).Value = order.Date;
             command.ExecuteNonQuery();
 
             OracleCommand command2 = new OracleCommand("SELECT MAX(\"OrderID\") as id FROM ALKOHOLICI.\"Order\"", conn);
