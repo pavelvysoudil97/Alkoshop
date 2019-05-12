@@ -40,7 +40,7 @@
     <!-- Custom styles for this template -->
     <link href="pricing.css" rel="stylesheet">
 </head>
-<div class="jumbotron" style="background-image:url('/Design/alk.jpg'); background-size: 100%; height: 250px"></div>
+<div class="jumbotron" style="background-image:url('/Design/alk.jpg'); background-size: 100%; height: 250px; margin: 0"></div>
 
 
 <body id="color-body">
@@ -52,16 +52,16 @@
             <a class="p-2 text-white" href="#">O nás</a>
             <a class="p-2 text-white" href="#">Obchodní podmínky</a>
             <a href="@Url.Action("Index", "Cart")">
-                <button type="button" class="btn btn-success btn-lg">
-                    Váš košík <span class="badge badge-light">
+                <button type="button" class="btn btn-success btn-outline-success">
+                    Váš košík <div class="badge badge-light badge-pill text-dark ">
                         @if (@Session["cart"] != null)
                         {
 
-                            @((Session["cart"] as List<Alkoshop.Models.CartItem>).Count)
+                                  <p>@((Session["cart"] as List<Alkoshop.Models.CartItem>).Count)</p>
                         }
                         else
                         { <p>0</p>}
-                    </span>
+                    </div>
                 </button>
             </a>
         </nav>

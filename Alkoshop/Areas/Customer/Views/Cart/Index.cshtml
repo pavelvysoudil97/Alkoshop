@@ -1,6 +1,11 @@
 ﻿@using Alkoshop.Models
 @model IList<CartItem>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/Content/menustyle.css" />
+
 <table class="table table-bordered table-hover marged-bottom table-light">
     <thead>
         <tr>
@@ -15,36 +20,36 @@
     <tbody>
 
         @if (Model != null)
-         {
+        {
             foreach (CartItem item in Model)
-             {
-        <tr>
-            <td>@item.Name</td>
-            <td>
-                <img src="@item.Image" alt="jagger" width="200px" height="200px" />
-            </td>
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>
+                        <img src="@item.Image" alt="jagger" width="200px" height="200px" />
+                    </td>
 
-            <td>@item.PricePerUnit</td>
-            
+                    <td>@item.PricePerUnit</td>
 
-            <td>
-                @Html.TextBox("count")
-                <!--<input type="number" class="form-control" id="count" name="count" placeholder="item.NumberOfUnits">-->
-            </td>
-                <td>
-                   <!-- <button type="submit" 
-                            class="btn btn-primary"
-                            onclick="location.href='Url.Action("Update", "Cart", new { cartItemProductId = item.ProductId, count =  })'">Upravit</button>
-                    !-->
-                <button type="button" ></button>
 
-                </td>
-            
+                    <td>
+                        @Html.TextBox("count")
+                        <!--<input type="number" class="form-control" id="count" name="count" placeholder="item.NumberOfUnits">-->
+                    </td>
+                    <td>
+                        <!-- <button type="submit"
+                                 class="btn btn-primary"
+                                 onclick="location.href='Url.Action("Update", "Cart", new { cartItemProductId = item.ProductId, count =  })'">Upravit</button>
+                         !-->
+                        <button type="button"></button>
 
-            <td>
-                <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Delete","Cart",new { cartItemId = item.ProductId})'">Smazat</button>
-            </td>
-        </tr>
+                    </td>
+
+
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Delete","Cart",new { cartItemId = item.ProductId})'">Smazat</button>
+                    </td>
+                </tr>
             }
         }
         else
