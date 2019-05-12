@@ -198,9 +198,9 @@ namespace Alkoshop.Database
             return null;
         }
 
-        internal static void createOrder(OracleConnection conn, Order order, ProductOrder[] productOrders)
+        internal static void createOrder(OracleConnection conn, Order order, IList<ProductOrder> productOrders)
         {
-            OracleCommand command = new OracleCommand("INSERT INTO ALKOHOLICI.\"Order\" (\"Date\",\"Status\",\"AddressID\",\"CustomerID\",\"EmployeeID\") VALUES(:date,'" + order.Status + "','" + order.AddressID + "','" + order.CustomerID + "','" + order.EmployeeID + ")", conn);
+            OracleCommand command = new OracleCommand("INSERT INTO ALKOHOLICI.\"Order\" (\"Date\",\"Status\",\"AddressID\",\"CustomerID\") VALUES(:date,'" + order.Status + "','" + order.AddressID + "','" + order.CustomerID + ")", conn);
             command.Parameters.Add(new OracleParameter("date", OracleDbType.Date)).Value = order.Date;
             command.ExecuteNonQuery();
 
@@ -216,10 +216,10 @@ namespace Alkoshop.Database
             }
         }
 
-        internal static IList<Order> getAllOrders(OracleConnection conn, int employeeID)
+        internal static IList<Order> getAllOrders(OracleConnection conn)
         {
             IList<Order> orders = new List<Order>();
-            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Order\" WHERE \"EmployeeID\"="+employeeID, conn);
+            OracleDataReader reader = getReader("SELECT * FROM ALKOHOLICI.\"Order\"", conn);
             while (reader.Read())
             {
                 int id = (int)reader["OrderID"];
@@ -227,6 +227,7 @@ namespace Alkoshop.Database
                 string status = (string)reader["Status"];
                 int customerID = (int)reader["CustomerID"];
                 int addressID = (int)reader["AddressID"];
+                int employeeID = (int)reader["EmployeeID"];
                 orders.Add(new Order(id, date, status, addressID, customerID, employeeID));
             }
             return orders;
@@ -248,9 +249,9 @@ namespace Alkoshop.Database
             return orders;
         }
 
-        internal static void changeOrderStatus(OracleConnection conn, int orderID, string status)
+        internal static void changeOrderStatus(OracleConnection conn, int orderID, string status, int employeeID)
         {
-            OracleCommand command = new OracleCommand("UPDATE ALKOHOLICI.\"Order\" SET \"Status\"='" +status+ "' WHERE \"OrderID\"="+orderID, conn);
+            OracleCommand command = new OracleCommand("UPDATE ALKOHOLICI.\"Order\" SET \"Status\"='" +status+ "',\"EmployeeID\"='" + employeeID + "' WHERE \"OrderID\"=" + orderID, conn);
             command.ExecuteNonQuery();
         }
 
