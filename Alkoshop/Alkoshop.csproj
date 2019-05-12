@@ -156,6 +156,8 @@
     <Content Include="Areas\Customer\Views\Cart\Index.cshtml" />
     <Content Include="Areas\Customer\Views\Product\Detail.cshtml" />
     <Content Include="Areas\Customer\Views\Favourite\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\Create.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\CustomerOrders.cshtml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -191,7 +193,7 @@
     <Compile Include="Class\AlkoshopMembershipProvider.cs" />
     <Compile Include="Class\ImageHelper.cs" />
     <Compile Include="Controllers\AddressController.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CustomerRegisterController.cs" />
     <Compile Include="Areas\Employee\Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -230,7 +232,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\CustomerRegister\Create.cshtml" />
     <Content Include="Views\Address\Create.cshtml" />
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
@@ -245,7 +247,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Models\" />
-    <Folder Include="Areas\Customer\Views\Order\" />
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Employee\Views\Home\" />
     <Folder Include="Design\" />

@@ -60,7 +60,7 @@ namespace Alkoshop.Areas.Customer.Controllers
             
             Session["cart"] = null; 
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home", new { area = ""});
+            return RedirectToAction("Index", "Home", new { Area = ""});
         }
     }
 }

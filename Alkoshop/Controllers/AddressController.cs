@@ -19,31 +19,38 @@ namespace Alkoshop.Controllers
         public ActionResult Create(string cusoremp)
         {
             
-            TempData["cusoremp"] = cusoremp;
+            TempData["cusoremporOr"] = cusoremp;
             if(cusoremp == "emp" && !User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index","Login");
-            }
+            } 
             return View();
         }
+
         [HttpPost]
-        public ActionResult Add(Address address, string cusoremp)
+        public ActionResult Add(Address tempAddress)
         {
             if (ModelState.IsValid)
             {
-                if((string)TempData["cusoremp"] == "cus") { 
-                    return RedirectToAction("Create", "Alkoshop.Controllers.CustomerController", new { area= "", address = address });
+                if((string)TempData["cusoremporOr"] == "cus") { 
+
+                    return RedirectToAction("Create", "CustomerRegister", tempAddress );
                     
-                } else if ((string)TempData["cusoremp"] == "emp" && User.Identity.IsAuthenticated)
+                } else if ((string)TempData["cusoremporOr"] == "emp" && User.Identity.IsAuthenticated)
                 {
-                    return RedirectToAction("Create", "Employee", address);
+                    return RedirectToAction("Create", "Employee", tempAddress);
+
+                } else if((string)TempData["cusoremporOr"] == "order")
+                {
+                    TempData["addressOrder"] = tempAddress;
+                    return RedirectToAction("Create", "Order", new { area = "Customer"});
                 }
                 
             }
             return View("Create");
             
         }
-        public ActionResult CreateEmployee()
+        public ActionResult CreateForOrder()
         {
             return View();
         }
