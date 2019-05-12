@@ -74,15 +74,16 @@ namespace Alkoshop.Database
             string comm = "";
             if (alcotabac == 1)
             {
-                comm = "SELECT DPH_COUNTER_ALCOHOL(" + alcotabacID + ") FROM DUAL";
+                comm = "SELECT DPH_COUNTER_ALCOHOL(" + alcotabacID + ") AS cena FROM DUAL";
             }
             if(alcotabac == 2)
             {
-                comm = "SELECT DPH_COUNTER_TABACCO(" + alcotabacID + ") FROM DUAL";
+                comm = "SELECT DPH_COUNTER_TABACCO(" + alcotabacID + ") AS cena FROM DUAL";
             }
             OracleDataReader reader = getReader(comm, conn);
             reader.Read();
-            return (double)reader["cena"];
+            decimal cena = (decimal)reader["CENA"];
+            return (double)cena;
         }
 
         internal static IList<Category> getCategories(OracleConnection conn, int alcotabac /*1 - alkohol; 2 - tabak*/)

@@ -25,7 +25,7 @@ namespace Alkoshop.Controllers
             }
             //    DBGetData.insertPhoto(conn, "C:/amundsen.jpg"); //pro vlozeni obrazku do DB
 
-            //System.Diagnostics.Debug.WriteLine(DBGetData.getProductByID((OracleConnection)Session["conn"],1).PriceWOdph);
+
             IList <Product> products = DBGetData.getAllProducts((OracleConnection)Session["conn"]);
             return View(products); 
         }
