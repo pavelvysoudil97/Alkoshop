@@ -348,9 +348,9 @@ namespace Alkoshop.Database
             fs.Read(ImageData, 0, System.Convert.ToInt32(fs.Length));
             fs.Close();
 
-            OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"Picture\" (\"Data\",\"Date_of_upload\",\"Suffix\") VALUES (:blobtodb,:date,'jpg')", conn);
+            OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"Picture\" (\"Data\",\"Date_of_upload\",\"Suffix\") VALUES (:blobtodb,:dateomg,'jpg')", conn);
             cmd.Parameters.Add(new OracleParameter("blobtodb", OracleDbType.Blob)).Value = ImageData;
-            cmd.Parameters.Add(new OracleParameter("date", OracleDbType.Date)).Value = DateTime.Now;
+            cmd.Parameters.Add(new OracleParameter("dateomg", OracleDbType.Date)).Value = DateTime.Now;
             try
             {
                 cmd.ExecuteNonQuery();

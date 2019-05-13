@@ -70,12 +70,12 @@ namespace Alkoshop.Areas.Employee.Controllers
                             picture.SaveAs(Server.MapPath("~/Design/" + picture.FileName));
                         }
 
-                        DBGetData.insertPhoto(DBMain.GetConnection(), Server.MapPath("~/Design/" + picture.FileName));
 
                         product.Amount = 10;
                         product.Availability = "yes";
                         product.Alcotabac = alcoTabac;
                         DBGetData.addProduct(DBMain.GetConnection(), product, countryId, categoryId, Server.MapPath("~/Design/" + picture.FileName));
+                        new System.IO.FileInfo(Server.MapPath("~/Design/" + picture.FileName)).Delete();
                         TempData["message-success"] = "Produkt byl úspěšně přidán";
                     }
                 }
