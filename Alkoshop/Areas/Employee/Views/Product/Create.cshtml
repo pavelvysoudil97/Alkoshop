@@ -1,0 +1,67 @@
+﻿@model Alkoshop.Models.Product
+
+
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "Create";
+}
+
+<div class="padded-down">
+    <h2>Přidání nového produktu</h2>
+</div>
+
+
+@using (Html.BeginForm("Add", "Product", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+
+    <div class="form-group">
+        <label>Name</label>
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control", name = "name", Placeholder = "Name" })
+        @Html.ValidationMessageFor(x => x.Name)
+    </div>
+    <div class="form-group">
+        <label>Producer</label>
+        @Html.TextBoxFor(x => x.Producer, new { @class = "form-control", name = "producer", Placeholder = "Producer" })
+        @Html.ValidationMessageFor(x => x.Producer)
+    </div>
+    <div class="form-group">
+        <label>Cena za jednotku</label>
+        @Html.TextBoxFor(x => x.PricePU, new { @class = "form-control", name = "pricePerUnit", Placeholder = "PricePerUnit" })
+        @Html.ValidationMessageFor(x => x.PricePU)
+    </div>
+    <div class="form-group">
+        <label>Popis</label>
+        @Html.TextBoxFor(x => x.Description, new { @class = "form-control", name = "description", Placeholder = "Description" })
+        @Html.ValidationMessageFor(x => x.Description)
+    </div>
+    <div class="form-group">
+        <label>Země původu</label>
+        @Html.DropDownList("countryName", new SelectList(ViewBag.Countries), new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Kategorie</label>
+        @Html.DropDownList("categoryId", new SelectList(ViewBag.Categories, "id", "name"), new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Kategorie 1-Alko 2-Tabak</label>
+        @Html.TextBoxFor(x => x.Alcotabac, new { type = "number", name = "alcoTabac" })
+        @Html.ValidationMessageFor(x => x.Alcotabac)
+    </div>
+
+
+    <div class="form-group">
+        <label>Obrázek</label>
+        <input type="file" name="picture" />
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary">Přidat</button>
+}
+
+
+
+

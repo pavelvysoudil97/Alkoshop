@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Alkoshop.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace Alkoshop.Areas.Employee.Controllers
         // GET: Employee/Home
         public ActionResult Index()
         {
+            Session["connection"] = DBMain.GetConnection();
             return View();
         }
     }

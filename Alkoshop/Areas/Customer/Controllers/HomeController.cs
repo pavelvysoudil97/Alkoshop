@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Alkoshop.Areas.Customer.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         // GET: Customer/Home

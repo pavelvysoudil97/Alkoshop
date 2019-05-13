@@ -5,9 +5,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Alkoshop.Controllers
+namespace Alkoshop.Areas.Employee.Controllers
 {
-    [Authorize(Users = "pecha@gmail.com")]
     public class EmployeeController : Controller
     {
         // GET: Employee
@@ -19,13 +18,13 @@ namespace Alkoshop.Controllers
         public ActionResult Create(Address address)
         {
             TempData["addresscontainer"] = address;
-            Employee employee = new Employee();
+            Alkoshop.Models.Employee employee = new Alkoshop.Models.Employee();
             employee.Address = address;
             return View();
         }
 
         [HttpPost]
-        public ActionResult Add(Employee employee)
+        public ActionResult Add(Alkoshop.Models.Employee employee)
         {
 
             var addressContainer = TempData["addresscontainer"];

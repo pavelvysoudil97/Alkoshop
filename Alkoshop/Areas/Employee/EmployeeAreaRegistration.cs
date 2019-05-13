@@ -17,8 +17,8 @@ namespace Alkoshop.Areas.Employee
             context.MapRoute(
                 "Employee_default",
                 "Employee/{controller}/{action}/{id}",
-                new {controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] {"Alkoshop.Area.Employee.Controllers"}
+                new {controller = "Home", action = "Index",AreaName="Employee", id = UrlParameter.Optional },
+                namespaces: new[] {"Alkoshop.Areas.Employee.Controllers"}
             );
         }
     }
