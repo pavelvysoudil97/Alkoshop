@@ -311,7 +311,7 @@ namespace Alkoshop.Database
         internal static bool createCustomerWithAddress(OracleConnection conn, Customer customer, Address address)
         {
             int addressID = createAddress(conn,address);
-            string comm = "INSERT INTO ALKOHOLICI.\"Customer\" (\"Birth_date\",\"Name\",\"Surname\",\"Email\",\"Password\",\"Phone_number\",\"Gdpr\",\"AddressID\") VALUES(:birthDate,'" + customer.Name+"','"+customer.Surname+"','"+customer.Email+"','"+customer.Password+"','"+customer.PhoneNumber+"','yes',"+addressID+")";    
+            string comm = "INSERT INTO ALKOHOLICI.\"Customer\" (\"Birth_date\",\"Name\",\"Surname\",\"Email\",\"Password\",\"Phone_number\",\"Gdpr\",\"AddressID\") VALUES(:birthDate,'" + customer.Name+"','"+customer.Surname+"','"+customer.Email+"','"+customer.Password+"','"+customer.PhoneNumber+"','yes','"+addressID+"')";    
             OracleCommand command = new OracleCommand(comm, conn);
             command.Parameters.Add(new OracleParameter("birthDate", OracleDbType.Date)).Value = customer.BirthDate;
             try
@@ -329,7 +329,7 @@ namespace Alkoshop.Database
         internal static void createEmployeeWithAddress(OracleConnection conn, Employee employee, Address address)
         {
             int addressID = createAddress(conn, address);
-            string comm = "INSERT INTO ALKOHOLICI.\"Employee\" (\"Name\",\"Surname\",\"Nickname\",\"Email\",\"Password\",\"Phone_number\",\"Salary\",\"Gdpr\",\"AddressID\") VALUES('" + employee.Name + "','" + employee.Surname + "','" + employee.Nickname + "','" + employee.Email + "','" + employee.Password + "','" + employee.PhoneNumber + "','" + employee.Salary + "','yes'," + addressID + ")";
+            string comm = "INSERT INTO ALKOHOLICI.\"Employee\" (\"Name\",\"Surname\",\"Nickname\",\"Email\",\"Password\",\"Phone_number\",\"Salary\",\"Gdpr\",\"AddressID\") VALUES('" + employee.Name + "','" + employee.Surname + "','" + employee.Nickname + "','" + employee.Email + "','" + employee.Password + "','" + employee.PhoneNumber + "','" + employee.Salary + "','yes','" + addressID + "')";
             OracleCommand command = new OracleCommand(comm, conn);
             try
             {
@@ -400,7 +400,7 @@ namespace Alkoshop.Database
                 int alcoholID = maxID(conn, "Alcohol", "AlcoholID");
                 insertPhoto(conn, pictureLocation);
                 int pictureID = maxID(conn, "Picture", "PictureID");
-                string comm2 = "INSERT INTO ALKOHOLICI.\"Product\" (\"Availability\",\"AlcoholID\",\"CountryID\",\"PictureID\",\"NAME\",\"PRODUCER\",\"CategoryID\",\"DESCRIPTION\") VALUES('" + product.Availability + "','" + alcoholID + "','" + countryID + "','" + pictureID + "','" + product.Name + "','" + product.Producer + "','" + categoryID + "','" + product.Description + ")";
+                string comm2 = "INSERT INTO ALKOHOLICI.\"Product\" (\"Availability\",\"AlcoholID\",\"CountryID\",\"PictureID\",\"NAME\",\"PRODUCER\",\"CategoryID\",\"DESCRIPTION\") VALUES('" + product.Availability + "','" + alcoholID + "','" + countryID + "','" + pictureID + "','" + product.Name + "','" + product.Producer + "','" + categoryID + "','" + product.Description + "')";
                 new OracleCommand(comm2, conn).ExecuteNonQuery();
             }
             if (product.Alcotabac == 2)
@@ -410,7 +410,7 @@ namespace Alkoshop.Database
                 int tabaccoID = maxID(conn, "Tabacco", "TabaccoID");
                 insertPhoto(conn, pictureLocation);
                 int pictureID = maxID(conn, "Picture", "PictureID");
-                string comm2 = "INSERT INTO ALKOHOLICI.\"Product\" (\"Availability\",\"TabaccoID\",\"CountryID\",\"PictureID\",\"NAME\",\"PRODUCER\",\"CategoryID\",\"DESCRIPTION\") VALUES('" + product.Availability + "','" + tabaccoID + "','" + countryID + "','" + pictureID + "','" + product.Name + "','" + product.Producer + "','" + categoryID + "','" + product.Description + ")";
+                string comm2 = "INSERT INTO ALKOHOLICI.\"Product\" (\"Availability\",\"TabaccoID\",\"CountryID\",\"PictureID\",\"NAME\",\"PRODUCER\",\"CategoryID\",\"DESCRIPTION\") VALUES('" + product.Availability + "','" + tabaccoID + "','" + countryID + "','" + pictureID + "','" + product.Name + "','" + product.Producer + "','" + categoryID + "','" + product.Description + "')";
                 new OracleCommand(comm2, conn).ExecuteNonQuery();
             }
         }
