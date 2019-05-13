@@ -50,9 +50,9 @@ namespace Alkoshop.Areas.Employee.Controllers
                     {
                         Image image = Image.FromStream(picture.InputStream);
 
-                        if (image.Height > 200 && image.Width > 200)
+                        if (image.Height > 400 && image.Width > 400)
                         {
-                            Image smallImage = ImageHelper.ScaleImage(image, 200, 200);
+                            Image smallImage = ImageHelper.ScaleImage(image, 400, 400);
                             Bitmap b = new Bitmap(smallImage);
 
                             Guid guid = Guid.NewGuid();
@@ -100,7 +100,7 @@ namespace Alkoshop.Areas.Employee.Controllers
         {
             int productId =(int) TempData["tempProductId"];
             DBGetData.changeProduct(DBMain.GetConnection(), productId, alcoTabac, amount, pricePU);
-
+            
             TempData["message-success"] = "Produkt byl uspesne upraven";
             return RedirectToAction("Index", "Home");
         }

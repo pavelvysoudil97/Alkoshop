@@ -11,6 +11,7 @@ namespace Alkoshop.Controllers
 {
     public class CustomerRegisterController : Controller
     {
+
         // GET: Customer
         public ActionResult Index()
         {
@@ -44,7 +45,8 @@ namespace Alkoshop.Controllers
             }
             
             
-            return View("Create", customer);
+            return RedirectToAction("Create", customer);
         }
+
     }
 }

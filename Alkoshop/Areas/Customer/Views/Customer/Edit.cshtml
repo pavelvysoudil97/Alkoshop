@@ -1,0 +1,82 @@
+﻿@model Alkoshop.Models.Customer
+
+
+@{
+    /**/
+
+    /**/
+
+    ViewBag.Title = "ChangeInformations";
+}
+
+<div class="padded-down">
+    <h2>Vaše údaje</h2>
+</div>
+
+
+@using (Html.BeginForm("Update", "Customer", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        <div class="row">
+            <div class="col">
+                <label>Name</label>
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", Placeholder = Model.Name })
+                @Html.ValidationMessageFor(x => x.Name)
+            </div>
+            <div class="col">
+                <label>Surname</label>
+                @Html.TextBoxFor(x => x.Surname, new { @class = "form-control", Placeholder = Model.Surname })
+                @Html.ValidationMessageFor(x => x.Surname)
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>Email</label>
+        @Html.TextBoxFor(x => x.Email, new { @class = "form-control", Placeholder = Model.Email })
+        @Html.ValidationMessageFor(x => x.Email)
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        @Html.PasswordFor(x => x.Password, new { @class = "form-control", Placeholder = Model.Password })
+        @Html.ValidationMessageFor(x => x.Password)
+    </div>
+    <div class="form-group">
+        <label>Phone Number</label>
+        @Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control ", Placeholder = Model.PhoneNumber })
+        @Html.ValidationMessageFor(x => x.PhoneNumber)
+    </div>
+    <div class="form-group">
+        <label>Birth Date </label>
+        @Html.TextBoxFor(x => x.BirthDate, new { @class = "form-control ", Placeholder = Model.BirthDate })
+        @Html.ValidationMessageFor(x => x.BirthDate)
+    </div>
+    <div class="form-group">
+        <label>City</label>
+        @Html.TextBoxFor(x => x.Address.City, new { @class = "form-control", Placeholder = Model.Address.City })
+        @Html.ValidationMessageFor(x => x.Address.City)
+    </div>
+    <div class="form-group">
+        <label>Street</label>
+        @Html.TextBoxFor(x => x.Address.Street, new { @class = "form-control", Placeholder = Model.Address.Street })
+        @Html.ValidationMessageFor(x => x.Address.Street)
+    </div>
+    <div class="form-group">
+        <label>Street Number</label>
+        @Html.TextBoxFor(x => x.Address.StreetNumber, new { @class = "form-control", Placeholder = Model.Address.StreetNumber })
+        @Html.ValidationMessageFor(x => x.Address.StreetNumber)
+    </div>
+    <div class="form-group">
+        <label>Zip Code</label>
+        @Html.TextBoxFor(x => x.Address.ZipCode, new { @class = "form-control ", Placeholder = Model.Address.ZipCode })
+        @Html.ValidationMessageFor(x => x.Address.ZipCode)
+    </div>
+
+
+
+    <button type="submit" class="btn btn-primary">Uložit údaje</button>
+}
+
+
+
+

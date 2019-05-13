@@ -75,11 +75,11 @@ namespace Alkoshop.Areas.Customer.Controllers
 
         public ActionResult CustomerOrders()
         {
-            OracleConnection connection = Session["conn"] as OracleConnection;
+            OracleConnection connection = DBMain.GetConnection();
             int customerId = (Session["User"] as Alkoshop.Models.Customer).ID;
 
             IList<Order> orders = DBGetData.getOrdersForCustomer(connection, customerId);
-
+           
             return View(orders);
         }
 

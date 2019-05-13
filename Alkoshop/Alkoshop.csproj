@@ -163,6 +163,8 @@
     <Content Include="Areas\Employee\Views\Product\Create.cshtml" />
     <Content Include="Areas\Employee\Views\Home\Index.cshtml" />
     <Content Include="Areas\Employee\Views\Product\Edit.cshtml" />
+    <Content Include="Areas\Employee\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\Customer\Edit.cshtml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -187,6 +189,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Customer\Controllers\CartController.cs" />
+    <Compile Include="Areas\Customer\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Customer\Controllers\FavouriteController.cs" />
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\LoginController.cs" />
@@ -255,7 +258,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Models\" />
     <Folder Include="Areas\Employee\Models\" />
-    <Folder Include="Areas\Employee\Views\Order\" />
     <Folder Include="Design\" />
   </ItemGroup>
   <ItemGroup>
