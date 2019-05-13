@@ -1,4 +1,5 @@
-﻿using Alkoshop.Models;
+﻿using Alkoshop.Database;
+using Alkoshop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Alkoshop.Areas.Employee.Controllers
 {
-    public class EmployeeController : Controller
+    public class EmployeeRegistrationController : Controller
     {
         // GET: Employee
         public ActionResult Index()
@@ -39,8 +40,8 @@ namespace Alkoshop.Areas.Employee.Controllers
             }
             if (ModelState.IsValid)
             {
-                //Pripravene na create Employee 
-                // DBGetData.createEmployeeWithAddress(customer, addressObject);
+
+                 DBGetData.createEmployeeWithAddress(DBMain.GetConnection(),employee, addressContainer as Address);
                 TempData["message-success"] = "Employee was added successfully";
 
                 return RedirectToAction("Index", "Home");

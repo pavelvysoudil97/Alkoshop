@@ -23,7 +23,7 @@ namespace Alkoshop.Areas.Employee.Controllers
         {
             IDictionary<int, string> countries = DBGetData.getCountries(DBMain.GetConnection());
             ViewBag.Countries = countries.Values;
-            IList<Category> categories = DBGetData.getCategories(Session["connection"] as OracleConnection, 0);
+            IList<Category> categories = DBGetData.getCategories(DBMain.GetConnection(), 0);
             ViewBag.Categories = categories;
             return View();
         }
@@ -33,7 +33,7 @@ namespace Alkoshop.Areas.Employee.Controllers
         {
             if (ModelState.IsValid)
             {
-                IDictionary<int, string> countries = DBGetData.getCountries(Session["connection"] as OracleConnection);
+                IDictionary<int, string> countries = DBGetData.getCountries(DBMain.GetConnection());
                 int countryId = 0;
 
                 foreach (KeyValuePair<int, string> item in countries)
@@ -70,12 +70,12 @@ namespace Alkoshop.Areas.Employee.Controllers
                             picture.SaveAs(Server.MapPath("~/Design/" + picture.FileName));
                         }
 
-                        DBGetData.insertPhoto(Session["connection"] as OracleConnection, Server.MapPath("~/Design/" + picture.FileName));
+                        DBGetData.insertPhoto(DBMain.GetConnection(), Server.MapPath("~/Design/" + picture.FileName));
 
                         product.Amount = 10;
                         product.Availability = "yes";
                         product.Alcotabac = alcoTabac;
-                        DBGetData.addProduct(Session["connection"] as OracleConnection, product, countryId, categoryId, Server.MapPath("~/Design/" + picture.FileName));
+                        DBGetData.addProduct(DBMain.GetConnection(), product, countryId, categoryId, Server.MapPath("~/Design/" + picture.FileName));
                         TempData["message-success"] = "Produkt byl úspěšně přidán";
                     }
                 }
@@ -83,9 +83,25 @@ namespace Alkoshop.Areas.Employee.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        public ActionResult Update(Product productId)
+        public ActionResult Edit(int productId)
         {
-            return View();
+            OracleConnection connection = DBMain.GetConnection();
+
+            Product product = DBGetData.getProductByID(connection, productId);
+            IDictionary<int, string> countries = DBGetData.getCountries(DBMain.GetConnection());
+            ViewBag.Countries = countries.Values;
+            IList<Category> categories = DBGetData.getCategories(DBMain.GetConnection(), 0);
+            ViewBag.Categories = categories;
+            return View(product);
+        }
+        [HttpPost]
+        public ActionResult Update(int productId, int alcoTabac, int amount, int pricePU)
+        {
+
+            DBGetData.changeProduct(DBMain.GetConnection(), productId, alcoTabac, amount, pricePU);
+
+            TempData["message-success"] = "Produkt byl uspesne upraven";
+            return RedirectToAction("Index", "Home");
         }
     }
 }

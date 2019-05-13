@@ -162,6 +162,7 @@
     <Content Include="Areas\Employee\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Employee\Views\Product\Create.cshtml" />
     <Content Include="Areas\Employee\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Employee\Views\Product\Edit.cshtml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -193,6 +194,7 @@
     <Compile Include="Areas\Customer\Controllers\ProductController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Areas\Employee\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Employee\Controllers\OrderController.cs" />
     <Compile Include="Areas\Employee\Controllers\ProductController.cs" />
     <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
     <Compile Include="Class\AlkoshopMembershipProvider.cs" />
@@ -253,6 +255,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Models\" />
     <Folder Include="Areas\Employee\Models\" />
+    <Folder Include="Areas\Employee\Views\Order\" />
     <Folder Include="Design\" />
   </ItemGroup>
   <ItemGroup>

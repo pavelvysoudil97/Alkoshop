@@ -38,7 +38,8 @@ namespace Alkoshop.Controllers
                     
                 } else if ((string)TempData["cusoremporOr"] == "emp" && User.Identity.IsAuthenticated)
                 {
-                    return RedirectToAction("Create", "Employee", tempAddress);
+                    TempData["temAddress"] = tempAddress;
+                    return RedirectToAction("Create", "EmployeeRegistration", new { area = "Employee"  });
 
                 } else if((string)TempData["cusoremporOr"] == "order")
                 {

@@ -22,6 +22,7 @@ namespace Alkoshop.Controllers
             OracleConnection connection = DBMain.GetConnection();
              Product product = DBGetData.getProductByID(connection, productId);
 
+
             return View(product); //product
         }
 
