@@ -92,12 +92,13 @@ namespace Alkoshop.Areas.Employee.Controllers
             ViewBag.Countries = countries.Values;
             IList<Category> categories = DBGetData.getCategories(DBMain.GetConnection(), 0);
             ViewBag.Categories = categories;
+            TempData["tempProductId"] = productId;
             return View(product);
         }
         [HttpPost]
-        public ActionResult Update(int productId, int alcoTabac, int amount, int pricePU)
+        public ActionResult Update(int alcoTabac, int amount, int pricePU)
         {
-
+            int productId =(int) TempData["tempProductId"];
             DBGetData.changeProduct(DBMain.GetConnection(), productId, alcoTabac, amount, pricePU);
 
             TempData["message-success"] = "Produkt byl uspesne upraven";

@@ -40,7 +40,7 @@
         
     <div class="form-group">
         <label>Kategorie 1-Alko 2-Tabak</label>
-        @Html.TextBoxFor(x => x.Alcotabac, new { type = "number", name = "alcoTabac" })
+        @Html.RadioButtonFor(x => x.Alcotabac, new { type = "number", name = "alcoTabac" })
         @Html.ValidationMessageFor(x => x.Alcotabac)
     </div>
 
