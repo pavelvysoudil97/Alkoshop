@@ -222,15 +222,10 @@ namespace Alkoshop.Database
             OracleCommand command = new OracleCommand("INSERT INTO ALKOHOLICI.\"Order\" (\"Date\",\"Status\",\"AddressID\",\"CustomerID\") VALUES(:orderdate,'" + order.Status + "','" + order.AddressID + "','" + order.CustomerID + "')", conn);
             command.Parameters.Add(new OracleParameter("orderdate", OracleDbType.Date)).Value = order.Date;
             command.ExecuteNonQuery();
-
-            OracleCommand command2 = new OracleCommand("SELECT MAX(\"OrderID\") as id FROM ALKOHOLICI.\"Order\"", conn);
-            OracleDataReader reader = command2.ExecuteReader();
-            reader.Read();
-            decimal orderID = (decimal)reader["id"];
-
+            int orderID = maxID(conn, "Order", "OrderID");
             foreach (ProductOrder productOrder in productOrders)
             {
-                OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"ProductOrder\" (\"ProductID\",\"OrderID\",\"PRICE_PER_UNIT\",\"NUMBER_OF_UNIT\") VALUES('" + productOrder.ProductID + "','" + (int)orderID + "','" + productOrder.Price_per_unit + "','" + productOrder.Number_of_unit + "')", conn);
+                OracleCommand cmd = new OracleCommand("INSERT INTO ALKOHOLICI.\"ProductOrder\" (\"ProductID\",\"OrderID\",\"PRICE_PER_UNIT\",\"NUMBER_OF_UNIT\") VALUES('" + productOrder.ProductID + "','" + orderID + "','" + productOrder.Price_per_unit + "','" + productOrder.Number_of_unit + "')", conn);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -274,37 +269,25 @@ namespace Alkoshop.Database
             command.ExecuteNonQuery();
         }
 
-        // Kdyz chcces zmenit i adresu tak musi byt changeAddress!=0 a address!=null -> (vcetne address.id!!)
-        internal static void changeCustomerData(OracleConnection conn, int customerID, string name, string surname, string pass, string email, int phoneNumber, int changeAddress = 0, Address address = null)
+        internal static void changeCustomerData(OracleConnection conn, int customerID, string name, string surname, string pass, string email, int phoneNumber, int addressID)
         {
-            string comm = "UPDATE ALKOHOLICI.\"Customer\" SET \"Name\"='" + name + "',\"Surname\"='" + surname + "',\"Password\"='" + pass + "',\"Email\"='" + email + "',\"Phone_number\"='" + phoneNumber + "' WHERE \"CustomerID\"=" + customerID;
-            if (changeAddress != 0 && address!=null)
-            {
-                OracleCommand cmnd = new OracleCommand("UPDATE ALKOHOLICI.\"Address\" SET \"City\"='"+address.City+"', \"Street\"='"+address.Street+"', \"Street_number\"='"+address.StreetNumber+"', \"Zip_code\"='"+address.ZipCode+"' WHERE \"AddressID\"=" + address.ID, conn);
-                cmnd.ExecuteNonQuery();
-                comm = "UPDATE ALKOHOLICI.\"Customer\" SET \"Name\"='" + name + "',\"Surname\"='" + surname + "',\"Password\"='" + pass + "',\"Email\"='" + email + "',\"Phone_number\"='" + phoneNumber + "',\"AddressID\"='" + address.ID + "' WHERE \"CustomerID\"=" + customerID;
-            }
-            OracleCommand command = new OracleCommand(comm, conn);
+            OracleCommand command = new OracleCommand("UPDATE ALKOHOLICI.\"Customer\" SET \"Name\"='" + name + "',\"Surname\"='" + surname + "',\"Password\"='" + pass + "',\"Email\"='" + email + "',\"Phone_number\"='" + phoneNumber + "',\"AddressID\"='" + addressID + "' WHERE \"CustomerID\"=" + customerID, conn);
             command.ExecuteNonQuery();
         }
 
         internal static int createAddress(OracleConnection conn, Address address)
         {
-            OracleCommand command = new OracleCommand("INSERT INTO ALKOHOLICI.\"Address\" (\"City\",\"Street\",\"Street_number\",\"Zip_code\") VALUES ('"+address.City+"','"+address.Street+"','"+address.StreetNumber+"','"+address.ZipCode+"')", conn);
             try
             {
+                OracleDataReader reader = getReader("SELECT \"AddressID\" FROM ALKOHOLICI.\"Address\" WHERE \"City\"='" + address.City + "' AND \"Street\"='" + address.Street + "' AND \"Street_number\"='" + address.StreetNumber + "' AND \"Zip_code\"='" + address.ZipCode + "'", conn);
+                reader.Read();
+                return (int)reader["AddressID"];
+            }
+            catch {
+                OracleCommand command = new OracleCommand("INSERT INTO ALKOHOLICI.\"Address\" (\"City\",\"Street\",\"Street_number\",\"Zip_code\") VALUES ('" + address.City + "','" + address.Street + "','" + address.StreetNumber + "','" + address.ZipCode + "')", conn);
                 command.ExecuteNonQuery();
+                return maxID(conn, "Address", "AddressID");
             }
-            catch (Exception ex1)
-            {
-                System.Diagnostics.Debug.WriteLine("## ERROR: " + ex1.Message);
-            }
-            OracleCommand command2 = new OracleCommand("SELECT MAX(\"AddressID\") as id FROM ALKOHOLICI.\"Address\"", conn);
-            OracleDataReader reader = command2.ExecuteReader();
-            decimal id = 0;
-            reader.Read();            
-            id = (decimal)reader["id"];
-            return (int)id;
         }        
 
         internal static bool createCustomerWithAddress(OracleConnection conn, Customer customer, Address address)
