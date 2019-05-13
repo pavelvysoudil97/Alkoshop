@@ -1,0 +1,32 @@
+﻿@using Alkoshop.Models
+@model IList<Product>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/Content/menustyle.css" />
+
+<div class="card-group">
+
+    @foreach (Product p in Model)
+    {
+    <div class="col-md-12">
+
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-100 position-relative">
+            <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
+                <div class="col-auto d-none d-lg-block align-self-center">
+                    <img src="@p.Picture" alt="@p.Name" width="400px" height="400px" />
+                </div>
+                <b><h3 class="mb-0">@p.Name</h3></b>
+                <div class="mb-1 text-muted"><b>Producent: </b>@p.Producer</div>
+                <p class="mb-auto"><b>Pochází z: </b> @p.Country</p>
+                <p class="mb-auto"><b>Popis produktu: </b>@p.Description</p>
+            </div>
+
+        </div>
+
+    </div>
+    }
+
+</div>
+

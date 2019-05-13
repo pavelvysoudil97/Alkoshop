@@ -18,13 +18,18 @@ namespace Alkoshop.Areas.Customer.Controllers
             return View();
         }
 
-        public ActionResult Create()
+        public ActionResult Create(bool newAddress)
         {
             OracleConnection connection = DBMain.GetConnection();
-
-            Address address = TempData["addressOrder"] as Address;
-           
-
+            Address address;
+            if (newAddress)
+            {
+                address = TempData["addressOrder"] as Address;
+            }else
+            {
+                address = (Session["User"] as Alkoshop.Models.Customer).Address;
+            }
+            
             Order order = new Order();
             
             order.CustomerID = (Session["User"] as Alkoshop.Models.Customer).ID;
@@ -53,6 +58,7 @@ namespace Alkoshop.Areas.Customer.Controllers
             TempData["potentialOrder"] = order;
             TempData["potentialProductOrders"] = productOrders;
             TempData["potentialAddress"] = address;
+            TempData["newAddress"] = newAddress;
             return View(cartItems);
         }
 
@@ -64,7 +70,17 @@ namespace Alkoshop.Areas.Customer.Controllers
             IList<ProductOrder> productOrder = TempData["potentialProductOrders"] as List<ProductOrder>;
             Address address = TempData["potentialAddress"] as Address;
 
-            int addressID = DBGetData.createAddress(connection, address);
+            int addressID;
+            if ((bool)TempData["newAddress"])
+            {
+                addressID = DBGetData.createAddress(connection, address);
+            }
+            else
+            {
+                addressID = (Session["User"] as Alkoshop.Models.Customer).Address.ID;
+
+            };
+            
             order.AddressID = addressID;
 
             DBGetData.createOrder(connection, order, productOrder);

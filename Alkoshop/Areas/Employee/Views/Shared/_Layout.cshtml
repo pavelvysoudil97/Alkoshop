@@ -49,8 +49,9 @@
         <a class="p-2 text-white" href="#">Features</a>
         <a class="p-2 text-white" href="@Url.Action("Create","Product")">Přidat produkt</a>
         <a class="p-2 text-white" href="@Url.Action("Index","Order")">Správa objednávek</a>
+        <a class="p-2 text-white" href="@Url.Action("AllProductsByOrders","Product")">Produkty k odeslání</a>
         <a class="p-2 text-white" href="@Url.Action("Create","Address", new {area = "", cusoremp = "emp"})">Registrace zaměstnance</a>
-        
+
     </nav>
     <div id="sing">
         <a class="btn btn-outline-success float-lg-right text-white" href="@Url.Action("Logout", "Login", new {area = "Customer"})"> Odhlásit se </a>

@@ -44,7 +44,7 @@ namespace Alkoshop.Controllers
                 } else if((string)TempData["cusoremporOr"] == "order")
                 {
                     TempData["addressOrder"] = tempAddress;
-                    return RedirectToAction("Create", "Order", new { area = "Customer"});
+                    return RedirectToAction("Create", "Order", new { area = "Customer", newAddress = true});
                 }
                 
             }

@@ -104,5 +104,12 @@ namespace Alkoshop.Areas.Employee.Controllers
             TempData["message-success"] = "Produkt byl uspesne upraven";
             return RedirectToAction("Index", "Home");
         }
+
+        public ActionResult AllProductsByOrders()
+        {
+            IList<Product> products = DBGetData.getOrderedProducts(DBMain.GetConnection());
+
+            return View(products);
+        }
     }
 }
