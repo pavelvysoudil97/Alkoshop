@@ -274,16 +274,15 @@ namespace Alkoshop.Database
             command.ExecuteNonQuery();
         }
 
-        // Kdyz chcces zmenit i adresu tak musi byt vyplneno oldAddressID a newAddress!
-        internal static void changeCustomerData(OracleConnection conn, int customerID, string name, string surname, string pass, string email, int phoneNumber, int oldAddressID = 0, Address newAddress = null)
+        // Kdyz chcces zmenit i adresu tak musi byt changeAddress!=0 a address!=null -> (vcetne address.id!!)
+        internal static void changeCustomerData(OracleConnection conn, int customerID, string name, string surname, string pass, string email, int phoneNumber, int changeAddress = 0, Address address = null)
         {
             string comm = "UPDATE ALKOHOLICI.\"Customer\" SET \"Name\"='" + name + "',\"Surname\"='" + surname + "',\"Password\"='" + pass + "',\"Email\"='" + email + "',\"Phone_number\"='" + phoneNumber + "' WHERE \"CustomerID\"=" + customerID;
-            if (oldAddressID!=0 && newAddress!=null)
+            if (changeAddress != 0 && address!=null)
             {
-                OracleCommand cmnd = new OracleCommand("DELETE FROM ALKOHOLICI.\"Address\" WHERE \"AddressID\"=" + oldAddressID, conn);
+                OracleCommand cmnd = new OracleCommand("UPDATE ALKOHOLICI.\"Address\" SET \"City\"='"+address.City+"', \"Street\"='"+address.Street+"', \"Street_number\"='"+address.StreetNumber+"', \"Zip_code\"='"+address.ZipCode+"' WHERE \"AddressID\"=" + address.ID, conn);
                 cmnd.ExecuteNonQuery();
-                int addressID = createAddress(conn, newAddress);
-                comm = "UPDATE ALKOHOLICI.\"Customer\" SET \"Name\"='" + name + "',\"Surname\"='" + surname + "',\"Password\"='" + pass + "',\"Email\"='" + email + "',\"Phone_number\"='" + phoneNumber + "',\"AddressID\"='" + addressID + "' WHERE \"CustomerID\"=" + customerID;
+                comm = "UPDATE ALKOHOLICI.\"Customer\" SET \"Name\"='" + name + "',\"Surname\"='" + surname + "',\"Password\"='" + pass + "',\"Email\"='" + email + "',\"Phone_number\"='" + phoneNumber + "',\"AddressID\"='" + address.ID + "' WHERE \"CustomerID\"=" + customerID;
             }
             OracleCommand command = new OracleCommand(comm, conn);
             command.ExecuteNonQuery();
