@@ -35,7 +35,7 @@
     {
                 @Html.Hidden("cartItemProductId",item.ProductId)
         <td>
-            @Html.TextBox("count",new { },new { type="number", Placeholder=item.NumberOfUnits})
+            @Html.TextBox("count",new {},new { type="number", Placeholder=item.NumberOfUnits, value = item.NumberOfUnits });
             <!--<input type="number" class="form-control" id="count" name="count" placeholder="item.NumberOfUnits">-->
         </td>
         <td>

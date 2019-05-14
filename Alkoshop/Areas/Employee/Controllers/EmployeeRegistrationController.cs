@@ -18,9 +18,11 @@ namespace Alkoshop.Areas.Employee.Controllers
 
         public ActionResult Create(Address address)
         {
-            TempData["addresscontainer"] = address;
+
+            
             Alkoshop.Models.Employee employee = new Alkoshop.Models.Employee();
-            employee.Address = address;
+            employee.Address = TempData["tempAddress"] as Address;
+            TempData["addresscontainer"] = employee.Address;
             return View();
         }
 
@@ -34,7 +36,7 @@ namespace Alkoshop.Areas.Employee.Controllers
             {
                 if(TempData["addresscontainer"] == null)
                 {
-                    return RedirectToAction("Create", "Address");
+                    return RedirectToAction("Create", "Address", new{area=""});
                 }
                 employee.Address = (Address)TempData["addresscontainer"];
             }

@@ -64,7 +64,7 @@ namespace Alkoshop.Areas.Customer.Controllers
         {
             IList<CartItem> cartProducts = (List<CartItem>)Session["cart"];
             foreach(CartItem item in cartProducts)
-            {
+            {   
                 if (item.ProductId.CompareTo(cartItemProductId) == 0)
                 {
                     item.NumberOfUnits = count;
