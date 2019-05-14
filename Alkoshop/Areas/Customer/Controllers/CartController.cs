@@ -24,7 +24,12 @@ namespace Alkoshop.Areas.Customer.Controllers
         [HttpPost]
         public ActionResult Add(string name, string image, int productId, int pricePerUnit, int numberOfUnit)
         {
-
+            int amountOfProduct = DBGetData.getProductByID(DBMain.GetConnection(), productId).Amount;
+            if (numberOfUnit > amountOfProduct)
+            {
+                TempData["message-nosuccess"] = "Ve skladu je jiz pouze " + amountOfProduct + " kusů";
+                return RedirectToAction("Detail","Product", new { productId });
+            }
             CartItem cartItem = new CartItem(name, image, productId, pricePerUnit, numberOfUnit);
             if(Session["cart"] == null)
             {

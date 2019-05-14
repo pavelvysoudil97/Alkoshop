@@ -14,12 +14,15 @@ namespace Alkoshop.Areas.Employee.Controllers
         public ActionResult Index()
         {
             IList<Order> orders = DBGetData.getAllOrders(DBMain.GetConnection());
+            ViewBag.OrderStates = new List<string> { "new", "exp", "strn" };
             return View(orders);
         }
 
-        public ActionResult Detail(int orderId)
+       public ActionResult Update(int orderId, string stateDropdown)
         {
-            return View();
+            DBGetData.changeOrderStatus(DBMain.GetConnection(), orderId, stateDropdown, (Session["User"] as Alkoshop.Models.Employee).ID);
+            TempData["message-success"] = "Status objednavky zmenen";
+            return RedirectToAction("Index");
         }
     }
 }

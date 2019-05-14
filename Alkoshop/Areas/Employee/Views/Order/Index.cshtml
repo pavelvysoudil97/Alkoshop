@@ -12,10 +12,22 @@
     <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
         <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
 
+
             <b><h3 class="mb-0">Id: @order.ID</h3></b>
             <p class="mb-auto"><b>Datum vytvoreni: </b>@order.Date</p>
-            <div><b>Status: </b> @order.Status</div>
-            <a href="@Url.Action("Detail", "Order", new { })"
+
+            @using (Html.BeginForm("Update", "Order", FormMethod.Post))
+                {
+                    @Html.Hidden("orderId", order.ID)
+                    <label title="Status:"></label>
+                    @Html.DropDownList("stateDropdown", new SelectList(ViewBag.OrderStates),order.Status)
+
+                    <button type="submit" class="btn btn-primary">Upravit status</button>
+
+                }
+
+
+
         </div>
 
     </div>
