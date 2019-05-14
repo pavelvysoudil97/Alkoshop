@@ -23,33 +23,37 @@
         {
             foreach (CartItem item in Model)
             {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>
-                        <img src="@item.Image" alt="jagger" width="400" height="400" />
-                    </td>
+        <tr>
+            <td>@item.Name</td>
+            <td>
+                <img src="@item.Image" alt="@item.Name" width="400" height="400" />
+            </td>
 
-                    <td>@item.PricePerUnit</td>
+            <td>@item.PricePerUnit</td>
+
+            @using (Html.BeginForm("Update", "Cart",FormMethod.Post))
+    {
+                @Html.Hidden("cartItemProductId",item.ProductId)
+        <td>
+            @Html.TextBox("count",new { },new { type="number", Placeholder=item.NumberOfUnits})
+            <!--<input type="number" class="form-control" id="count" name="count" placeholder="item.NumberOfUnits">-->
+        </td>
+        <td>
+            <!-- <button type="submit"
+             class="btn btn-primary"
+             onclick="location.href='Url.Action("Update", "Cart", new { cartItemProductId = item.ProductId, count =  })'">Upravit</button>
+     !-->
+            <button type="submit" class="btn btn-primary">Upravit</button>
+
+        </td>
+}
 
 
-                    <td>
-                        @Html.TextBox("count")
-                        <!--<input type="number" class="form-control" id="count" name="count" placeholder="item.NumberOfUnits">-->
-                    </td>
-                    <td>
-                        <!-- <button type="submit"
-                                 class="btn btn-primary"
-                                 onclick="location.href='Url.Action("Update", "Cart", new { cartItemProductId = item.ProductId, count =  })'">Upravit</button>
-                         !-->
-                        <button type="button"></button>
 
-                    </td>
-
-
-                    <td>
-                        <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Delete","Cart",new { cartItemId = item.ProductId})'">Smazat</button>
-                    </td>
-                </tr>
+            <td>
+                <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Delete","Cart",new { cartItemId = item.ProductId})'">Smazat</button>
+            </td>
+        </tr>
             }
         }
         else
