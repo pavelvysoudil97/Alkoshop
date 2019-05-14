@@ -8,10 +8,10 @@
 
 <h2>Souhrn Objednávky</h2>
 
-<p>Objednávka na Adresu: @ViewBag.Address.City </p>
-<p>Vytvořena dne:@ViewBag.Order.Date</p>
-<p>Jméno:@ViewBag.OrderUser.Name</p>
-<p>Příjmení:@ViewBag.OrderUser.Surname</p>
+<p>Objednávka na Adresu: @ViewBag.Address.Street @ViewBag.Address.StreetNumber, @ViewBag.Address.ZipCode @ViewBag.Address.City </p>
+<p>Vytvořena dne:  @ViewBag.Order.Date</p>
+<p>Jméno:  @ViewBag.OrderUser.Name</p>
+<p>Příjmení:  @ViewBag.OrderUser.Surname</p>
 
 
 @foreach (CartItem item in Model)
@@ -32,8 +32,8 @@
 <h4>Celková cena: @ViewBag.TotalPrice</h4>
 
 
-<button type="button" class="btn btn-primary" onclick="location.href ='@Url.Action("TrueCreate","Order")'">Potvrdit</button>
-<button type="button" class="btn btn-primary" onclick="location.href ='@Url.Action("Index","Home")'">Zrušit</button>
+<button type="button" class="btn btn-success" onclick="location.href ='@Url.Action("TrueCreate","Order")'">Potvrdit</button>
+<button type="button" class="btn btn-success" onclick="location.href = '@Url.Action("Index","Cart")'">Zrušit</button>
 
 
 

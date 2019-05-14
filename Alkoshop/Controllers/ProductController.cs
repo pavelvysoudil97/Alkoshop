@@ -22,6 +22,12 @@ namespace Alkoshop.Controllers
             OracleConnection connection = DBMain.GetConnection();
              Product product = DBGetData.getProductByID(connection, productId);
 
+            Session["conn"] = DBMain.GetConnection();
+
+            IList<Category> alcoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 1);
+            IList<Category> tabaccoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 2);
+            ViewBag.AlcoCategories = alcoCategories;
+            ViewBag.TabaccoCategories = tabaccoCategories;
 
             return View(product); //product
         }

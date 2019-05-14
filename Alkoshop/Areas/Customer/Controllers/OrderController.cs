@@ -95,7 +95,14 @@ namespace Alkoshop.Areas.Customer.Controllers
             int customerId = (Session["User"] as Alkoshop.Models.Customer).ID;
 
             IList<Order> orders = DBGetData.getOrdersForCustomer(connection, customerId);
-           
+
+            Session["conn"] = DBMain.GetConnection();
+
+            IList<Category> alcoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 1);
+            IList<Category> tabaccoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 2);
+            ViewBag.AlcoCategories = alcoCategories;
+            ViewBag.TabaccoCategories = tabaccoCategories;
+
             return View(orders);
         }
 

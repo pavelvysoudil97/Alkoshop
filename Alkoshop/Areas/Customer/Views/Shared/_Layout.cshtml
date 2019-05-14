@@ -48,31 +48,32 @@
     <div id="nav" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm">
         <a href="@Url.Action("Index", "Home")" class="pr-4"><img alt="XXX" src="~/Design/alkoshop_logo.png" width="100px" height="35px" /></a>
         <nav class="my-2 my-md-0 mr-md-3 ">
+            <a class="p-2 text-white" href="@Url.Action("Index", "Home")">Produkty</a>
+            <a class="p-2 text-white" href="@Url.Action("AboutUs", "Home")">O nás</a>
+            <a class="p-2 text-white" href="@Url.Action("Conditions", "Home")">Obchodní podmínky</a><span>  |  </span>
             <a class="p-2 text-white" href="@Url.Action("Index", "Favourite")">Oblíbené</a>
             <a class="p-2 text-white" href="@Url.Action("CustomerOrders", "Order")">Moje objednávky</a>
-            <a class="p-2 text-white" href="#">O nás</a>
-            <a class="p-2 text-white" href="#">Obchodní podmínky</a>
+
             <a href="@Url.Action("Index", "Cart")">
                 <button type="button" class="btn btn-success btn-outline-success">
                     Váš košík
                     <div class="badge badge-light badge-pill text-dark ">
                         @if (@Session["cart"] != null)
-                        {
+                {
 
-                            <p>@((Session["cart"] as List<Alkoshop.Models.CartItem>).Count)</p>
-                        }
-                        else
-                        {
-                            <p>0</p>}
+                    <p>@((Session["cart"] as List<Alkoshop.Models.CartItem>).Count)</p>
+        }
+        else
+        {
+            <p>0</p>}
                     </div>
                 </button>
             </a>
         </nav>
-        <div>
-            <a href="@Url.Action("Edit","Customer")" class="float-lg-right text-white"> Nastavení účtu</a>
-        </div>
         <div id="sing">
-            <a class="btn btn-outline-success float-lg-right text-white" href="@Url.Action("Logout", "Login")"> Odhlásit se </a>
+            
+            <a class="btn btn-outline-success float-lg-right text-white" href="@Url.Action("Logout", "Login")"> Odhlásit se</a><span>  |  </span>
+            <a href="@Url.Action("Edit","Customer")" class="btn btn-outline-success float-lg-right text-white"> Nastavení účtu</a>
         </div>
     </div>
     @if (TempData["message-nosuccess"] != null)

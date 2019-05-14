@@ -26,7 +26,7 @@
                 <tr>
                     <td>@item.Name</td>
                     <td>
-                        <img src="@item.Image" alt="jagger" width="400" height="400" />
+                        <img src="@item.Image" alt="jagger" width="200" height="200" />
                     </td>
 
                     <td>@item.PricePerUnit</td>
@@ -62,7 +62,11 @@
     </tbody>
 </table>
 <div class="clearfix"></div>
-<button type="button" class="btn btn-dark" onclick="location.href ='@Url.Action("Create","Order",new { area= "Customer", newAddress = false})'">Vytvořit objednávku s Vaší adresou</button>
-<button type="button" class="btn btn-dark" onclick="location.href='@Url.Action("Create","Address", new { area="", cusoremp = "order"})'">Vytvořit objednávku s novou adresou</button>
+<button type="button" class="btn btn-success" onclick="location.href ='@Url.Action("Create","Order",new { area= "Customer", newAddress = false})'">Vytvořit objednávku s Vaší adresou</button>
+<button type="button" class="btn btn-success" onclick="location.href='@Url.Action("Create","Address", new { area="", cusoremp = "order"})'">Vytvořit objednávku s novou adresou</button>
 
+
+<br /><br />
+<br />
+<div style="width: 20%"><a href="@Url.Action("Index","Home")" class="btn btn-lg btn-block text-white btn-outline-success btn-success">Zpět</a></div>
 

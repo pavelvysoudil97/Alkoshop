@@ -33,5 +33,27 @@ namespace Alkoshop.Areas.Customer.Controllers
             IList<Product> products = DBGetData.getAllProducts((OracleConnection)Session["conn"]);
             return View(products);
         }
+
+        public ActionResult AboutUs()
+        {
+            Session["conn"] = DBMain.GetConnection();
+
+            IList<Category> alcoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 1);
+            IList<Category> tabaccoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 2);
+            ViewBag.AlcoCategories = alcoCategories;
+            ViewBag.TabaccoCategories = tabaccoCategories;
+            return View();
+        }
+
+        public ActionResult Conditions()
+        {
+            Session["conn"] = DBMain.GetConnection();
+
+            IList<Category> alcoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 1);
+            IList<Category> tabaccoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 2);
+            ViewBag.AlcoCategories = alcoCategories;
+            ViewBag.TabaccoCategories = tabaccoCategories;
+            return View();
+        }
     }
 }

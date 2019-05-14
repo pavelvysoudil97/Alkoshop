@@ -5,34 +5,34 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Step 1. - Register address</h2>
+<h2>Část 1 - uveďte adresu</h2>
 
 
 @using (Html.BeginForm("Add" , "Address", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
 {
     <div class="form-group">
-        <label>City</label>
+        <label>Město</label>
         @Html.TextBoxFor(x => x.City, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.City)
     </div>
     <div class="form-group">
-        <label>Street</label>
+        <label>Ulice</label>
         @Html.TextBoxFor(x => x.Street, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.Street)
     </div>
     <div class="form-group">
-        <label>Street Number</label>
+        <label>Číslo popisné</label>
         @Html.TextBoxFor(x => x.StreetNumber, new { @class = "form-control" })
         @Html.ValidationMessageFor(x => x.StreetNumber)
     </div>
     <div class="form-group">
-        <label>Zip Code</label>
+        <label>PSČ</label>
         @Html.TextBoxFor(x => x.ZipCode, new { @class = "form-control " })
         @Html.ValidationMessageFor(x => x.ZipCode)
     </div>
     
 
-    <button type="submit" class="btn btn-primary">To step 2.</button>
+    <button type="submit" class="btn btn-success">Pokračovat</button>
 }
 
 

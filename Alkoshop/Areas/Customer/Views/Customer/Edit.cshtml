@@ -9,6 +9,12 @@
     ViewBag.Title = "ChangeInformations";
 }
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/Content/menustyle.css" />
+
+
 <div class="padded-down">
     <h2>Vaše údaje</h2>
 </div>
@@ -74,8 +80,14 @@
 
 
 
-    <button type="submit" class="btn btn-primary">Uložit údaje</button>
+    <button type="submit" class="btn btn-success">Uložit údaje</button>
 }
+
+<br /><br />
+<br />
+<div style="width: 20%"><a href="@Url.Action("Index","Home")" class="btn btn-lg btn-block text-white btn-outline-success btn-success">Zpět</a></div>
+
+
 
 
 

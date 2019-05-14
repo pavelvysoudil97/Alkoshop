@@ -26,6 +26,9 @@
             background-color: darkgreen;
             color: white;
         }
+        nav a.active {
+            background-color: seagreen;
+        }
         #color-body {
             background-color: whitesmoke;
         }
@@ -45,9 +48,9 @@
         <div id="nav" class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm">
             <a href="@Url.Action("Index", "Home")" class="pr-4"><img alt="XXX" src="~/Design/alkoshop_logo.png" width="100px" height="35px" /></a>
             <nav class="my-2 my-md-0 mr-md-3 ">
-                <a class="p-2 text-white" href="#">Features</a>
-                <a class="p-2 text-white" href="#">O nás</a>
-                <a class="p-2 text-white" href="#">Obchodní podmínky</a>
+                <a class="p-2 text-white" href="@Url.Action("Index", "Home")">Produkty</a>
+                <a class="p-2 text-white" href="@Url.Action("AboutUs", "Home")">O nás</a>
+                <a class="p-2 text-white" href="@Url.Action("Conditions", "Home")">Obchodní podmínky</a>
             </nav>
             <div id="sing">
                 <a class="btn btn-outline-success float-lg-right text-white" href="@Url.Action("Index", "Login", new {area = "Customer"})"> Přihlásit se </a>

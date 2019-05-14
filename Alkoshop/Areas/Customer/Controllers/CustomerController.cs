@@ -38,8 +38,7 @@ namespace Alkoshop.Areas.Customer.Controllers
                                         customer.Password,
                                         customer.Email,
                                         customer.PhoneNumber,
-                                        (int)TempData["oldAddressId"],
-                                        new Address(addressId, customer.Address.City, customer.Address.Street, customer.Address.StreetNumber, customer.Address.ZipCode));
+                                        addressId);
             TempData["message-success"] = "Vaše data byla úspěšně změněna";
             return RedirectToAction("Index", "Home");
         }
