@@ -16,7 +16,17 @@ namespace Alkoshop.Areas.Customer.Controllers
         public ActionResult Index()
         {
             IList<CartItem> cartItems = (List<CartItem>)Session["cart"];
+            IList<ProductOrder> productOrders = new List<ProductOrder>();
+            int totalPrice = 0;
 
+            foreach (CartItem cartItem in cartItems)
+            {
+                //ProductOrder productOrder = new ProductOrder(cartItem.ProductId, 0, cartItem.PricePerUnit, cartItem.NumberOfUnits);
+               // productOrders.Add(productOrder);
+                totalPrice += (cartItem.PricePerUnit * cartItem.NumberOfUnits);
+
+            }
+            ViewBag.TotalPrice = totalPrice;
             return View(cartItems);
 
         }
