@@ -33,6 +33,7 @@ namespace Alkoshop.Models
         public string StreetNumber { get; set; }
 
         [Required(ErrorMessage = "Zip code is required")]
+        [Range(11111, 99999, ErrorMessage = "Neni regulerni cislo popisne")]
         public string ZipCode { get; set; }
     }
 }
