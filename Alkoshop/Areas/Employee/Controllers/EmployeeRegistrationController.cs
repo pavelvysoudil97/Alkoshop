@@ -1,5 +1,4 @@
-﻿using Alkoshop.Database;
-using Alkoshop.Models;
+﻿using DataAccess.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,41 +15,41 @@ namespace Alkoshop.Areas.Employee.Controllers
             return View();
         }
 
-        public ActionResult Create(Address address)
-        {
-
-            
-            Alkoshop.Models.Employee employee = new Alkoshop.Models.Employee();
-            employee.Address = TempData["tempAddress"] as Address;
-            TempData["addresscontainer"] = employee.Address;
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Add(Alkoshop.Models.Employee employee)
-        {
-
-            var addressContainer = TempData["addresscontainer"];
-
-            if (employee.Address == null)
-            {
-                if(TempData["addresscontainer"] == null)
-                {
-                    return RedirectToAction("Create", "Address", new{area=""});
-                }
-                employee.Address = (Address)TempData["addresscontainer"];
-            }
-            if (ModelState.IsValid)
-            {
-
-                 DBGetData.createEmployeeWithAddress(DBMain.GetConnection(),employee, addressContainer as Address);
-                TempData["message-success"] = "Employee was added successfully";
-
-                return RedirectToAction("Index", "Home");
-            }
+        //public ActionResult Create(Address address)
+        //{
 
 
-            return View("Create", employee);
-        }
+        //    DataAccess.Model.Employee employee = new DataAccess.Model.Employee();
+        //    employee.Address = TempData["tempAddress"] as Address;
+        //    TempData["addresscontainer"] = employee.Address;
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public ActionResult Add(DataAccess.Model.Employee employee)
+        //{
+
+        //    var addressContainer = TempData["addresscontainer"];
+
+        //    if (employee.Address == null)
+        //    {
+        //        if(TempData["addresscontainer"] == null)
+        //        {
+        //            return RedirectToAction("Create", "Address", new{area=""});
+        //        }
+        //        employee.Address = (Address)TempData["addresscontainer"];
+        //    }
+        //    if (ModelState.IsValid)
+        //    {
+
+        //         DBGetData.createEmployeeWithAddress(DBMain.GetConnection(),employee, addressContainer as Address);
+        //        TempData["message-success"] = "Employee was added successfully";
+
+        //        return RedirectToAction("Index", "Home");
+        //    }
+
+
+        //    return View("Create", employee);
+        //}
     }
 }

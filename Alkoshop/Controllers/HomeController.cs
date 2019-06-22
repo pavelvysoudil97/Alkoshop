@@ -1,8 +1,10 @@
-﻿using Alkoshop.Database;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using Oracle.DataAccess.Client;
-using Alkoshop.Models;
+using DataAccess.Model;
+using DataAccess.Dao;
+using System.Data.SqlClient;
+using System;
 
 namespace Alkoshop.Controllers
 {
@@ -11,44 +13,30 @@ namespace Alkoshop.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            Session["conn"] = DBMain.GetConnection();
-
-            IList<Category> alcoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 1);
-            IList<Category> tabaccoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 2);
-            ViewBag.AlcoCategories = alcoCategories;
-            ViewBag.TabaccoCategories = tabaccoCategories;
-
+            CategoryDao categoryDao = new CategoryDao();
+            IList<Category> categories = categoryDao.GetAll();
+            
+            ViewBag.Categories = categories;
+            
             if (TempData["foundProducts"] != null)
             {
                 IList<Product> incomingProducts = TempData["foundProducts"] as List<Product>;
                 return View(incomingProducts);
             }
-            //    DBGetData.insertPhoto(conn, "C:/amundsen.jpg"); //pro vlozeni obrazku do DB
-
-
-            IList <Product> products = DBGetData.getAllProducts((OracleConnection)Session["conn"]);
-            return View(products); 
+            
+           
+            ProductDao productDao = new ProductDao();
+            IList<Product> products = productDao.GetAll();
+            return View(products);
         }
 
         public ActionResult AboutUs()
         {
-            Session["conn"] = DBMain.GetConnection();
-
-            IList<Category> alcoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 1);
-            IList<Category> tabaccoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 2);
-            ViewBag.AlcoCategories = alcoCategories;
-            ViewBag.TabaccoCategories = tabaccoCategories;
             return View();
         }
 
         public ActionResult Conditions()
         {
-            Session["conn"] = DBMain.GetConnection();
-
-            IList<Category> alcoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 1);
-            IList<Category> tabaccoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 2);
-            ViewBag.AlcoCategories = alcoCategories;
-            ViewBag.TabaccoCategories = tabaccoCategories;
             return View();
         }
     }

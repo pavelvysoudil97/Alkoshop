@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="DataAccess" namespace="DataAccess.Model">
+
+  <class name="Customer" table="Customer">
+    <id name="Id" column="id">
+      <generator class="native" />
+    </id>
+    <property name="Name" column="name" />
+    <property name="Surname" column="surname" />
+    <property name="Email" column="email" />
+    <property name="Password" column="password" />
+    <property name="PhoneNumber" column="phone_number" />
+    <property name="BirthDate" column="birth_date" />
+    <many-to-one name="Address" column="address_id" foreign-key="address_id" />
+
+  </class>
+
+</hibernate-mapping>

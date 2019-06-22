@@ -8,7 +8,10 @@
     padding-right: 15px;
 }
 
-
+.miniature{
+    width : 200px;
+    height : 50px;
+}
 .padded-down {
     padding-bottom: 35px;
 }

@@ -1,4 +1,4 @@
-﻿@model Alkoshop.Models.Customer
+﻿@model DataAccess.Model.Customer
 
 
 @{
@@ -54,7 +54,8 @@
     </div>
     <div class="form-group">
         <label>Birth Date </label>
-        @Html.TextBoxFor(x => x.BirthDate, new { @class = "form-control ", Placeholder = Model.BirthDate })
+        @Html.TextBoxFor(x => x.BirthDate,
+            new { @type = "date", @Value = Model.BirthDate.ToString("dd-MM-yyyy") })       
         @Html.ValidationMessageFor(x => x.BirthDate)
     </div>
     <div class="form-group">
@@ -74,6 +75,7 @@
     </div>
     <div class="form-group">
         <label>Zip Code</label>
+        
         @Html.TextBoxFor(x => x.Address.ZipCode, new { @class = "form-control ", Placeholder = Model.Address.ZipCode })
         @Html.ValidationMessageFor(x => x.Address.ZipCode)
     </div>

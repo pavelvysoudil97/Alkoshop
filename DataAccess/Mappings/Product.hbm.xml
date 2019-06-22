@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="DataAccess" namespace="DataAccess.Model">
+
+  <class name="Product" table="Product">
+    <id name="Id" column="id">
+      <generator class="native" />
+    </id>
+    <property name="Availability" column="availability" />
+    <property name="Name" column="name" />
+    <property name="Producer" column="producer" />
+    <property name="Description" column="description"/>
+    <property name="PricePerUnit" column="price_per_unit"/>
+    <property name="Image" column="picture"/>
+    <many-to-one name="Country" column="country_id" foreign-key="country_id"/>
+    <many-to-one name="Category" column="category_id" foreign-key="category_id" />
+
+  </class>
+
+</hibernate-mapping>

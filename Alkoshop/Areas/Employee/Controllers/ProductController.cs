@@ -1,6 +1,5 @@
 ﻿using Alkoshop.Class;
-using Alkoshop.Database;
-using Alkoshop.Models;
+using DataAccess.Model;
 using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -21,103 +20,102 @@ namespace Alkoshop.Areas.Employee.Controllers
         }
         public ActionResult Create()
         {
-            IDictionary<int, string> countries = DBGetData.getCountries(DBMain.GetConnection());
-            ViewBag.Countries = countries.Values;
-            IList<Category> categories = DBGetData.getCategories(DBMain.GetConnection(), 0);
-            ViewBag.Categories = categories;
+            //IDictionary<int, string> countries = DBGetData.getCountries(DBMain.GetConnection());
+            //ViewBag.Countries = countries.Values;
+            //IList<Category> categories = DBGetData.getCategories(DBMain.GetConnection(), 0);
+            //ViewBag.Categories = categories;
             return View();
         }
 
         [HttpPost]
         public ActionResult Add(Product product, HttpPostedFileBase picture, string countryName, int categoryId,int alcoTabac)
         {
-            if (ModelState.IsValid)
-            {
-                IDictionary<int, string> countries = DBGetData.getCountries(DBMain.GetConnection());
-                int countryId = 0;
+            //if (ModelState.IsValid)
+            //{
+            //    IDictionary<int, string> countries = DBGetData.getCountries(DBMain.GetConnection());
+            //    int countryId = 0;
 
-                foreach (KeyValuePair<int, string> item in countries)
-                {
-                    if (item.Value == countryName)
-                    {
-                        countryId = item.Key;
-                    }
-                }
+            //    foreach (KeyValuePair<int, string> item in countries)
+            //    {
+            //        if (item.Value == countryName)
+            //        {
+            //            countryId = item.Key;
+            //        }
+            //    }
 
-                if (picture != null)
-                {
-                    if (picture.ContentType == "image/jpeg" || picture.ContentType == "image/png")
-                    {
-                        Image image = Image.FromStream(picture.InputStream);
+            //    if (picture != null)
+            //    {
+            //        if (picture.ContentType == "image/jpeg" || picture.ContentType == "image/png")
+            //        {
+            //            Image image = Image.FromStream(picture.InputStream);
 
-                        if (image.Height > 400 && image.Width > 400)
-                        {
-                            Image smallImage = ImageHelper.ScaleImage(image, 400, 400);
-                            Bitmap b = new Bitmap(smallImage);
+            //            if (image.Height > 400 && image.Width > 400)
+            //            {
+            //                Image smallImage = ImageHelper.ScaleImage(image, 400, 400);
+            //                Bitmap b = new Bitmap(smallImage);
 
-                            Guid guid = Guid.NewGuid();
+            //                Guid guid = Guid.NewGuid();
                             
 
-                            b.Save(Server.MapPath("~/Design/" + picture.FileName), ImageFormat.Jpeg);
+            //                b.Save(Server.MapPath("~/Design/" + picture.FileName), ImageFormat.Jpeg);
 
-                            smallImage.Dispose();
-                            b.Dispose();
-
-
-                        }
-                        else
-                        {
-                            picture.SaveAs(Server.MapPath("~/Design/" + picture.FileName));
-                        }
+            //                smallImage.Dispose();
+            //                b.Dispose();
 
 
-                        product.Amount = 10;
-                        product.Availability = "yes";
-                        product.Alcotabac = alcoTabac;
-                        DBGetData.addProduct(DBMain.GetConnection(), product, countryId, categoryId, Server.MapPath("~/Design/" + picture.FileName));
-                        new System.IO.FileInfo(Server.MapPath("~/Design/" + picture.FileName)).Delete();
-                        TempData["message-success"] = "Produkt byl úspěšně přidán";
-                    }
-                }
-            }
+            //            }
+            //            else
+            //            {
+            //                picture.SaveAs(Server.MapPath("~/Design/" + picture.FileName));
+            //            }
+
+
+            //            product.Amount = 10;
+            //            product.Availability = "yes";
+            //            product.Alcotabac = alcoTabac;
+            //            DBGetData.addProduct(DBMain.GetConnection(), product, countryId, categoryId, Server.MapPath("~/Design/" + picture.FileName));
+            //            new System.IO.FileInfo(Server.MapPath("~/Design/" + picture.FileName)).Delete();
+            //            TempData["message-success"] = "Produkt byl úspěšně přidán";
+            //        }
+            //    }
+            //}
             return RedirectToAction("Index","Home");
         }
 
         public ActionResult Edit(int productId)
         {
-            OracleConnection connection = DBMain.GetConnection();
 
-            Product product = DBGetData.getProductByID(connection, productId);
-            IDictionary<int, string> countries = DBGetData.getCountries(DBMain.GetConnection());
-            ViewBag.Countries = countries.Values;
-            IList<Category> categories = DBGetData.getCategories(DBMain.GetConnection(), 0);
-            ViewBag.Categories = categories;
-            TempData["tempProductId"] = productId;
-            return View(product);
+            //Product product = DBGetData.getProductByID(connection, productId);
+            //IDictionary<int, string> countries = DBGetData.getCountries(DBMain.GetConnection());
+            //ViewBag.Countries = countries.Values;
+            //IList<Category> categories = DBGetData.getCategories(DBMain.GetConnection(), 0);
+            //ViewBag.Categories = categories;
+            //TempData["tempProductId"] = productId;
+            return View();//product);
         }
         [HttpPost]
         public ActionResult Update(int alcoTabac, int amount, int pricePU)
         {
-            int productId =(int) TempData["tempProductId"];
-            DBGetData.changeProduct(DBMain.GetConnection(), productId, alcoTabac, amount, pricePU);
+            //int productId =(int) TempData["tempProductId"];
+            //DBGetData.changeProduct(DBMain.GetConnection(), productId, alcoTabac, amount, pricePU);
             
-            TempData["message-success"] = "Produkt byl uspesne upraven";
+            //TempData["message-success"] = "Produkt byl uspesne upraven";
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult AllProductsByOrders()
         {
-            IList<Product> products = DBGetData.getOrderedProducts(DBMain.GetConnection());
+            // IList<Product> products = DBGetData.getOrderedProducts(DBMain.GetConnection());
 
-            return View(products);
+            return View();// products);
         }
 
         public ActionResult ShowProductByCategory(int categoryId)
         {
-            OracleConnection connection = DBMain.GetConnection();
-            IList<Product> foundProducts = DBGetData.getAllProducts(connection, categoryId);
-            TempData["foundProducts"] = foundProducts;
-            return RedirectToAction("Index", "Home", new { incomingProducts = foundProducts });
+            //OracleConnection connection = DBMain.GetConnection();
+            //IList<Product> foundProducts = DBGetData.getAllProducts(connection, categoryId);
+            //TempData["foundProducts"] = foundProducts;
+            return RedirectToAction("Index", "Home");//, new { incomingProducts = foundProducts });
         }
     }
 }

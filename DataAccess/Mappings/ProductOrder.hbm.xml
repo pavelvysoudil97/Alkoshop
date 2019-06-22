@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="DataAccess" namespace="DataAccess.Model">
+
+  <class name="ProductOrder" table="ProductOrder">
+    <id name="Id" column="id">
+      <generator class="native" />
+    </id>
+    <property name="PricePerUnit" column="price_per_unit" />
+    <property name="NumberOfUnit" column="number_of_unit" />
+    
+    <many-to-one name="Order" column="order_id" foreign-key="order_id"/>
+    <many-to-one name="Product" column="product_id" foreign-key="product_id" />
+
+  </class>
+
+</hibernate-mapping>

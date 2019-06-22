@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alkoshop", "Alkoshop\Alkoshop.csproj", "{96200C51-FB67-4041-A55F-FCDB97C20071}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{CBB74EB4-ADAC-4FC7-B40B-E23791D341EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{96200C51-FB67-4041-A55F-FCDB97C20071}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96200C51-FB67-4041-A55F-FCDB97C20071}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96200C51-FB67-4041-A55F-FCDB97C20071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBB74EB4-ADAC-4FC7-B40B-E23791D341EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBB74EB4-ADAC-4FC7-B40B-E23791D341EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBB74EB4-ADAC-4FC7-B40B-E23791D341EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBB74EB4-ADAC-4FC7-B40B-E23791D341EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

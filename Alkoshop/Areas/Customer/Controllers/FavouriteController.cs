@@ -1,5 +1,5 @@
-﻿using Alkoshop.Database;
-using Alkoshop.Models;
+﻿using DataAccess.Dao;
+using DataAccess.Model;
 using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -10,49 +10,66 @@ using System.Web.Mvc;
 namespace Alkoshop.Areas.Customer.Controllers
 {
     [Authorize]
-    public class FavouriteController : Controller
+   public class FavouriteController : Controller
     {
-        // GET: Customer/Favourite
-        public ActionResult Index()
-        {
+       // GET: Customer/Favourite
+       public ActionResult Index()
+       {
+           DataAccess.Model.Customer customer = Session["User"] as DataAccess.Model.Customer;
+            FavouriteDao favouriteDao = new FavouriteDao();
+            ProductDao productDao = new ProductDao();
+            IList<Favourite> favourites = favouriteDao.GetAllByCustomer(customer);
+            IList<Product> favouriteProducts = new List<Product>();
+            foreach(Favourite f in favourites)
+            {
+                Product p = productDao.GetById(f.Product.Id);
+                favouriteProducts.Add(p);
+            }
 
-            Alkoshop.Models.Customer customer = Session["User"] as Alkoshop.Models.Customer;
-            OracleConnection connection = DBMain.GetConnection();
-            IList<Product> favProducts = DBGetData.getFavForCustomer(connection, customer.ID);
-
-            Session["conn"] = DBMain.GetConnection();
-
-            IList<Category> alcoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 1);
-            IList<Category> tabaccoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 2);
-            ViewBag.AlcoCategories = alcoCategories;
-            ViewBag.TabaccoCategories = tabaccoCategories;
-
-            return View(favProducts);
-        }
+            return View(favouriteProducts);
+       }
 
         public ActionResult Add(int productId)
         {
-            OracleConnection connection = DBMain.GetConnection();
-            Alkoshop.Models.Customer customer = Session["User"] as Alkoshop.Models.Customer;
-            IList<Product> favProducts = DBGetData.getFavForCustomer(connection, customer.ID);
-            foreach(Product p in favProducts)
+            DataAccess.Model.Customer customer = Session["User"] as DataAccess.Model.Customer;
+            FavouriteDao favouriteDao = new FavouriteDao();
+            ProductDao productDao = new ProductDao();
+            IList<Favourite> favourites = favouriteDao.GetAllByCustomer(customer);
+            IList<Product> favouriteProducts = new List<Product>();
+            foreach (Favourite f in favourites)
             {
-                if(p.Id == productId)
+                Product p = productDao.GetById(f.Product.Id);
+                favouriteProducts.Add(p);
+            }
+            foreach(Product p in favouriteProducts)
+             {
+                       if(p.Id == productId)
+                        {
+                            TempData["message-nosuccess"] = "Tento produkt jiz mate v oblibenych";
+                            return RedirectToAction("Index", "Favourite");
+                        }
+             }
+            favouriteDao.Create(new Favourite(customer, productDao.GetById(productId)));
+            TempData["message-success"] = "Produkt byl pridan k vasim oblibenym";
+            return RedirectToAction("Index", "Favourite");
+            }
+        public ActionResult Remove(int productId)
+        {
+            DataAccess.Model.Customer customer = Session["User"] as DataAccess.Model.Customer;
+            FavouriteDao favouriteDao = new FavouriteDao();
+            ProductDao productDao = new ProductDao();
+            IList<Favourite> favourites = favouriteDao.GetAllByCustomer(customer);
+            IList<Product> favouriteProducts = new List<Product>();
+            foreach (Favourite f in favourites)
+            {
+                if (f.Product.Id == productId)
                 {
-                    TempData["message-nosuccess"] = "Tento produkt jiz mate v oblibenych";
+                    favouriteDao.Delete(f);
+                    TempData["message-success"] = "Produkt byl odebran z Vasich oblibenych";
                     return RedirectToAction("Index", "Favourite");
                 }
             }
-            DBGetData.addProductToFav(connection, customer.ID, productId);
-            TempData["message-success"] = "Produkt byl pridan k vasim oblibenym";
-            return RedirectToAction("Index", "Favourite");
-        }
-        public ActionResult Remove(int productId)
-        {
-            OracleConnection connection = DBMain.GetConnection();
-            Alkoshop.Models.Customer customer = Session["User"] as Alkoshop.Models.Customer;
-            DBGetData.removeProductFromFav(connection, customer.ID, productId);
-            TempData["message-success"] = "Produkt byl odebran z Vasich oblibenych";
+            TempData["message-nosuccess"] = "Tento produkt jiz mate v oblibenych";
             return RedirectToAction("Index", "Favourite");
         }
     }

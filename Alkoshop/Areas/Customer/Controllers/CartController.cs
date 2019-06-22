@@ -1,5 +1,6 @@
-﻿using Alkoshop.Database;
-using Alkoshop.Models;
+﻿
+using DataAccess.Dao;
+using DataAccess.Model;
 using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,7 @@ namespace Alkoshop.Areas.Customer.Controllers
 
             foreach (CartItem cartItem in cartItems)
             {
-                //ProductOrder productOrder = new ProductOrder(cartItem.ProductId, 0, cartItem.PricePerUnit, cartItem.NumberOfUnits);
-               // productOrders.Add(productOrder);
+                
                 totalPrice += (cartItem.PricePerUnit * cartItem.NumberOfUnits);
 
             }
@@ -31,15 +31,16 @@ namespace Alkoshop.Areas.Customer.Controllers
 
         }
 
-        [HttpPost]
+       [HttpPost]
         public ActionResult Add(string name, string image, int productId, int pricePerUnit, int numberOfUnit)
         {
-            int amountOfProduct = DBGetData.getProductByID(DBMain.GetConnection(), productId).Amount;
-            if (numberOfUnit > amountOfProduct)
-            {
-                TempData["message-nosuccess"] = "Ve skladu je jiz pouze " + amountOfProduct + " kusů";
-                return RedirectToAction("Detail","Product", new { productId });
-            }
+               ProductDao productDao = new ProductDao();
+               int amountOfProduct = productDao.GetById(productId).Availability;
+               if (numberOfUnit > amountOfProduct)
+                {
+                    TempData["message-nosuccess"] = "Ve skladu je jiz pouze " + amountOfProduct + " kusů";
+                    return RedirectToAction("Detail","Product", new { productId });
+                }
             CartItem cartItem = new CartItem(name, image, productId, pricePerUnit, numberOfUnit);
             if(Session["cart"] == null)
             {
@@ -73,10 +74,17 @@ namespace Alkoshop.Areas.Customer.Controllers
         public ActionResult Update(int cartItemProductId, int count)
         {
             IList<CartItem> cartProducts = (List<CartItem>)Session["cart"];
+            ProductDao productDao = new ProductDao();
+
             foreach(CartItem item in cartProducts)
             {   
                 if (item.ProductId.CompareTo(cartItemProductId) == 0)
                 {
+                    if(productDao.GetById(item.ProductId).Availability < count)
+                    {
+                        TempData["message-no-success"] = "Na skladě není požadované množství";
+                        return RedirectToAction("Index", "Cart");
+                    }
                     item.NumberOfUnits = count;
                 }
             }

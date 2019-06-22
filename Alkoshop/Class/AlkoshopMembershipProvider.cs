@@ -1,5 +1,5 @@
-﻿using Alkoshop.Database;
-using Alkoshop.Models;
+﻿using DataAccess.Dao;
+using DataAccess.Model;
 using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -110,18 +110,20 @@ namespace Alkoshop.Class
 
         public override bool ValidateUser(string email, string password)
         {
-            OracleConnection conn = DBMain.GetConnection();
 
             if (email.Contains("@alkoshop.com"))
             {
-                Employee employee = DBGetData.getEmployee(conn, email, password);
+                EmployeeDao employeeDao = new EmployeeDao();
+                Employee employee = employeeDao.GetByEmailAndPassword(email, password);
                 return employee != null;
             }
             else
             {
-                Customer customer = DBGetData.getCustomer(conn, email, password);
+                CustomerDao customerDao = new CustomerDao();
+                Customer customer = customerDao.GetByEmailAndPassword(email, password);
                 return customer != null;
             }
+            return false;
         }
     }
 }

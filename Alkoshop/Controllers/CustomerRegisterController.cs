@@ -1,5 +1,5 @@
-﻿using Alkoshop.Database;
-using Alkoshop.Models;
+﻿using DataAccess.Dao;
+using DataAccess.Model;
 using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -21,30 +21,33 @@ namespace Alkoshop.Controllers
         public ActionResult Create(Address address)
         {
             TempData["addresscontainer"] = address;
-            Customer customer = new Customer();
-            customer.Address = address;
             return View();
         }
 
         [HttpPost]
         public ActionResult Add(Customer customer)
         {
-            OracleConnection connection = DBMain.GetConnection();
-            var addressContainer = TempData["addresscontainer"];
-
-            if (customer.Address == null)
+            if(customer.BirthDate.Year > DateTime.Today.Year - 18)
             {
-                customer.Address = (Address)TempData["addresscontainer"];
+                TempData["message-no-success"] = "Pro registraci musíte být starší než 18 let!";
+                TempData["addresscontainer"] = customer.Address;
+                return RedirectToAction("Create", customer);
             }
+
+            customer.Address = (Address)TempData["addresscontainer"];
+
             if (ModelState.IsValid)
             {
-                DBGetData.createCustomerWithAddress(connection, customer, customer.Address);
+                AddressDao addressDao = new AddressDao();
+                addressDao.Create(customer.Address);
 
-                TempData["message-success"] = "Customer was added successfully";
+                CustomerDao customerDao = new CustomerDao();
+                customerDao.Create(customer);
+               
+                TempData["message-success"] = "Registrace proběhla úspěšně prosím přihlaste se";
                 return RedirectToAction("Index", "Home");
             }
-            
-            
+
             return RedirectToAction("Create", customer);
         }
 
