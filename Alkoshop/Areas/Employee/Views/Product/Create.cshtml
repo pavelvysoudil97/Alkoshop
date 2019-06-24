@@ -29,8 +29,8 @@
     </div>
     <div class="form-group">
         <label>Cena za jednotku</label>
-        @Html.TextBoxFor(x => x.PricePU, new { @class = "form-control", name = "pricePerUnit", Placeholder = "PricePerUnit" })
-        @Html.ValidationMessageFor(x => x.PricePU)
+        @Html.TextBoxFor(x => x.PricePerUnit, new { @class = "form-control", name = "pricePerUnit", Placeholder = "PricePerUnit" })
+        @Html.ValidationMessageFor(x => x.PricePerUnit)
     </div>
     <div class="form-group">
         <label>Popis</label>
@@ -38,18 +38,19 @@
         @Html.ValidationMessageFor(x => x.Description)
     </div>
     <div class="form-group">
+        <label>Mnozstvi</label>
+        @Html.TextBoxFor(x => x.Availability, new { @class = "form-control", name = "availability", Placeholder = "Availability" })
+        @Html.ValidationMessageFor(x => x.Availability)
+    </div>
+    <div class="form-group">
         <label>Země původu</label>
-        @Html.DropDownList("countryName", new SelectList(ViewBag.Countries), new { @class = "form-control" })
+        @Html.DropDownList("countryId", new SelectList(ViewBag.Countries, "id", "name"), new { @class = "form-control" })
     </div>
     <div class="form-group">
         <label>Kategorie</label>
         @Html.DropDownList("categoryId", new SelectList(ViewBag.Categories, "id", "name"), new { @class = "form-control" })
     </div>
-    <div class="form-group">
-        <label>Kategorie 1-Alko 2-Tabak</label>
-        @Html.TextBoxFor(x => x.Alcotabac, new { type = "number", name = "alcoTabac" })
-        @Html.ValidationMessageFor(x => x.Alcotabac)
-    </div>
+
 
 
     <div class="form-group">

@@ -150,6 +150,9 @@
     <Content Include="Areas\Customer\Views\Home\Conditions.cshtml" />
     <Content Include="Areas\Employee\Views\EmployeeRegistration\Create.cshtml" />
     <Content Include="Areas\Customer\Views\Order\Detail.cshtml" />
+    <Content Include="Areas\Employee\Views\Order\TodoOrder.cshtml" />
+    <Content Include="Areas\Employee\Views\Order\Detail.cshtml" />
+    <Content Include="Areas\Customer\Views\Review\Evaluate.cshtml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -180,6 +183,7 @@
     <Compile Include="Areas\Customer\Controllers\LoginController.cs" />
     <Compile Include="Areas\Customer\Controllers\OrderController.cs" />
     <Compile Include="Areas\Customer\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Customer\Controllers\ReviewController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
     <Compile Include="Areas\Employee\Controllers\HomeController.cs" />
     <Compile Include="Areas\Employee\Controllers\OrderController.cs" />
@@ -192,6 +196,7 @@
     <Compile Include="Areas\Employee\Controllers\EmployeeRegistrationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -235,6 +240,8 @@
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Design\" />
     <Folder Include="Models\" />
+    <Folder Include="uploads\product\" />
+    <Folder Include="Views\Review\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

@@ -1,0 +1,45 @@
+﻿@using DataAccess.Model
+@model Review
+@{
+    ViewBag.Title = "Evaluate";
+}
+
+<h2>Hodnoceni produktu : @ViewBag.Product.Name</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
+                <div class="col-auto d-none d-lg-block align-self-center">
+                    <img class="card-img-top" src="@Url.Content("~/uploads/product/" + ViewBag.Product.Image)" alt="Card image cap" width="200" height="200">
+                </div>
+                <b><h3 class="mb-0">@ViewBag.Product.Name</h3></b>
+                <div class="mb-1 text-muted"><b>Producent: </b>@ViewBag.Product.Producer</div>
+                <div><b>Cena: </b> @ViewBag.Product.PricePerUnit CZk</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    @using (Html.BeginForm("Vote", "Review", new { productId = @ViewBag.Product.Id }, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+    {
+
+        <div class="form-group">
+            <label>Hodnocení</label>
+            @Html.TextBoxFor(x => x.Value, new { @class = "form-control ", Placeholder = "Hodnoceni" })
+            @Html.ValidationMessageFor(x => x.Value)
+        </div>
+
+        <div class="form-group">
+            <label>Slovni popis</label>
+            @Html.TextBoxFor(x => x.Description, new { @class = "form-control", Placeholder = "Popis" })
+            @Html.ValidationMessageFor(x => x.Description)
+        </div>
+
+
+
+
+        <button type="submit" class="btn btn-success">Register</button>
+    }
+</div>
+

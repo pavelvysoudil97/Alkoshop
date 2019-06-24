@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="DataAccess" namespace="DataAccess.Model">
 
-  <class name="Order" table="Order">
+  <class name="Order" table="`Order`" lazy="true">
     <id name="Id" column="id">
       <generator class="native" />
     </id>
-    <many-to-one name="State" column="state_id" foreign-key="state_id" />
+    <property name="Status" column="status"/>
     <property name="Date" column="date" />
     <many-to-one name="Address" column="address_id" foreign-key="address_id" />
     <many-to-one name="Customer" column="customer_id" foreign-key="customer_id" />

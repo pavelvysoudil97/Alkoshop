@@ -13,7 +13,7 @@ namespace DataAccess.Model
         [Required]
         public virtual DateTime Date { get; set; }
         [Required]
-        public virtual State State { get; set; }
+        public virtual string Status { get; set; }
         [Required]
         public virtual Address Address { get; set; }
         [Required]

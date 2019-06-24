@@ -4,8 +4,9 @@
     ViewBag.Title = "Detail";
 }
 
+
 <h2>Souhrn Objednávky</h2>
-@if(@ViewBag.Order.Address.Street != null)
+@if (@ViewBag.Order.Address.Street != null)
 {
     <p>Objednávka na Adresu: @ViewBag.Order.Address.Street @ViewBag.Order.Address.StreetNumber, @ViewBag.Order.Address.ZipCode @ViewBag.Order.Address.City </p>
 }

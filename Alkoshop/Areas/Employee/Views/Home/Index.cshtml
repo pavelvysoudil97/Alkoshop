@@ -12,14 +12,14 @@
     {
         <div class="col-lg-3" style="margin-bottom: 8px">
             <div class="card">
-                <img class="card-img-top" src="@p.Picture" alt="Card image cap" width="200" height="200">
+                <img class="card-img-top" src="@Url.Content("~/uploads/product/" + p.Image)" alt="Card image cap" width="200" height="200">
                 <div class="card-body">
                     <h5 class="card-title">@p.Name</h5>
                     <div class="card-text list-unstyled">
                         <ul class="mt-3 mb-4 card-text list-unstyled">
                             <li>Producent: @p.Producer</li>
-                            <li>Cena: @p.PricePU Kč</li>
-                            @if (p.Availability == "yes")
+                            <li>Cena: @p.PricePerUnit Kč</li>
+                            @if (p.Availability >= 0)
                             {
                                 <li>Na skladě</li>
                             }
@@ -33,8 +33,8 @@
                 <div class="card-footer">
 
                     <small class="text-muted">
-                            <a href="@Url.Action("Edit","Product", new {productId = p.Id})" class="btn btn-lg btn-block text-white btn-outline-success btn-success marged-bottom">Upravit</a>
-                        
+                        <a href="@Url.Action("Edit","Product", new {productId = p.Id})" class="btn btn-lg btn-block text-white btn-outline-success btn-success marged-bottom">Upravit</a>
+
                     </small>
                 </div>
             </div>
@@ -51,14 +51,17 @@
         Alkohol
     </a>
     <div id="collapse1" class="panel-collapse collapse">
-        @foreach (Category cat in ViewBag.AlcoCategories)
+        @foreach (Category cat in ViewBag.Categories)
         {
-            <li class="nav-item">
-                <a class="nav-link" id="itemnav" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
-                    <span data-feather="file"> @cat.name</span>
+            if (cat.Type == "Alkohol")
+            {
+                <li class="nav-item">
+                    <a class="nav-link" id="itemnav" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.Id})">
+                        <span data-feather="file"> @cat.Name</span>
 
-                </a>
-            </li>
+                    </a>
+                </li>
+            }
 
         }
     </div>
@@ -67,16 +70,19 @@
         Tabák
     </a>
     <div id="collapse2" class="panel-collapse collapse">
-        @foreach (Category cat in ViewBag.TabaccoCategories)
+        @foreach (Category cat in ViewBag.Categories)
         {
-            <li class="nav-item" id="itemnav">
-                <a class="nav-link" id="itemnav" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.id})">
-                    <span data-feather="file"> @cat.name</span>
+            if (cat.Type == "Tabak")
+            {
+                <li class="nav-item" id="itemnav">
+                    <a class="nav-link" id="itemnav" href="@Url.Action("ShowProductByCategory", "Product", new { categoryId = cat.Id })">
+                        <span data-feather="file"> @cat.Name</span>
 
-                </a>
-            </li>
-
+                    </a>
+                </li>
+            }
         }
     </div>
 }
+
 

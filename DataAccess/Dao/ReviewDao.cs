@@ -1,4 +1,5 @@
 ﻿using DataAccess.Model;
+using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,11 @@ namespace DataAccess.Dao
         {
 
         }
+        public IList<Review> GetProductReview(Product product)
+        {
+                return session.CreateCriteria<Review>()
+                    .Add(Restrictions.Eq("Product", product))
+                    .List<Review>();
+            }
     }
 }

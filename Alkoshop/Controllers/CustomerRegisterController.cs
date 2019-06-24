@@ -27,6 +27,11 @@ namespace Alkoshop.Controllers
         [HttpPost]
         public ActionResult Add(Customer customer)
         {
+            if (customer.Email.Contains("alkoshop.com"))
+            {
+                TempData["message-no-success"] = "Nemas pravo pridavat zamestnance";
+                return RedirectToAction("Index", "Home");
+            }
             if(customer.BirthDate.Year > DateTime.Today.Year - 18)
             {
                 TempData["message-no-success"] = "Pro registraci musíte být starší než 18 let!";

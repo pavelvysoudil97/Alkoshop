@@ -43,3 +43,6 @@
 .marged{
     margin-bottom: 30px;
 }
+.checked {
+    color: orange;
+}

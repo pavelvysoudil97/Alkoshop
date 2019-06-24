@@ -1,4 +1,5 @@
-﻿using DataAccess.Model;
+﻿using DataAccess.Dao;
+using DataAccess.Model;
 using Oracle.DataAccess.Client;
 using System;
 using System.Collections.Generic;
@@ -14,22 +15,20 @@ namespace Alkoshop.Areas.Employee.Controllers
         // GET: Customer/Home
         public ActionResult Index()
         {
+            CategoryDao categoryDao = new CategoryDao();
+            IList<Category> categories = categoryDao.GetAll();
 
-            //IList<Category> alcoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 1);
-            //IList<Category> tabaccoCategories = DBGetData.getCategories((OracleConnection)Session["conn"], 2);
-            //ViewBag.AlcoCategories = alcoCategories;
-            //ViewBag.TabaccoCategories = tabaccoCategories;
+            ViewBag.Categories = categories;
 
-            //if (TempData["foundProducts"] != null)
-            //{
-            //    IList<Product> incomingProducts = TempData["foundProducts"] as List<Product>;
-            //    return View(incomingProducts);
-            //}
-            ////    DBGetData.insertPhoto(conn, "C:/amundsen.jpg"); //pro vlozeni obrazku do DB
+            if (TempData["foundProducts"] != null)
+            {
+                IList<Product> incomingProducts = TempData["foundProducts"] as List<Product>;
+                return View(incomingProducts);
+            }
 
-
-            //IList<Product> products = DBGetData.getAllProducts((OracleConnection)Session["conn"]);
-            return View();// products);
+            ProductDao productDao = new ProductDao();
+            IList<Product> products = productDao.GetAll();
+            return View(products);
         }
     }
 }

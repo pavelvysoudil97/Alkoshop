@@ -1,0 +1,21 @@
+﻿@using DataAccess.Model
+@model IList<Order>
+@{
+    ViewBag.Title = "TodoOrder";
+}
+
+<h2>TodoOrder</h2>
+
+@foreach (Order item in Model)
+{
+    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+        <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
+            
+            <a href="@Url.Action("Detail", "Order", new { orderId = item.Id})">@item.Id</a>
+            <b><h3 class="mb-0">@item.Date</h3></b>
+            <p class="mb-auto"><b>Počet kusů: </b>@item.Status</p>
+            <div><b>Cena za kus: </b> @item.TotalPrice CZk</div>
+        </div>
+
+    </div>
+}

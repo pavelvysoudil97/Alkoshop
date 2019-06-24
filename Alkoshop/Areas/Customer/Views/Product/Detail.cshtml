@@ -8,41 +8,82 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/Content/menustyle.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
 
-<div class="col-md-12">
-
-    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
-            <div class="col-auto d-none d-lg-block align-self-center">
-                <img src="~/Design/no_image.png" alt="jagger" width="400" height="400" />
-            </div>
-            <b><h3 class="mb-0">@Model.Name</h3></b>
-            <div class="mb-1 text-muted"><b>Producent: </b>@Model.Producer</div>
-            <p class="mb-auto"><b>Pochází z: </b> @Model.Country</p>
-            <p class="mb-auto"><b>Popis produktu: </b>@Model.Description</p>
-            <div><b>Cena: </b> @Model.PricePerUnit Kč</div>
-            <div><b>Na skladě zbývá už jen:</b>@Model.Availability kusů!</div>
-
-
-
-            @using (@Html.BeginForm("Add", "Cart", new { name = Model.Name, image = "~/ Design / no_image.png", productId = Model.Id, pricePerUnit = Model.PricePerUnit }, FormMethod.Post))
-            {
-                <br /><br />
-                <div>
-                    <p class="mb-auto"><b>Zadejte počet kusů: </b></p>
-                    <label for="inputPassword2" class="sr-only">Počet kusů</label>
-                    <input type="number" class="form-control" id="inputCount" name="numberOfUnit" size="15" min="1" max="@Model.Availability">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
+                <div class="col-auto d-none d-lg-block align-self-center">
+                    <img src="@Url.Content("~/uploads/product/" + Model.Image)" alt="@Model.Name" width="300" height="300" />
                 </div>
-                <br /><br />
-                <button type="submit" class="btn btn-success mb-2">Přidat do košíku</button>
-            }
-        </div>
+                <b><h3 class="mb-0">@Model.Name</h3></b>
+                <div class="mb-1 text-muted"><b>Producent: </b>@Model.Producer</div>
+                <p class="mb-auto"><b>Pochází z: </b> @Model.Country.Name</p>
+                <p class="mb-auto"><b>Popis produktu: </b>@Model.Description</p>
+                <div><b>Cena: </b> @Model.PricePerUnit Kč</div>
+                <div><b>Na skladě zbývá už jen:</b>@Model.Availability kusů!</div>
 
+
+
+                @using (@Html.BeginForm("Add", "Cart", new { name = Model.Name, image = @Url.Content("~/ uploads / product / " + Model.Image), productId = Model.Id, pricePerUnit = Model.PricePerUnit }, FormMethod.Post))
+                {
+                    <br /><br />
+                    <div>
+                        <p class="mb-auto"><b>Zadejte počet kusů: </b></p>
+                        <label for="inputPassword2" class="sr-only">Počet kusů</label>
+                        <input type="number" class="form-control" id="inputCount" name="numberOfUnit" size="15" min="1" max="@Model.Availability">
+                    </div>
+                    <br /><br />
+                    <button type="submit" class="btn btn-success mb-2">Přidat do košíku</button>
+                }
+            </div>
+
+        </div>
+        <br />
+        <div style="width: 20%"><a href="@Url.Action("Index","Home")" class="btn btn-lg btn-block text-white btn-outline-success btn-success">Zpět</a></div>
+        <div style="width: 20%"><a href="@Url.Action("Evaluate","Review", new { productId = Model.Id })" class="btn btn-lg btn-block text-white btn-outline-success btn-success">Hodnocení</a></div>
     </div>
-    <br />
-    <div style="width: 20%"><a href="@Url.Action("Index","Home")" class="btn btn-lg btn-block text-white btn-outline-success btn-success">Zpět</a></div>
 
 </div>
+
+
+<div class="row">
+    <div class="jumbotron">
+        <h3 class="display-4">Statistika produktu : @Model.Name</h3>
+        <p>Celkove hodnoceni produktu : @ViewBag.Value / 5</p>
+        <hr class="my-4">
+
+    </div>
+</div>
+
+<h4 class="display-4">Recenze @Model.Name</h4>
+
+@foreach (Review r in ViewBag.Reviews)
+{
+    <div class="jumbotron">
+        
+        <p class="lead">Uzivatel : @r.Customer.Name dal produktu</p>
+        @for (int i = 0; i < 5; i++)
+        {
+            if (i < r.Value)
+            {
+                <span class="fa fa-star checked"></span>
+            }
+            else
+            {
+                <span class="fa fa-star"></span>
+            }
+        }
+        <hr class="my-4">
+        <p>Komentář: @r.Description</p>
+    </div>
+}
 
 
 <script src="~/Scripts/counter.js"></script>

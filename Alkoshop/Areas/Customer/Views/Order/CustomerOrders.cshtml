@@ -14,35 +14,37 @@
 @foreach (Order order in Model)
 {
 
-    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
+<div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+    <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
 
-            <b><h3 class="mb-0">Číslo objednávky: @order.Id</h3></b>
-            <p class="mb-auto"><b>Datum vytvoření: </b>@order.Date</p>
-            <div>
-                <b>Status: @order.State</b>
-                @if (order.State.Id == 1)
-                {
-                <span>Nová objednávka</span> 
-                }
-                else if(order.State.Id == 2)
-                {
-                    <span>Objednávka byla odeslána</span> 
-                }
-                else
-                {
-                    <span>Stornovaná objednávka</span> 
-                }
-                <a href="@Url.Action("Detail", "Order",new { orderId = order.Id})"
-            
-            </div>
+        <b><h3 class="mb-0">Číslo objednávky: @order.Id</h3></b>
+        <p class="mb-auto"><b>Datum vytvoření: </b>@order.Date</p>
+        <div>
+            Status:
+            @if (order.Status == "new")
+            {
+                <span>Nová objednávka</span>
+            }
+            else if (order.Status == "exp")
+            {
+                <span>Objednávka byla odeslána</span>
+            }
+            else
+            {
+                <span>Stornovaná objednávka</span>
+            }
+
         </div>
     </div>
+    <div style="width: 20% ; display:flex ; align-items:center" ><a href="@Url.Action("Detail","Order", new { orderId = @order.Id })" class="btn flex-xl-shrink-0 btn-lg btn-block text-white btn-outline-success btn-success">Detail</a></div>
+    
+
+</div>
+
 
 }
 
 <br />
-<div style="width: 20%"><a href="@Url.Action("Index","Home")" class="btn btn-lg btn-block text-white btn-outline-success btn-success">Zpět</a></div>
 
-
+<div style="width: 20%"><a href="@Url.Action("Index","Home")" class="btn btn-lg btn-block text-white justify-content-md-center btn-outline-success btn-success">Zpět</a></div>
 

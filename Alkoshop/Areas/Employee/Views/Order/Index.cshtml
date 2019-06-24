@@ -13,12 +13,12 @@
         <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
 
 
-            <b><h3 class="mb-0">Číslo objednávky: @order.ID</h3></b>
+            <b><h3 class="mb-0">Číslo objednávky: @order.Id</h3></b>
             <p class="mb-auto"><b>Datum vytvoreni: </b>@order.Date</p>
 
             @using (Html.BeginForm("Update", "Order", FormMethod.Post))
                 {
-                    @Html.Hidden("orderId", order.ID)
+                    @Html.Hidden("orderId", order.Id)
                     <label title="Status:"></label>
                     @Html.DropDownList("stateDropdown", new SelectList(ViewBag.OrderStates),order.Status)
 

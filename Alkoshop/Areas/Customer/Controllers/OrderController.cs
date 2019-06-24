@@ -26,18 +26,17 @@ namespace Alkoshop.Areas.Customer.Controllers
             if (newAddress)
             {
                 address = TempData["addressOrder"] as Address;
+                addressDao.Create(address);
             }else
             {
                 address = (Session["User"] as DataAccess.Model.Customer).Address;
             }
             
             Order order = new Order();
-            StateDao stateDao = new StateDao();
-            State state = stateDao.GetById(1);
+            order.Status = "new";
             DateTime dateTime = DateTime.Now;
 
             order.Customer = (Session["User"] as DataAccess.Model.Customer);
-            order.State = state;
             order.Date = dateTime;
             order.Address = address;
             IList<CartItem> cartItems = (Session["cart"] as List<CartItem>);
@@ -47,7 +46,7 @@ namespace Alkoshop.Areas.Customer.Controllers
             
             foreach(CartItem cartItem in cartItems)
             {
-                ProductOrder productOrder = new ProductOrder(cartItem.ProductId, 0, cartItem.PricePerUnit, cartItem.NumberOfUnits);
+                ProductOrder productOrder = new ProductOrder(cartItem.ProductId, cartItem.PricePerUnit, cartItem.NumberOfUnits, 0);
                 productOrders.Add(productOrder);
                 totalPrice += (cartItem.PricePerUnit * cartItem.NumberOfUnits);
 
@@ -68,13 +67,20 @@ namespace Alkoshop.Areas.Customer.Controllers
         {
             OrderDao orderDao = new OrderDao();
             Order order = TempData["potentialOrder"] as Order;
-            IList<ProductOrder> productOrder = TempData["potentialProductOrders"] as List<ProductOrder>;
+            IList<ProductOrder> productOrders = TempData["potentialProductOrders"] as List<ProductOrder>;
             Address address = TempData["potentialAddress"] as Address;
+            ProductOrderDao productOrderDao = new ProductOrderDao();
             
             
             order.Address = address;
             orderDao.Create(order);
-            
+
+            foreach (ProductOrder p in productOrders)
+            {
+                p.Order = order;
+                productOrderDao.Create(p);
+            }
+
             TempData["message-success"] = "Vaše objednávka byla úspěšně vytvořena";
             Session["cart"] = null;
             return RedirectToAction("Index", "Home");
@@ -94,6 +100,7 @@ namespace Alkoshop.Areas.Customer.Controllers
             ProductOrderDao productOrderDao = new ProductOrderDao();
             OrderDao orderDao = new OrderDao();
             Order order = orderDao.GetById(orderId);
+            ViewBag.Order = order;
             ViewBag.TotalPrice = order.TotalPrice;
             IList<ProductOrder> products = productOrderDao.GetAllByOrder(order);
             return View(products);

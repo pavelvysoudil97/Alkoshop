@@ -74,7 +74,6 @@
     <Compile Include="Dao\ProductDao.cs" />
     <Compile Include="Dao\ProductOrderDao.cs" />
     <Compile Include="Dao\ReviewDao.cs" />
-    <Compile Include="Dao\StateDao.cs" />
     <Compile Include="Interface\IDaoBase.cs" />
     <Compile Include="Interface\IEntity.cs" />
     <Compile Include="Model\Address.cs" />
@@ -89,7 +88,6 @@
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\ProductOrder.cs" />
     <Compile Include="Model\Review.cs" />
-    <Compile Include="Model\State.cs" />
     <Compile Include="NHibernateHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -115,13 +113,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Mappings\Country.hbm.xml" />
     <EmbeddedResource Include="Mappings\Favourite.hbm.xml" />
-    <EmbeddedResource Include="Mappings\Order.hbm.xml" />
+    <EmbeddedResource Include="Mappings\Order.hbm.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Mappings\Product.hbm.xml" />
     <EmbeddedResource Include="Mappings\ProductOrder.hbm.xml" />
     <EmbeddedResource Include="Mappings\Review.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mappings\State.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

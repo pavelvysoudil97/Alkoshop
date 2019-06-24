@@ -21,5 +21,11 @@ namespace DataAccess.Dao
                 .Add(Restrictions.Eq("Customer", customer))
                 .List<DataAccess.Model.Order>();
         }
+        public IList<DataAccess.Model.Order> GetAllOrderToExp()
+        {
+            return session.CreateCriteria<DataAccess.Model.Order>()
+                .Add(Restrictions.Eq("Status", "new"))
+                .List<DataAccess.Model.Order>();
+        }
     }
 }

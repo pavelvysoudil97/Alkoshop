@@ -8,29 +8,65 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="/Content/menustyle.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .checked {
+        color: orange;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
 
-<div class="col-md-12">
-
-    <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-        <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
-            <div class="col-auto d-none d-lg-block align-self-center">
-                <img class="card-img-top" src="~/Design/no_image.png" alt="Card image cap" width="400" height="400">
+        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
+                <div class="col-auto d-none d-lg-block align-self-center">
+                    <img class="card-img-top" src="@Url.Content("~/uploads/product/" + Model.Image)" alt="Card image cap" width="200" height="200">
+                </div>
+                <b><h3 class="mb-0">@Model.Name</h3></b>
+                <div class="mb-1 text-muted"><b>Producent: </b>@Model.Producer</div>
+                <p class="mb-auto"><b>Pochází z: </b> @Model.Country.Name</p>
+                <p class="mb-auto"><b>Popis produktu: </b>@Model.Description</p>
+                <div><b>Cena: </b> @Model.PricePerUnit CZk</div>=
             </div>
-            <b><h3 class="mb-0">@Model.Name</h3></b>
-            <div class="mb-1 text-muted"><b>Producent: </b>@Model.Producer</div>
-            <p class="mb-auto"><b>Pochází z: </b> @Model.Country</p>
-            <p class="mb-auto"><b>Popis produktu: </b>@Model.Description</p>
-            <div><b>Cena: </b> @Model.PricePerUnit CZk</div>=
+
         </div>
 
+        <h5>Pro objednání se musíte přihlásit!</h5>    <br /><br />
+        <div style="width: 20%"><a href="@Url.Action("Index","Home")" class="btn btn-lg btn-block text-white btn-outline-success btn-success">Zpět</a></div>
+
     </div>
+</div>
 
-    <h5>Pro objednání se musíte přihlásit!</h5>    <br /><br />
-    <div style="width: 20%"><a href="@Url.Action("Index","Home")" class="btn btn-lg btn-block text-white btn-outline-success btn-success">Zpět</a></div>
+<div class="row">
+    <div class="jumbotron">
+        <h3 class="display-4">Statistika produktu : @Model.Name</h3>
+        <p>Celkove hodnoceni produktu : @ViewBag.Value / 5</p>
+        <hr class="my-4">
 
+    </div>
 </div>
 
 
+@foreach (Review r in ViewBag.Reviews)
+{
+<div class="jumbotron">
+    <h4 class="display-4">Recenze @Model.Name</h4>
+    <p class="lead">Uzivatel : @r.Customer.Name dal produktu</p>
+    @for (int i = 0; i < 5; i++)
+    {
+        if (i < r.Value)
+        {
+            <span class="fa fa-star checked"></span>
+        }
+        else
+        {
+            <span class="fa fa-star"></span>
+        }
+    }
+    <hr class="my-4">
+    <p>Komentář: @r.Description</p>
+</div>
+}
 <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 
 

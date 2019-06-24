@@ -10,12 +10,13 @@
 
     @foreach (Product p in Model)
     {
+
     <div class="col-lg-3">
 
         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-100 position-relative">
             <div class="col p-4 d-flex flex-column position-static" style="background-color: white">
                 <div class="col-auto d-none d-lg-block align-self-center">
-                    <img src="@p.Picture" alt="@p.Name" width="100px" height="100px" />
+                    <img src="@Url.Content("~/uploads/product/" + p.Image)" alt="@p.Name" width="100px" height="100px" />
                 </div>
                 <b><h3 class="mb-0">@p.Name</h3></b>
                 <p class="mb-auto"><b>Product Id: </b>@p.Id</p>

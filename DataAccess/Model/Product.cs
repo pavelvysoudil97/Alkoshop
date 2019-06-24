@@ -21,8 +21,7 @@ namespace DataAccess.Model
 
         [Required]
         public virtual int Availability { get; set; }
-
-        [Required]
+        
         public virtual Country Country { get; set; }
         public virtual string Description { get; set; }
         public virtual string Image { get; set; }

@@ -21,7 +21,20 @@ namespace Alkoshop.Areas.Customer.Controllers
         {
             ProductDao productDao = new ProductDao();
             Product product = productDao.GetById(productId);
-
+            ReviewDao reviewDao = new ReviewDao();
+            IList<Review> reviews = reviewDao.GetProductReview(product);
+            ViewBag.Reviews = reviews;
+            int count = reviews.Count;
+            float evaluation = 0;
+            foreach (Review r in reviews)
+            {
+                evaluation += r.Value;
+            }
+            if(reviews.Count == 0)
+            {
+                count = 1;
+            }
+            ViewBag.Value = (evaluation / count * 1.0);
             return View(product);
         }
 

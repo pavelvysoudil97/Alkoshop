@@ -1,4 +1,5 @@
-﻿using DataAccess.Interface;
+﻿using DataAccess.Dao;
+using DataAccess.Interface;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -12,7 +13,10 @@ namespace DataAccess.Model
         public ProductOrder() { }
         public ProductOrder(int productId, int pricePerUnit, int numberOfUnits, int orderId = 0)
         {
-            
+            ProductDao productDao = new ProductDao();
+            Product = productDao.GetById(productId);
+            PricePerUnit = pricePerUnit;
+            NumberOfUnit = numberOfUnits;
         }
         public virtual int Id { get; set; }
         [Required]
