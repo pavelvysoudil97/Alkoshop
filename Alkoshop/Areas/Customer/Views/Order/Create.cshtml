@@ -8,10 +8,10 @@
 
 <h2>Souhrn Objednávky</h2>
 
-<p>Objednávka na Adresu: @ViewBag.Address.Street @ViewBag.Address.StreetNumber, @ViewBag.Address.ZipCode @ViewBag.Address.City </p>
+<p>Objednávka na Adresu: @ViewBag.Order.Address.Street @ViewBag.Order.Address.StreetNumber, @ViewBag.Order.Address.ZipCode @ViewBag.Order.Address.City </p>
 <p>Vytvořena dne:  @ViewBag.Order.Date</p>
-<p>Jméno:  @ViewBag.OrderUser.Name</p>
-<p>Příjmení:  @ViewBag.OrderUser.Surname</p>
+<p>Jméno:  @ViewBag.Order.Customer.Name</p>
+<p>Příjmení:  @ViewBag.Order.Customer.Surname</p>
 
 
 @foreach (CartItem item in Model)

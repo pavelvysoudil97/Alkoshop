@@ -1,4 +1,5 @@
 ﻿using DataAccess.Model;
+using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,12 @@ namespace DataAccess.Dao
         public ProductOrderDao() : base()
         {
 
+        }
+        public IList<ProductOrder> GetAllByOrder(DataAccess.Model.Order order)
+        {
+            return session.CreateCriteria<ProductOrder>()
+                .Add(Restrictions.Eq("Order", order))
+                .List<ProductOrder>();
         }
     }
 }

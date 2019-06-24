@@ -5,11 +5,11 @@
     <id name="Id" column="id">
       <generator class="native" />
     </id>
+    <many-to-one name="State" column="state_id" foreign-key="state_id" />
     <property name="Date" column="date" />
-    <property name="Status" column="status" />
-    <property name="TotalPrice" column="total_price" />
     <many-to-one name="Address" column="address_id" foreign-key="address_id" />
     <many-to-one name="Customer" column="customer_id" foreign-key="customer_id" />
+    <property name="TotalPrice" column="total_price" />
 
   </class>
 

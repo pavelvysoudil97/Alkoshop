@@ -1,0 +1,48 @@
+﻿@using DataAccess.Model
+@model IList<ProductOrder>
+@{
+    ViewBag.Title = "Detail";
+}
+
+<h2>Souhrn Objednávky</h2>
+
+<p>Objednávka na Adresu: @ViewBag.Order.Address.Street @ViewBag.Order.Address.StreetNumber, @ViewBag.Order.Address.ZipCode @ViewBag.Order.Address.City </p>
+<p>Vytvořena dne:  @ViewBag.Order.Date</p>
+<p>Jméno:  @ViewBag.Order.Customer.Name</p>
+<p>Příjmení:  @ViewBag.Order.Customer.Surname</p>
+
+<table class="table table-bordered table-hover marged-bottom table-light">
+    <thead>
+        <tr>
+            <th>Nazev produktu</th>
+            <th>Image</th>
+            <th>Cena za kus</th>
+            <th>Pocet kusu</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (ProductOrder item in Model)
+            {
+        <tr>
+            <td>@item.Product.Name</td>
+            <td>
+                <img src="@item.Product.Image" alt="@item.Product.Name" width="200" height="200" />
+            </td>
+
+            <td>@item.PricePerUnit</td>
+            <td>@item.NumberOfUnit</td>
+        </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+<h3>Celková cena: @ViewBag.TotalPrice Kč</h3>
+<div class="clearfix"></div>
+
+<br /><br />
+<br />
+<div style="width: 20%"><a href="@Url.Action("Index","Home")" class="btn btn-lg btn-block text-white btn-outline-success btn-success">Zpět</a></div>
+

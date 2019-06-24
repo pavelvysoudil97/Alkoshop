@@ -149,6 +149,7 @@
     <Content Include="Areas\Customer\Views\Home\AboutUs.cshtml" />
     <Content Include="Areas\Customer\Views\Home\Conditions.cshtml" />
     <Content Include="Areas\Employee\Views\EmployeeRegistration\Create.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\Detail.cshtml" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -230,6 +231,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Models\" />
+    <Folder Include="Areas\Customer\Views\ProductOrder\" />
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Design\" />
     <Folder Include="Models\" />
